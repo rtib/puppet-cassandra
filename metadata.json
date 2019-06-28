@@ -1,31 +1,42 @@
 {
   "name": "trepasi-cassandra",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "author": "T. Repasi",
-  "summary": "",
+  "summary": "Puppet module to manage a Cassandra cluster.",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/rtib/puppet-cassandra.git",
+  "project_page": "https://github.com/rtib/puppet-cassandra",
+  "issues_url": "https://github.com/rtib/puppet-cassandra/issues",
+  "tags": [
+    "Cassandra"
+  ],
   "dependencies": [
-
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 6.0.0 <7.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 6.0.0 <7.0.0"
+    },
+    {
+      "name": "cataphract/yaml_settings",
+      "version_requirement": ">=0.1.0 <1.0.0"
+    }
   ],
   "operatingsystem_support": [
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "8"
-      ]
-    },
-    {
-      "operatingsystem": "Ubuntu",
-      "operatingsystemrelease": [
-        "16.04"
+        "8",
+        "9"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.10.0 < 7.0.0"
+      "version_requirement": ">= 6.0.0 < 7.0.0"
     }
   ],
   "pdk-version": "1.10.0",
