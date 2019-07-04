@@ -7,9 +7,6 @@
   "source": "https://github.com/rtib/puppet-cassandra.git",
   "project_page": "https://github.com/rtib/puppet-cassandra",
   "issues_url": "https://github.com/rtib/puppet-cassandra/issues",
-  "tags": [
-    "Cassandra"
-  ],
   "dependencies": [
     {
       "name": "puppetlabs/stdlib",
@@ -39,7 +36,10 @@
       "version_requirement": ">= 6.0.0 < 7.0.0"
     }
   ],
-  "pdk-version": "1.10.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#1.10.0",
-  "template-ref": "tags/1.10.0-0-gbba9ac3"
+  "tags": [
+    "Cassandra"
+  ],
+  "pdk-version": "1.11.1",
+  "template-url": "https://github.com/puppetlabs/pdk-templates.git#1.11.1",
+  "template-ref": "tags/1.11.1-0-g2ff8c24"
 }
