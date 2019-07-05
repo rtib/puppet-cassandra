@@ -24,14 +24,55 @@ matrix:
   fast_finish: true
   include:
     -
-      bundler_args: --with system_tests
-      dist: trusty
-      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_set=debian-9 BEAKER_TESTMODE=apply
-      rvm: 2.5.3
-      script: bundle exec rake beaker
       services: docker
-      stage: acceptance
       sudo: required
+      bundler_args: --with system_tests
+      rvm: 2.5.3
+      stage: acceptance
+      before_script:
+      - bundler exec rake 'litmus:provision_list[centos]'
+      - bundler exec rake 'litmus:install_agent[puppet5]'
+      - bundler exec rake litmus:install_module
+      script:
+      - bundler exec rake litmus:acceptance:parallel
+    -
+      services: docker
+      sudo: required
+      bundler_args: --with system_tests
+      rvm: 2.5.3
+      stage: acceptance
+      before_script:
+      - bundler exec rake 'litmus:provision_list[centos]'
+      - bundler exec rake 'litmus:install_agent[puppet6]'
+      - bundler exec rake litmus:install_module
+      script:
+      - bundler exec rake litmus:acceptance:parallel
+    -
+      services: docker
+      sudo: required
+      bundler_args: --with system_tests
+      rvm: 2.5.3
+      stage: acceptance
+      before_script:
+      - bundler exec rake 'litmus:provision_list[debian]'
+      - bundler exec bolt command run 'apt-get install wget -y' --inventoryfile inventory.yaml --nodes='localhost*'
+      - bundler exec rake 'litmus:install_agent[puppet5]'
+      - bundler exec rake litmus:install_module
+      script:
+      - bundler exec rake litmus:acceptance:parallel
+    -
+      services: docker
+      sudo: required
+      bundler_args: --with system_tests
+      rvm: 2.5.3
+      stage: acceptance
+      before_script:
+      - bundler exec rake 'litmus:provision_list[debian]'
+      - bundler exec bolt command run 'apt-get install wget -y' --inventoryfile inventory.yaml --nodes='localhost*'
+      - bundler exec rake 'litmus:install_agent[puppet6]'
+      - bundler exec rake litmus:install_module
+      script:
+      - bundler exec rake litmus:acceptance:parallel
     -
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static

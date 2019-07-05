@@ -4,8 +4,22 @@ changelog_project: puppet-cassandra
 mock_with: ':rspec'
 .travis.yml:
   user: trepasi
-  docker_sets:
-    - set: debian-9
+  # docker_defaults:
+  #   env: SET=@@SET@@ COLLECTION=@@COLLECTION@@
+  #   before_script: |
+  #     - bundle exec rake 'litmus:provision_list[@@SET@@]'
+  #     - bundle exec rake 'litmus:install_agent[@@COLLECTION@@]'
+  #     - bundle exec rake litmus:install_module
+  #   script: bundle exec rake litmus:acceptance:parallel
+  # docker_sets:
+  #   - set: debian
+  #     collection: puppet5
+  #   - set: debian
+  #     collection: puppet6
+  #   - set: centos
+  #     collection: puppet5
+  #   - set: centos
+  #     collection: puppet6
 Gemfile:
   required:
     ':system_tests':
