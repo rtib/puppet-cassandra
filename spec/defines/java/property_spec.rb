@@ -5,7 +5,7 @@ describe 'cassandra::java::property' do
   let(:title) { 'testproperty' }
   let(:params) do
     {
-      'value' => 'testvalue'
+      'value' => 'testvalue',
     }
   end
 

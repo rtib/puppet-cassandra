@@ -5,7 +5,7 @@ describe 'cassandra::java::gc' do
     context "on #{os}" do
       let(:pre_condition) { 'include cassandra' }
       let(:facts) { os_facts }
-      let(:params) do 
+      let(:params) do
         {
           'collector' => 'g1',
         }

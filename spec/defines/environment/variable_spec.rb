@@ -5,7 +5,7 @@ describe 'cassandra::environment::variable' do
   let(:title) { 'testvariable' }
   let(:params) do
     {
-      'value' => 'testvalue'
+      'value' => 'testvalue',
     }
   end
 
