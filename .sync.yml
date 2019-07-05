@@ -4,15 +4,17 @@ changelog_project: puppet-cassandra
 mock_with: ':rspec'
 .travis.yml:
   user: trepasi
-  # docker_sets:
-  #   - set: debian
-  #     collection: puppet5
-  #   - set: debian
-  #     collection: puppet6
-  #   - set: centos
-  #     collection: puppet5
-  #   - set: centos
-  #     collection: puppet6
+  litmus_sets:
+    - set: debian
+      collection: puppet5
+      commands:
+      - 'apt-get install wget -y'
+    - set: debian
+      commands:
+      - 'apt-get install wget -y'
+    - set: centos
+      collection: puppet5
+    - set: centos
 Gemfile:
   required:
     ':system_tests':

@@ -41,5 +41,5 @@
   ],
   "pdk-version": "1.11.1",
   "template-url": "https://github.com/rtib/pdk-templates.git#litmus_config",
-  "template-ref": "remotes/origin/litmus_config-0-g2243390"
+  "template-ref": "remotes/origin/litmus_config-0-g9a55910"
 }
