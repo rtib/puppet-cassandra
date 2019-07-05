@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'cassandra::config' do
+describe 'cassandra::config::topology' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:pre_condition) { 'include cassandra' }

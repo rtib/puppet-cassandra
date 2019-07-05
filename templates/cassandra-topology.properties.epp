@@ -1,0 +1,17 @@
+# This file is managed by Puppet module cassandra.
+# DO NOT EDIT!
+
+# Cassandra Node IP=Data Center:Rack
+<% $cassandra::topology.keys.sort.each |String $dc| {
+     $cassandra::topology[$dc].keys.sort.each |String $rack| {
+       $cassandra::topology[$dc][$rack].each |Stdlib::IP::Address $ip| { -%>
+<%= $ip -%>=<%= $dc -%>:<%= $rack %>
+<%     }
+     }
+   }
+-%>
+
+# default for unknown nodes
+<% if $cassandra::topology_default { -%>
+default=<%= $cassandra::topology_default -%>
+<% } -%>
