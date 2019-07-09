@@ -23,10 +23,22 @@
   ],
   "operatingsystem_support": [
     {
+      "operatingsystem": "Centos",
+      "operatingsystemrelease": [
+        "7"
+      ]
+    },
+    {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "8",
         "9"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "16.04",
+        "18.04"
       ]
     }
   ],
@@ -41,5 +53,5 @@
   ],
   "pdk-version": "1.11.1",
   "template-url": "https://github.com/rtib/pdk-templates.git#testing",
-  "template-ref": "remotes/origin/testing-0-gcac707b"
+  "template-ref": "remotes/origin/testing-0-g3c2b165"
 }

@@ -1,7 +1,7 @@
 ---
 debian:
   provisioner: docker
-  images: ['debian:8', 'debian:9', 'ubuntu:14.04', 'ubuntu:16.04', 'ubuntu:18.04']
+  images: ['debian:9', 'ubuntu:16.04', 'ubuntu:18.04']
 centos:
   provisioner: docker
-  images: ['centos:6', 'centos:7']
+  images: ['centos:7']
