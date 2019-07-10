@@ -1,0 +1,15 @@
+# This file is managed by Puppet module profiles_cassandra
+# DO NOT EDIT!
+
+# Source the default cassandra.in.sh to get classpath and agent settings
+# Locations (in order) to use when searching for an include file.
+for include in /usr/share/cassandra/cassandra.in.sh \
+  /usr/local/share/cassandra/cassandra.in.sh \
+  /opt/cassandra/cassandra.in.sh; do
+  if [ -r "$include" ]; then
+    . "$include"
+    break
+  fi
+done
+
+# Settings provided by configuration

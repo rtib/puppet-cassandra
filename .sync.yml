@@ -35,6 +35,7 @@ Gemfile:
           - mswin
           - mingw
           - x64_mingw
+      - gem: rspec-retry
   optional:
     ':development':
       - gem: 'github_changelog_generator'

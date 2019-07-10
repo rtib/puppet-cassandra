@@ -1,0 +1,3 @@
+---
+cassandra::config_dir: /etc/cassandra/conf
+cassandra::config::envfile: /usr/share/cassandra/cassandra.in.sh

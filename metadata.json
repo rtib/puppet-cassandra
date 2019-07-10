@@ -53,5 +53,5 @@
   ],
   "pdk-version": "1.11.1",
   "template-url": "https://github.com/rtib/pdk-templates.git#testing",
-  "template-ref": "remotes/origin/testing-0-g3c2b165"
+  "template-ref": "remotes/origin/testing-0-gbc857bc"
 }
