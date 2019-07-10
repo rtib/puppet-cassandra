@@ -16,15 +16,6 @@ mock_with: ':rspec'
       - 'echo "deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
       - 'apt-get update'
       - 'apt-get install wget openjdk-8-jdk -y'
-    - set: centos
-      collection: puppet5
-      commands:
-      - 'echo -e "[cassandra]\nname=Apache Cassandra\nbaseurl=https://www.apache.org/dist/cassandra/redhat/311x/\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://www.apache.org/dist/cassandra/KEYS\n" > /etc/yum.repos.d/cassandra.repo'
-      - 'yum install -y java-1.8.0-openjdk'
-    - set: centos
-      commands:
-      - 'echo -e "[cassandra]\nname=Apache Cassandra\nbaseurl=https://www.apache.org/dist/cassandra/redhat/311x/\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=https://www.apache.org/dist/cassandra/KEYS\n" > /etc/yum.repos.d/cassandra.repo'
-      - 'yum install -y java-1.8.0-openjdk'
 Gemfile:
   required:
     ':system_tests':

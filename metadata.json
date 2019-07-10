@@ -23,12 +23,6 @@
   ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "Centos",
-      "operatingsystemrelease": [
-        "7"
-      ]
-    },
-    {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "9"
@@ -45,7 +39,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 6.0.0 < 7.0.0"
+      "version_requirement": ">= 5.5.0 < 7.0.0"
     }
   ],
   "tags": [
