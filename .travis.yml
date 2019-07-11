@@ -34,7 +34,7 @@ matrix:
       - bundler exec rake 'litmus:provision_list[debian]'
       - bundler exec bolt command run 'echo "deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list' --inventoryfile inventory.yaml --nodes='localhost*'
       - bundler exec bolt command run 'apt-get update' --inventoryfile inventory.yaml --nodes='localhost*'
-      - bundler exec bolt command run 'apt-get install wget openjdk-8-jdk -y' --inventoryfile inventory.yaml --nodes='localhost*'
+      - bundler exec bolt command run 'apt-get install iproute2 wget openjdk-8-jdk -y' --inventoryfile inventory.yaml --nodes='localhost*'
       - bundler exec rake 'litmus:install_agent[puppet5]'
       - bundler exec rake litmus:install_module
       script:
@@ -50,7 +50,7 @@ matrix:
       - bundler exec rake 'litmus:provision_list[debian]'
       - bundler exec bolt command run 'echo "deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list' --inventoryfile inventory.yaml --nodes='localhost*'
       - bundler exec bolt command run 'apt-get update' --inventoryfile inventory.yaml --nodes='localhost*'
-      - bundler exec bolt command run 'apt-get install wget openjdk-8-jdk -y' --inventoryfile inventory.yaml --nodes='localhost*'
+      - bundler exec bolt command run 'apt-get install iproute2 wget openjdk-8-jdk -y' --inventoryfile inventory.yaml --nodes='localhost*'
       - bundler exec rake 'litmus:install_agent[puppet6]'
       - bundler exec rake litmus:install_module
       script:

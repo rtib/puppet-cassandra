@@ -10,12 +10,12 @@ mock_with: ':rspec'
       commands:
       - 'echo "deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
       - 'apt-get update'
-      - 'apt-get install wget openjdk-8-jdk -y'
+      - 'apt-get install iproute2 wget openjdk-8-jdk -y'
     - set: debian
       commands:
       - 'echo "deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
       - 'apt-get update'
-      - 'apt-get install wget openjdk-8-jdk -y'
+      - 'apt-get install iproute2 wget openjdk-8-jdk -y'
 Gemfile:
   required:
     ':system_tests':
