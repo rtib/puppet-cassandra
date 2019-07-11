@@ -8,11 +8,11 @@ define cassandra::java::advancedruntimeoption (
   Variant[Boolean,String] $value,
 ) {
   $_opt = $value ? {
-    Boolean => inline_epp('-XX:<% if $value { -%>+<% else -%>-<% } -%><%= $name %>',
+    Boolean => inline_epp('XX:<% if $value { -%>+<% } else { -%>-<% } -%><%= $name %>',
                   'name'  => $name,
                   'value' => $value,
                 ),
-    String  => inline_epp('-XX:<%= $name -%>=<%= $value %>',
+    String  => inline_epp('XX:<%= $name -%>=<%= $value %>',
                   'name'  => $name,
                   'value' => $value,
                 ),
