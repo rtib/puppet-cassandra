@@ -7,8 +7,6 @@ describe 'cassandra' do
         let(:facts) { os_facts }
 
         context 'default install' do
-          let(:pre_condition) { 'include cassandra' }
-
           it { is_expected.to compile }
           it do
             is_expected.to contain_package('cassandra')
@@ -47,7 +45,7 @@ describe 'cassandra' do
               .with_ensure('installed')
           end
           it do
-                is_expected.to contain_package('cassandra-tools')
+            is_expected.to contain_package('cassandra-tools')
               .with_ensure('3.0.18')
           end
         end
