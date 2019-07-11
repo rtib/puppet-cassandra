@@ -5,8 +5,8 @@
 # @example
 #   cassandra::environment::variable { 'namevar': }
 define cassandra::environment::variable (
+  String $value,
   String $id = $title,
-  String $value
 ) {
   concat::fragment{ "cassandra::environment::variable[${id}]=${value}":
     target   => $cassandra::envfile,
