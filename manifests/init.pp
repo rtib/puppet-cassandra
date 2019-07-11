@@ -34,8 +34,8 @@
 class cassandra (
   String                      $cassandra_package = 'cassandra',
   String                      $cassandra_ensure = 'installed',
-  String                      $tools_ensure = 'installed',
   String                      $tools_package = 'cassandra-tools',
+  String                      $tools_ensure = $cassandra_ensure,
   Boolean                     $manage_service = true,
   Cassandra::Service::Ensure  $service_ensure = undef,
   Cassandra::Service::Enable  $service_enable = 'manual',
