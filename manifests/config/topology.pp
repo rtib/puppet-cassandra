@@ -5,9 +5,9 @@
 #
 # This class is contained with config, thus do not use it for its own.
 #
-class cassandra::config::topology (
-  Stdlib::Absolutepath $path = "${cassandra::config_dir}/cassandra-topology.properties"
-) {
+class cassandra::config::topology {
+  $path = "${cassandra::config_dir}/cassandra-topology.properties"
+
   if $cassandra::topology =~ Hash {
     file { $path:
       ensure  => 'file',

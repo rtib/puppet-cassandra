@@ -8,7 +8,7 @@ define cassandra::environment::variable (
   String $value
 ) {
   concat::fragment{ "cassandra::environment::variable[${name}]=${value}@${facts['hostname']}":
-    target   => $cassandra::config::envfile,
+    target   => $cassandra::envfile,
     order    => '10',
     content  => inline_epp('<%= $name %>="<%= $val -%>"',
       'name' => $name,

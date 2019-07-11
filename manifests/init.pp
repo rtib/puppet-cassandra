@@ -25,6 +25,8 @@
 #   configuration hash to be merged with local cassandra.yaml on the node
 # @param cassandra_home
 #   homedirectory of cassandra user
+# @param envfile
+#   envfile path containing environment settings
 # @param rackdc
 #   rack and dc settings to be used by GossipingPropertyFileSnitch
 # @param topology
@@ -43,6 +45,7 @@ class cassandra (
   Stdlib::Absolutepath        $config_dir = '/etc/cassandra',
   Hash                        $config = {},
   Stdlib::Absolutepath        $cassandra_home = '/var/lib/cassandra',
+  Stdlib::Absolutepath        $envfile = "${cassandra_home}/.cassandra.in.sh",
   Optional[Cassandra::Rackdc] $rackdc = undef,
   Optional[Hash]              $topology = undef,
   Optional[Pattern[/[a-zA-Z0-9.]:[a-zA-Z0-9.-]/]]

@@ -5,9 +5,9 @@
 #
 # This class is contained with config, thus do not use it for its own.
 #
-class cassandra::config::rackdc(
-  Stdlib::Absolutepath $path = "${cassandra::config_dir}/cassandra-rackdc.properties"
-) {
+class cassandra::config::rackdc {
+  $path = "${cassandra::config_dir}/cassandra-rackdc.properties"
+
   if $cassandra::rackdc =~ Hash {
     file { $path:
       ensure  => 'file',
