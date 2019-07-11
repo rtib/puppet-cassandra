@@ -14,6 +14,9 @@ describe 'cassandra::java::property' do
       let(:facts) { os_facts }
 
       it { is_expected.to compile }
+      it do
+        is_expected.to contain_cassandra__environment__jvm_option('Dtestproperty=testvalue')
+      end
     end
   end
 end
