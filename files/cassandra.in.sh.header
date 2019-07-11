@@ -1,4 +1,4 @@
-# This file is managed by Puppet module profiles_cassandra
+# This file is managed by Puppet module cassandra
 # DO NOT EDIT!
 
 # Source the default cassandra.in.sh to get classpath and agent settings
