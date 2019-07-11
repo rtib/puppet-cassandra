@@ -7,5 +7,5 @@
 define cassandra::java::property (
   String $value,
 ) {
-  cassandra::environment::jvm_option{ "-D${name}=${value}": }
+  cassandra::environment::jvm_option{ "D${name}=${value}": }
 }
