@@ -6,7 +6,8 @@
 #   cassandra::environment::jvm_option { 'namevar': }
 define cassandra::environment::jvm_option (
 ) {
-  cassandra::environment::variable{ 'JVM_EXTRA_OPTS':
-    value => "\$JVM_EXTRA_OPTS ${name}",
+  cassandra::environment::variable{ "cassandra::environment::jvm_option[${name}]":
+    id    => 'JVM_EXTRA_OPTS',
+    value => "\$JVM_EXTRA_OPTS -${name}",
   }
 }
