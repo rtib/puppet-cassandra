@@ -1,13 +1,9 @@
 # This file is managed by Puppet module cassandra.
 # DO NOT EDIT!
 
-<% if has_key($cassandra::rackdc, 'dc') { -%>
 dc=<%= $cassandra::rackdc['dc'] %>
-<% }
-if has_key($cassandra::rackdc, 'rack') { -%>
 rack=<%= $cassandra::rackdc['rack'] %>
-<% }
-if has_key($cassandra::rackdc, 'dc_suffix') { -%>
+<% if has_key($cassandra::rackdc, 'dc_suffix') { -%>
 dc_suffix=<%= $cassandra::rackdc['dc_suffix'] %>
 <% }
 if $cassandra::rackdc['prefer_local'] { -%>
