@@ -20,7 +20,7 @@ describe 'cassandra::java::agent' do
         let(:title) { 'testAgent2' }
         let(:params) do
           {
-            'value' => 'param'
+            'value' => 'param',
           }
         end
 

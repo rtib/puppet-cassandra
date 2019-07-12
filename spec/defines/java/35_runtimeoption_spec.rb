@@ -20,7 +20,7 @@ describe 'cassandra::java::runtimeoption' do
         let(:title) { 'testoption2' }
         let(:params) do
           {
-            'value' => 'testvalue'
+            'value' => 'testvalue',
           }
         end
 
