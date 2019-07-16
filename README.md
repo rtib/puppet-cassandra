@@ -3,14 +3,14 @@
 
 A Puppet module to run Cassandra nodes.
 
-#### Table of Contents
+# Table of Contents
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
 - [Cassandra](#Cassandra)
-      - [Table of Contents](#Table-of-Contents)
+- [Table of Contents](#Table-of-Contents)
   - [Description](#Description)
   - [Setup](#Setup)
     - [What cassandra affects](#What-cassandra-affects)
@@ -19,10 +19,15 @@ A Puppet module to run Cassandra nodes.
     - [Main node configuration](#Main-node-configuration)
     - [Rack and DC settings](#Rack-and-DC-settings)
     - [Topology settings](#Topology-settings)
+    - [Environment settings](#Environment-settings)
+      - [Environment variables](#Environment-variables)
+      - [JVM options](#JVM-options)
+      - [Java agent](#Java-agent)
+      - [Java properties](#Java-properties)
+      - [JVM Runtime options and advanced runtime options](#JVM-Runtime-options-and-advanced-runtime-options)
+      - [Java garbage collection](#Java-garbage-collection)
   - [Reference](#Reference)
-  - [Limitations](#Limitations)
   - [Development](#Development)
-  - [Release Notes/Contributors/Etc. **Optional**](#Release-NotesContributorsEtc-Optional)
 
 <!-- /code_chunk_output -->
 
@@ -90,7 +95,7 @@ cassandra::cassandra_package: dsc22
 
 ### Main node configuration
 
-The module provides you access to the main configuration file, the `cassandra.yaml`, though the configuration parameter `config`. This can contain a hash resembling the structure of the `cassandra.yaml`, which will be merged to the current content of the `cassandra.yaml` file on the node itself. This merge will only happen on the node itself.
+The module provides you access to the main configuration file, the `cassandra.yaml`, though the configuration parameter `config`. This can contain a hash resembling the structure of the `cassandra.yaml`, which will be merged to the current content of the `cassandra.yaml` file on the node. This merge will only happen on the node itself.
 
 The `config` parameter should contain only those settings you want to have non-default, i.e. want to change on the node. Keep in mind, that the structure of this hash must fit to the structure of `cassandra.yaml`, e.g.
 
@@ -111,7 +116,7 @@ For deeper understanding of this merge procedure refer to the [cataphract/yaml_s
 
 ### Rack and DC settings
 
-When using `GossipingPropertyFileSnitch` class for snitching your cluster, you need to setup the `cassandra-rackdc.properties` file. This can be done through the `rackdc` parameter of this module.
+When using `GossipingPropertyFileSnitch` class on your cluster, you need to setup the `cassandra-rackdc.properties` file. This is done through the `rackdc` parameter of this module.
 
 ```yaml
 cassandra::rackdc:
@@ -130,7 +135,7 @@ You can optionally add the `prefer_local` and `dc_suffix` parameter to the `rack
 
 ### Topology settings
 
-When using `PropertyFileSnitch` of `GossipingPropertyFileSnitch` classes on you setup, you might want to control the contents of `cassandra-topology.properties` file. This is done through the `topology` parameter of this module. This may contain a multi-leveld hash mapping your datacenters to your racks and your racks to the array of your nodes.
+When using `PropertyFileSnitch` or `GossipingPropertyFileSnitch` classes on your setup, you might want to control the contents of `cassandra-topology.properties` file. This is done through the `topology` parameter of this module. This contains a multi-leveld hash mapping your datacenters to your racks and your racks to the array of nodes.
 
 ```yaml
 cassandra::topology:
@@ -163,45 +168,42 @@ This will end up in a `cassandra-topology.properties` file containing:
 10.0.1.4=dc2:rackB
 ```
 
-Note, that if you leave the `topology` undef, the module will remove the `cassandra-topology.properties` file from your nodes. This is intended to support the migration from `PropertyFileSnitch` to `GossipingPropertyFileSnitch`.
+Note, that if you leave the `topology` parameter `undef` (which is the default), the module will remove the `cassandra-topology.properties` file from your nodes. This is intended to support the migration from `PropertyFileSnitch` to `GossipingPropertyFileSnitch`.
 
-Note, that the module will not notify the service on updates on the `cassandra-topology.properties` file, as both snitch classes using it are able to on-the-fly reload the file.
+Note, that the module will, other than with config changes, not notify the service on updates the `cassandra-topology.properties` file is receiving, as both snitch classes using this file are able to on-the-fly reload it.
+
+### Environment settings
+
+The module provides a variety of settings to the runtime environment and  various JVM settings.
+
+#### Environment variables
+
+The defined type `cassandra::environment::variable` can be used to created env variable given to the Cassandra process. These typically contain such as `MAX_HEAP_SIZE`, `HEAP_NEWSIZE`, `LOCAL_JMX` and other.
+
+#### JVM options
+
+The defined type `cassandra::environment::jvm_option` adds JVM options to the process running Cassandra.
+
+#### Java agent
+
+To add an Java agent to the JVM running Cassandra, use the `cassandra::java::agent` defined type.
+
+#### Java properties
+
+You can pass properties to Cassandra by instanciating the `cassandra::java::property` type.
+
+#### JVM Runtime options and advanced runtime options
+
+The JVM runtime can be configured through various instances of `cassandra::java::runtimeoption` and `cassandra::java::advancedruntimeoption`.
+
+#### Java garbage collection
+
+You can configure the Java GC using, the templates provided, by instanciating the class `cassandra::java::gc`.
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
-
-## Limitations
-
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+This module contains automatically generated reference documentation that can be found at [https://rtib.github.io/puppet-cassandra/](https://rtib.github.io/puppet-cassandra/) or within the REFERNCE.md file.
 
 ## Development
 
 In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
-
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
