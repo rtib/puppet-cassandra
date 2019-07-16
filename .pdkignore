@@ -25,7 +25,6 @@
 .project
 .envrc
 /inventory.yaml
-/.vscode/
 /appveyor.yml
 /.fixtures.yml
 /Gemfile
@@ -40,3 +39,4 @@
 /.travis.yml
 /.yardopts
 /spec/
+/.vscode/
