@@ -53,9 +53,12 @@ class cassandra (
 ) {
   contain cassandra::install
   contain cassandra::config
+  contain cassandra::config::topology
   contain cassandra::service
 
   Class['cassandra::install']
   -> Class['cassandra::config']
   ~> Class['cassandra::service']
+  Class['cassandra::install']
+  -> Class['cassandra::config::topology']
 }

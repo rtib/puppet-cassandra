@@ -16,7 +16,6 @@ class cassandra::config {
     source => 'puppet:///modules/cassandra/cassandra.in.sh.header',
   }
 
-  contain cassandra::config::topology
   contain cassandra::config::rackdc
 
   # Merge cassandra.yaml with config hash on the target node

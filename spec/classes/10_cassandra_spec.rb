@@ -7,8 +7,13 @@ describe 'cassandra' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('cassandra') }
-      it { is_expected.to contain_class('cassandra::install').that_comes_before('Class[cassandra::config]') }
+      it do
+        is_expected.to contain_class('cassandra::install')
+          .that_comes_before('Class[cassandra::config]')
+          .that_comes_before('Class[cassandra::config::topology]')
+      end
       it { is_expected.to contain_class('cassandra::config') }
+      it { is_expected.to contain_class('cassandra::config::topology') }
       it { is_expected.to contain_class('cassandra::service').that_subscribes_to('Class[cassandra::config]') }
     end
   end
