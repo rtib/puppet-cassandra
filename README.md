@@ -16,8 +16,7 @@ A Puppet module to run Cassandra nodes.
     - [What cassandra affects](#What-cassandra-affects)
     - [Setup Requirements](#Setup-Requirements)
   - [Usage](#Usage)
-    - [Configuration](#Configuration)
-      - [Main node configuration](#Main-node-configuration)
+    - [Main node configuration](#Main-node-configuration)
     - [Rack and DC settings](#Rack-and-DC-settings)
     - [Topology settings](#Topology-settings)
   - [Reference](#Reference)
@@ -89,9 +88,7 @@ In the case, your package name is other you may use `cassandra_package` and/or `
 cassandra::cassandra_package: dsc22
 ```
 
-### Configuration
-
-#### Main node configuration
+### Main node configuration
 
 The module provides you access to the main configuration file, the `cassandra.yaml`, though the configuration parameter `config`. This can contain a hash resembling the structure of the `cassandra.yaml`, which will be merged to the current content of the `cassandra.yaml` file on the node itself. This merge will only happen on the node itself.
 
