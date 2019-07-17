@@ -34,6 +34,11 @@ class cassandra::config {
   merge({}, $cassandra::java['adv_runtime_options']).each |String $name, $value| {
     cassandra::java::advancedruntimeoption { $name: value => $value, }
   }
+  if $cassandra::java_gc {
+    class { 'cassandra::java::gc':
+      * => $cassandra::java_gc,
+    }
+  }
 
   contain cassandra::config::rackdc
 

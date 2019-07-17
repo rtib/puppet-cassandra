@@ -51,6 +51,7 @@ class cassandra (
     runtime_options     => Optional[Hash],
     adv_runtime_options => Optional[Hash],
   }]                          $java = {},
+  Optional[Hash]              $java_gc = undef,
   Hash                        $config = {},
   Stdlib::Absolutepath        $cassandra_home = '/var/lib/cassandra',
   Stdlib::Absolutepath        $envfile = "${cassandra_home}/.cassandra.in.sh",

@@ -135,6 +135,53 @@ describe 'cassandra' do
               .with_value(true)
           end
         end
+
+        context 'java g1 gc w/o params' do
+          let(:params) do
+            {
+              'java_gc' => {
+                'collector' => 'g1'
+              },
+            }
+          end
+
+          it do
+            is_expected.to contain_class('cassandra::java::gc')
+              .with_collector('g1')
+          end
+        end
+
+        context 'java cms gc w/o params' do
+          let(:params) do
+            {
+              'java_gc' => {
+                'collector' => 'cms'
+              },
+            }
+          end
+
+          it do
+            is_expected.to contain_class('cassandra::java::gc')
+              .with_collector('cms')
+          end
+        end
+
+        context 'java bad gc w/o params' do
+          let(:params) do
+            {
+              'java_gc' => {
+                'collector' => 'bad'
+              },
+            }
+          end
+
+          it do
+            expect {
+              is_expected.to contain_class('cassandra::java::gc')
+                .with_collector('bad')
+            }.to raise_error(Puppet::Error)
+          end
+        end
       end
     end
   end
