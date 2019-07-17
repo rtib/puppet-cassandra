@@ -1,9 +1,11 @@
-# @summary A short summary of the purpose of this class
+# @summary Controls the service
 #
-# A description of what this class does
+# This class is controlling the Cassandra service on the nodes. Take
+# care of the fact, that configuration changes will notify the service
+# which may lead to onorchestrated node restarts on your cluster.
 #
-# @example
-#   include cassandra::service
+# You probably don't want this happen in production.
+#
 class cassandra::service {
   if $cassandra::manage_service {
     service { $cassandra::service_name:

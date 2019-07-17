@@ -1,9 +1,19 @@
-# @summary A short summary of the purpose of this defined type.
+# @summary Creates a JVM option for Cassandra.
 #
-# A description of what this defined type does
+# Each instance of this type is adding a JVM option to
+# the JVM running the Cassandra. This enables you to set e.g.
+# `verbose:gc`.
 #
-# @example
-#   cassandra::environment::jvm_option { 'namevar': }
+# The `config` class contains a factory for this type which will create
+# instances for each key of `cassandra::jvm_options`.
+#
+# @example directly created
+#    cassandra::jvm_option { 'verbose:gc': }
+#
+# @example factory generated
+#    cassandra::jvm_options:
+#      - verbose:gc
+#      - server
 define cassandra::environment::jvm_option (
 ) {
   cassandra::environment::variable{ "cassandra::environment::jvm_option[${name}]":

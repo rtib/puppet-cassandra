@@ -1,11 +1,31 @@
-# @summary A short summary of the purpose of this class
+# @summary Manages the configuration files on your Cassandra nodes
 #
-# A description of what this class does
+# This class is managing the following files:
+# * /var/lib/cassandra/.cassandra.in.sh
+# * /etc/cassandra/cassandra-rackdc.properties
+# * /etc/cassandra/cassandra.yaml
+# * /etc/cassandra/jvm.options
 #
-# @example
-#   include cassandra::config
+# The main class of this module will include this class, you should not
+# invoke this at all.
+#
+# All parameter necessery for this class are defined in the main class.
+#
+# The `config` parameter should contain only those settings you want
+# to have non-default, i.e. want to change on the node. Keep in mind,
+# that the structure of this hash must fit to the structure of
+# `cassandra.yaml`.
+#
+# @example main config file handling
+#   cassandra::config:
+#     cluster_name: Example Cassandra cluster
+#     endpoint_snitch: PropertyFileSnitch
+#     seed_provider:
+#       - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+#         parameters:
+#           - seeds: 10.0.0.1,10.0.1.1
+#     listen_address: %{facts.networking.ip}
 class cassandra::config {
-  # setup environment include file
   concat { $cassandra::envfile:
     ensure         => present,
     ensure_newline => true,

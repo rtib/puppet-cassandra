@@ -1,9 +1,27 @@
-# @summary A short summary of the purpose of this defined type.
+# @summary Creating an environment variable for Cassandra.
 #
-# A description of what this defined type does
+# Each instance of this type is adding a environment variable to
+# the Cassandra process. This enables you to set e.g. `MAX_HEAP_SIZE`,
+# `HEAP_NEWSIZE`, etc.
 #
-# @example
-#   cassandra::environment::variable { 'namevar': }
+# The `config` class contains a factory for this type which will create
+# instances for each key of `cassandra::environment`.
+#
+# @example directly created
+#    cassandra::environment::variable { 'MAX_HEAP_SIZE': 
+#      value => '8G',
+#    }
+#
+# @example factory generated
+#    cassandra::environment:
+#      MAX_HEAP_SIZE: 8G
+#      HEAP_NEWSIZE: 2G
+#
+# @param id
+#   name of the environment variable
+# @param value
+#   value to be assigned to the variable
+#
 define cassandra::environment::variable (
   String $value,
   String $id = $title,

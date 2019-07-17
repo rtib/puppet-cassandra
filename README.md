@@ -216,7 +216,7 @@ cassandra::java:
     cassandra.consistent.rangemovement: false
     cassandra.replace_address: 10.0.0.2
   agents:
-    jmx_prometheus_javaagent-0.12.0.jar: 8080:config.yaml
+    jmx_prometheus_javaagent.jar: 8080:config.yaml
   runtime_options:
     check: jni
   adv_runtime_options:

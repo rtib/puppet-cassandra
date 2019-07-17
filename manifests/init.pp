@@ -1,6 +1,13 @@
 # @summary This is the main entry point and API for Cassandra module.
 #
 # Puppet module for Cassandra cluster which enables to install, configure and manage Cassandra nodes.
+# The module consists of the `install` class, which is included first, followed by `config` and
+# `config::topology` classes. Finally, the `service` class is included and notification from `config`
+# are forwarded to `service`.
+#
+# This class is the main class of this module and the only one which should be
+# included in your node manifests. For documentation of the particular feature,
+# refer to the reference documentation of the other components.
 #
 # @example
 #   include cassandra
@@ -19,8 +26,18 @@
 #   ensure clause for cassandra service
 # @param service_enable
 #   enable state of cassandra service
+# @param service_name
+#   the name of the cassandra service
 # @param config_dir
 #   cassandra configuration directory
+# @param environment
+#   hash of environment variable name-value pairs which should be add
+# @param jvm_options
+#   list of options to be passed to the JVM
+# @param java
+#   input hash to the factory of java properties, agents, runtime_options and advanced_runtime_options
+# @param java_gc
+#   input hash to the `java::gc` class
 # @param config
 #   configuration hash to be merged with local cassandra.yaml on the node
 # @param cassandra_home

@@ -1,16 +1,8 @@
+# @summary Setup the Java garbage collection for Cassandra
+#
 # This class allows to set consistent JVM options at once, especially for the
 # purpose of garbage collection settings. This is enabled by managing
 # jvm.options file, available from Cassandra version 3.0 and later.
-#
-# @summary A short summary of the purpose of this class
-#
-# @example
-#   class { 'cassandra::java::gc':
-#     collector => 'g1',
-#   }
-#
-# @param collector select the garbage collector to use
-# @param params to set up for the selected GC
 #
 # GC parameters could be:
 # * common parameters
@@ -24,6 +16,25 @@
 #       cores present
 #   * concGCThreads (Optional[Integer], defaults to: undef) - -XX:ConcGCThreads automatically set to -XX:ParallelGCThreads if the above is
 #       set
+#
+# The `config` class contains a factory for this class which will create
+# an instance using the settings of `cassandra::java_gc`, if not undef.
+#
+# @example directly created
+#   class { 'cassandra::java::gc':
+#     collector => 'g1',
+#   }
+#
+# @example factory generated
+#    cassandra::java_gc:
+#      collector: g1
+#      params:
+#        maxGCPauseMillis: 300
+#
+# @param collector
+#   select the garbage collector to use
+# @param params
+#   parameter to set up the selected GC
 class cassandra::java::gc (
   Enum['cms','g1']  $collector,
   Hash[String,Data] $params = {},

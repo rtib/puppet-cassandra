@@ -1,9 +1,27 @@
-# @summary A short summary of the purpose of this defined type.
+# @summary Add an advanced runtime option to the JVM running Cassandra.
 #
-# A description of what this defined type does
+# Each instance of this type adds a advanced runtime option to the JVM running
+# Cassandra.
 #
-# @example
-#   cassandra::java::advancedruntimeoption { 'namevar': }
+# The `config` class contains a factory for this type which will
+# create instances for each key of `cassandra::java::runtime_options`.
+#
+# @example directly created
+#   cassandra::java::advancedruntimeoption { 'LargePageSizeInBytes':
+#     value => '2m',
+#   }
+#
+# @example factory generated
+#    cassandra::java:
+#      adv_runtime_options:
+#        LargePageSizeInBytes: 2m
+#        UseLargePages: true
+#        AlwaysPreTouch: true
+#
+# @param value
+#   a string value to be added to the runtime option or a boolean
+#   which will prefix the option with + or -
+#
 define cassandra::java::advancedruntimeoption (
   Variant[Boolean,String] $value,
 ) {
