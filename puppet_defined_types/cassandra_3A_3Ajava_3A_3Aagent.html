@@ -70,13 +70,16 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this defined type.
+  Add an agent to the JVM running Cassandra.
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this defined type does</p>
+<p>Each instance of this type adds an agent to the JVM running Cassandra.</p>
+
+<p>The <code>config</code> class contains a factory for this type which will
+create instances for each key of <code>cassandra::java::agents</code>.</p>
 
   </div>
 </div>
@@ -88,7 +91,22 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>cassandra::java::agent { &#39;namevar&#39;: }</code></pre>
+        <p class="example_title"><div class='inline'>
+<p>directly created</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java::agent { &#39;jmx_prometheus_javaagent.jar&#39;:
+  value =&gt; &#39;8080:config.yaml&#39;,
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>factory created</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java:
+  agents:
+    jmx_prometheus_javaagent.jar: 8080:config.yaml</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -105,6 +123,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>options to be added to the agent</p>
+</div>
+      
     </li>
   
 </ul>
@@ -117,18 +140,18 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11
-12
-13
-14
-15</pre>
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/java/agent.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/java/agent.pp', line 22</span>
 
 define cassandra::java::agent (
   Optional[String] $value = undef,

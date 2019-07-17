@@ -78,8 +78,8 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>This class allows to manage the cassandra-topology.properties file, which
-is needed when using PropertyFileSnitch or GossippingPropertyFileSnitch.</p>
+<p>This class manages the cassandra-topology.properties file, which is needed
+when using PropertyFileSnitch or GossippingPropertyFileSnitch.</p>
 
 <p>This class is contained with config, thus do not use it for its own.</p>
 
@@ -89,6 +89,54 @@ is needed when using PropertyFileSnitch or GossippingPropertyFileSnitch.</p>
 
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>multi-dc and multi-rack topology</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::topology:
+  dc1:
+    rackA:
+    - 10.0.0.1
+    - 10.0.0.2
+    rackB:
+    - 10.0.0.3
+    - 10.0.0.4
+  dc2:
+    rackA:
+    - 10.0.1.1
+    - 10.0.1.2
+    rackB:
+    - 10.0.1.3
+    - 10.0.1.4</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>setting up topology_default</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::topology:
+  dc1:
+    rackA:
+    - 10.0.0.1
+    - 10.0.0.2
+    rackB:
+    - 10.0.0.3
+    - 10.0.0.4
+  dc2:
+    rackA:
+    - 10.0.1.1
+    - 10.0.1.2
+    rackB:
+    - 10.0.1.3
+    - 10.0.1.4
+cassandra::topology_default: dc1:rackA</code></pre>
+    
+  </div>
+
 
 </div><div class="method_details_list">
   <table class="source_code">
@@ -97,23 +145,23 @@ is needed when using PropertyFileSnitch or GossippingPropertyFileSnitch.</p>
         <pre class="lines">
 
 
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21</pre>
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/config/topology.pp', line 8</span>
+        <pre class="code"><span class="info file"># File 'manifests/config/topology.pp', line 43</span>
 
 class cassandra::config::topology {
   $path = &quot;${cassandra::config_dir}/cassandra-topology.properties&quot;

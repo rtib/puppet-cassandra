@@ -70,13 +70,17 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this defined type.
+  Creates a JVM option for Cassandra.
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this defined type does</p>
+<p>Each instance of this type is adding a JVM option to the JVM running the
+Cassandra. This enables you to set e.g. <code>verbose:gc</code>.</p>
+
+<p>The <code>config</code> class contains a factory for this type which will
+create instances for each key of <code>cassandra::jvm_options</code>.</p>
 
   </div>
 </div>
@@ -88,7 +92,20 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>cassandra::environment::jvm_option { &#39;namevar&#39;: }</code></pre>
+        <p class="example_title"><div class='inline'>
+<p>directly created</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::jvm_option { &#39;verbose:gc&#39;: }</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>factory generated</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::jvm_options:
+  - verbose:gc
+  - server</code></pre>
     
   </div>
 
@@ -100,16 +117,16 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11
-12
-13</pre>
+17
+18
+19
+20
+21
+22
+23</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/environment/jvm_option.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/environment/jvm_option.pp', line 17</span>
 
 define cassandra::environment::jvm_option (
 ) {

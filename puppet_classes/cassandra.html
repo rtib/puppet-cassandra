@@ -79,7 +79,15 @@
   <div class="discussion">
     
 <p>Puppet module for Cassandra cluster which enables to install, configure and
-manage Cassandra nodes.</p>
+manage Cassandra nodes. The module consists of the <code>install</code>
+class, which is included first, followed by <code>config</code> and
+<code>config::topology</code> classes. Finally, the <code>service</code>
+class is included and notification from <code>config</code> are forwarded
+to <code>service</code>.</p>
+
+<p>This class is the main class of this module and the only one which should
+be included in your node manifests. For documentation of the particular
+feature, refer to the reference documentation of the other components.</p>
 
   </div>
 </div>
@@ -225,6 +233,24 @@ manage Cassandra nodes.</p>
   
     <li>
       
+        <span class='name'>service_name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;cassandra&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the name of the cassandra service</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>config_dir</span>
       
       
@@ -237,6 +263,84 @@ manage Cassandra nodes.</p>
         &mdash;
         <div class='inline'>
 <p>cassandra configuration directory</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>environment</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>hash of environment variable name-value pairs which should be add</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>jvm_options</span>
+      
+      
+        <span class='type'>(<tt>Array[String]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>list of options to be passed to the JVM</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>java</span>
+      
+      
+        <span class='type'>(<tt>Struct[{
+    properties          =&gt; Optional[Hash],
+    agents              =&gt; Optional[Hash],
+    runtime_options     =&gt; Optional[Hash],
+    adv_runtime_options =&gt; Optional[Hash],
+  }]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>input hash to the factory of java properties, agents, runtime_options and
+advanced_runtime_options</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>java_gc</span>
+      
+      
+        <span class='type'>(<tt>Optional[Hash]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>undef</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>input hash to the <code>java::gc</code> class</p>
 </div>
       
     </li>
@@ -350,19 +454,6 @@ GossipingPropertyFileSnitch</p>
       
     </li>
   
-    <li>
-      
-        <span class='name'>service_name</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>&#39;cassandra&#39;</tt>)</em>
-      
-      
-    </li>
-  
 </ul>
 
 
@@ -373,23 +464,6 @@ GossipingPropertyFileSnitch</p>
         <pre class="lines">
 
 
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
 53
 54
 55
@@ -398,10 +472,39 @@ GossipingPropertyFileSnitch</p>
 58
 59
 60
-61</pre>
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 36</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 53</span>
 
 class cassandra (
   String                      $cassandra_package = &#39;cassandra&#39;,
@@ -413,6 +516,15 @@ class cassandra (
   Cassandra::Service::Enable  $service_enable = &#39;manual&#39;,
   String                      $service_name = &#39;cassandra&#39;,
   Stdlib::Absolutepath        $config_dir = &#39;/etc/cassandra&#39;,
+  Hash                        $environment = {},
+  Array[String]               $jvm_options = [],
+  Struct[{
+    properties          =&gt; Optional[Hash],
+    agents              =&gt; Optional[Hash],
+    runtime_options     =&gt; Optional[Hash],
+    adv_runtime_options =&gt; Optional[Hash],
+  }]                          $java = {},
+  Optional[Hash]              $java_gc = undef,
   Hash                        $config = {},
   Stdlib::Absolutepath        $cassandra_home = &#39;/var/lib/cassandra&#39;,
   Stdlib::Absolutepath        $envfile = &quot;${cassandra_home}/.cassandra.in.sh&quot;,
@@ -423,11 +535,14 @@ class cassandra (
 ) {
   contain cassandra::install
   contain cassandra::config
+  contain cassandra::config::topology
   contain cassandra::service
 
   Class[&#39;cassandra::install&#39;]
   -&gt; Class[&#39;cassandra::config&#39;]
   ~&gt; Class[&#39;cassandra::service&#39;]
+  Class[&#39;cassandra::install&#39;]
+  -&gt; Class[&#39;cassandra::config::topology&#39;]
 }</pre>
       </td>
     </tr>

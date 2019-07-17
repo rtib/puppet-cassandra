@@ -70,13 +70,18 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this defined type.
+  Creating an environment variable for Cassandra.
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this defined type does</p>
+<p>Each instance of this type is adding a environment variable to the
+Cassandra process. This enables you to set e.g. <code>MAX_HEAP_SIZE</code>,
+<code>HEAP_NEWSIZE</code>, etc.</p>
+
+<p>The <code>config</code> class contains a factory for this type which will
+create instances for each key of <code>cassandra::environment</code>.</p>
 
   </div>
 </div>
@@ -88,22 +93,26 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>cassandra::environment::variable { &#39;namevar&#39;: }</code></pre>
+        <p class="example_title"><div class='inline'>
+<p>directly created</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::environment::variable { &#39;MAX_HEAP_SIZE&#39;:
+  value =&gt; &#39;8G&#39;,
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>factory generated</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::environment:
+  MAX_HEAP_SIZE: 8G
+  HEAP_NEWSIZE: 2G</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
-    <li>
-      
-        <span class='name'>value</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-    </li>
   
     <li>
       
@@ -115,6 +124,27 @@
       
         <em class="default">(defaults to: <tt>$title</tt>)</em>
       
+      
+        &mdash;
+        <div class='inline'>
+<p>name of the environment variable</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>value to be assigned to the variable</p>
+</div>
       
     </li>
   
@@ -128,22 +158,22 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre>
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/environment/variable.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/environment/variable.pp', line 25</span>
 
 define cassandra::environment::variable (
   String $value,

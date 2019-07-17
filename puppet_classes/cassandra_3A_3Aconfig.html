@@ -72,13 +72,26 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this class
+  Manages the configuration files on your Cassandra nodes
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this class does</p>
+<p>This class is managing the following files: *
+/var/lib/cassandra/.cassandra.in.sh *
+/etc/cassandra/cassandra-rackdc.properties * /etc/cassandra/cassandra.yaml
+* /etc/cassandra/jvm.options</p>
+
+<p>The main class of this module will include this class, you should not
+invoke this at all.</p>
+
+<p>All parameter necessery for this class are defined in the main class.</p>
+
+<p>The <code>config</code> parameter should contain only those settings you
+want to have non-default, i.e. want to change on the node. Keep in mind,
+that the structure of this hash must fit to the structure of
+<code>cassandra.yaml</code>.</p>
 
   </div>
 </div>
@@ -90,7 +103,18 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_cassandra'>cassandra</span><span class='op'>::</span><span class='id identifier rubyid_config'>config</span></code></pre>
+        <p class="example_title"><div class='inline'>
+<p>main config file handling</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::config:
+  cluster_name: Example Cassandra cluster
+  endpoint_snitch: PropertyFileSnitch
+  seed_provider:
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+        - seeds: 10.0.0.1,10.0.1.1
+  listen_address: %{facts.networking.ip}</code></pre>
     
   </div>
 
@@ -102,33 +126,54 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27</pre>
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/config.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/config.pp', line 28</span>
 
 class cassandra::config {
-  # setup environment include file
   concat { $cassandra::envfile:
     ensure         =&gt; present,
     ensure_newline =&gt; true,
@@ -139,7 +184,30 @@ class cassandra::config {
     source =&gt; &#39;puppet:///modules/cassandra/cassandra.in.sh.header&#39;,
   }
 
-  contain cassandra::config::topology
+  $cassandra::environment.each |String $name, String $value| {
+    cassandra::environment::variable { $name: value =&gt; $value, }
+  }
+  $cassandra::jvm_options.each |String $name| {
+    cassandra::environment::jvm_option { $name: }
+  }
+  merge({}, $cassandra::java[&#39;properties&#39;]).each |String $name, $value| {
+    cassandra::java::property { $name: value =&gt; $value, }
+  }
+  merge({}, $cassandra::java[&#39;agents&#39;]).each |String $name, $value| {
+    cassandra::java::agent { $name: value =&gt; $value, }
+  }
+  merge({}, $cassandra::java[&#39;runtime_options&#39;]).each |String $name, $value| {
+    cassandra::java::runtimeoption { $name: value =&gt; $value, }
+  }
+  merge({}, $cassandra::java[&#39;adv_runtime_options&#39;]).each |String $name, $value| {
+    cassandra::java::advancedruntimeoption { $name: value =&gt; $value, }
+  }
+  if $cassandra::java_gc {
+    class { &#39;cassandra::java::gc&#39;:
+      * =&gt; $cassandra::java_gc,
+    }
+  }
+
   contain cassandra::config::rackdc
 
   # Merge cassandra.yaml with config hash on the target node

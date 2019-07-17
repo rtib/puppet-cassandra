@@ -72,7 +72,7 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this class
+  Setup the Java garbage collection for Cassandra
 
 <h2>Overview</h2>
 <div class="docstring">
@@ -95,6 +95,10 @@ cores present  * concGCThreads (<a href="Integer">Optional</a>, defaults
 to: undef) - -XX:ConcGCThreads automatically set to -XX:ParallelGCThreads
 if the above is  set</p>
 
+<p>The <code>config</code> class contains a factory for this class which will
+create an instance using the settings of <code>cassandra::java_gc</code>,
+if not undef.</p>
+
   </div>
 </div>
 
@@ -105,9 +109,23 @@ if the above is  set</p>
     <p class="tag_title">Examples:</p>
     
       
+        <p class="example_title"><div class='inline'>
+<p>directly created</p>
+</div></p>
+      
       <pre class="example code"><code>class { &#39;cassandra::java::gc&#39;:
   collector =&gt; &#39;g1&#39;,
 }</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>factory generated</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java_gc:
+  collector: g1
+  params:
+    maxGCPauseMillis: 300</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -142,7 +160,7 @@ if the above is  set</p>
       
         &mdash;
         <div class='inline'>
-<p>to set up for the selected GC</p>
+<p>parameter to set up the selected GC</p>
 </div>
       
     </li>
@@ -157,18 +175,18 @@ if the above is  set</p>
         <pre class="lines">
 
 
-27
-28
-29
-30
-31
-32
-33
-34
-35</pre>
+38
+39
+40
+41
+42
+43
+44
+45
+46</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/java/gc.pp', line 27</span>
+        <pre class="code"><span class="info file"># File 'manifests/java/gc.pp', line 38</span>
 
 class cassandra::java::gc (
   Enum[&#39;cms&#39;,&#39;g1&#39;]  $collector,

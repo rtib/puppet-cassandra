@@ -70,13 +70,16 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this defined type.
+  Add a Java property to the JVM running Cassandra.
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this defined type does</p>
+<p>Each instance of this type adds a property to the JVM running Cassandra.</p>
+
+<p>The <code>config</code> class contains a factory for this type which will
+create instances for each key of <code>cassandra::java::properties</code>.</p>
 
   </div>
 </div>
@@ -88,7 +91,23 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>cassandra::java::property { &#39;namevar&#39;: }</code></pre>
+        <p class="example_title"><div class='inline'>
+<p>directly created</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java::property { &#39;cassandra.replace_address&#39;:
+  value =&gt; &#39;10.0.0.2&#39;
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>factory generated</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java:
+  properties:
+    cassandra.consistent.rangemovement: false
+    cassandra.replace_address: 10.0.0.2</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -103,6 +122,11 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>the value the property is set to</p>
+</div>
+      
     </li>
   
 </ul>
@@ -115,14 +139,14 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11</pre>
+23
+24
+25
+26
+27</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/java/property.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/java/property.pp', line 23</span>
 
 define cassandra::java::property (
   String $value,

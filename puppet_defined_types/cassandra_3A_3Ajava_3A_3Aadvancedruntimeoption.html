@@ -70,13 +70,18 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this defined type.
+  Add an advanced runtime option to the JVM running Cassandra.
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this defined type does</p>
+<p>Each instance of this type adds a advanced runtime option to the JVM
+running Cassandra.</p>
+
+<p>The <code>config</code> class contains a factory for this type which will
+create instances for each key of
+<code>cassandra::java::runtime_options</code>.</p>
 
   </div>
 </div>
@@ -88,7 +93,24 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>cassandra::java::advancedruntimeoption { &#39;namevar&#39;: }</code></pre>
+        <p class="example_title"><div class='inline'>
+<p>directly created</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java::advancedruntimeoption { &#39;LargePageSizeInBytes&#39;:
+  value =&gt; &#39;2m&#39;,
+}</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>factory generated</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java:
+  adv_runtime_options:
+    LargePageSizeInBytes: 2m
+    UseLargePages: true
+    AlwaysPreTouch: true</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -103,6 +125,12 @@
       
       
       
+        &mdash;
+        <div class='inline'>
+<p>a string value to be added to the runtime option or a boolean which will
+prefix the option with + or -</p>
+</div>
+      
     </li>
   
 </ul>
@@ -115,25 +143,25 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22</pre>
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/java/advancedruntimeoption.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/java/advancedruntimeoption.pp', line 25</span>
 
 define cassandra::java::advancedruntimeoption (
   Variant[Boolean,String] $value,

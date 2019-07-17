@@ -70,13 +70,18 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this defined type.
+  Add a runtime option to the JVM running Cassandra.
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this defined type does</p>
+<p>Each instance of this type adds a runtime option to the JVM running
+Cassandra.</p>
+
+<p>The <code>config</code> class contains a factory for this type which will
+create instances for each key of
+<code>cassandra::java::runtime_options</code>.</p>
 
   </div>
 </div>
@@ -88,7 +93,21 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code>cassandra::java::runtimeoption { &#39;namevar&#39;: }</code></pre>
+        <p class="example_title"><div class='inline'>
+<p>directly created</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java::runtimeoption { &#39;prof&#39;: }</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>factory generated</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::java:
+  runtime_options:
+    check: jni
+    prof:</code></pre>
     
   </div>
 <p class="tag_title">Parameters:</p>
@@ -105,6 +124,11 @@
         <em class="default">(defaults to: <tt>undef</tt>)</em>
       
       
+        &mdash;
+        <div class='inline'>
+<p>value to be added to the runtime option</p>
+</div>
+      
     </li>
   
 </ul>
@@ -117,23 +141,23 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11
-12
-13
-14
-15</pre>
+21
+22
+23
+24
+25
+26
+27
+28
+29</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/java/runtimeoption.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/java/runtimeoption.pp', line 21</span>
 
 define cassandra::java::runtimeoption (
   Optional[String] $value = undef,
 ) {
-  $_opt = inline_epp(&#39;X&lt;%= $prop -%&gt;&lt;% if $value { -%&gt;=&lt;%= $value -%&gt;&lt;% } -%&gt;&#39;,
+  $_opt = inline_epp(&#39;X&lt;%= $prop -%&gt;&lt;% if $value { -%&gt;:&lt;%= $value -%&gt;&lt;% } -%&gt;&#39;,
       &#39;prop&#39;  =&gt; $name,
       &#39;value&#39; =&gt; $value,
     )

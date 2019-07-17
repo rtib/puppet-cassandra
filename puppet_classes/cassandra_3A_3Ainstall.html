@@ -72,13 +72,18 @@
 </div>
 
   <h2>Summary</h2>
-  A short summary of the purpose of this class
+  Installs the Cassandra packages.
 
 <h2>Overview</h2>
 <div class="docstring">
   <div class="discussion">
     
-<p>A description of what this class does</p>
+<p>This class is installing the Cassandra and optionally the Tools packages.</p>
+
+<p>The main class of this module will include this class, you should not
+invoke this at all.</p>
+
+<p>All parameter necessery for this class are defined in the main class.</p>
 
   </div>
 </div>
@@ -90,7 +95,33 @@
     <p class="tag_title">Examples:</p>
     
       
-      <pre class="example code"><code><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_cassandra'>cassandra</span><span class='op'>::</span><span class='id identifier rubyid_install'>install</span></code></pre>
+        <p class="example_title"><div class='inline'>
+<p>install a specific version</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::cassandra_ensure: 3.0.18</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>to install the latest version of cassandra-tools, independently from the
+cassandra version above</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::tools_ensure: latest</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>if you don&#39;t want to install the tools package</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::tools_ensure: absent</code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>in the case, your package name is other</p>
+</div></p>
+      
+      <pre class="example code"><code>cassandra::cassandra_package: dsc22</code></pre>
     
   </div>
 
@@ -102,18 +133,18 @@
         <pre class="lines">
 
 
-7
-8
-9
-10
-11
-12
-13
-14
-15</pre>
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/install.pp', line 7</span>
+        <pre class="code"><span class="info file"># File 'manifests/install.pp', line 23</span>
 
 class cassandra::install {
   package { $cassandra::cassandra_package:
