@@ -79,3 +79,12 @@ branches:
     - /^v\d/
 notifications:
   email: false
+deploy:
+  provider: puppetforge
+  user: trepasi
+  password:
+    secure: "cBB1QgzCLXYoJiJCmknN1tO70ON9atoxWOZ436xY6FXdES8pn8KsgMD1c2GjFilDw8dcN6KJwRk1ty3MtHSHSK0wVqaLwc/4YrP/UJF6DDqGF+jJgtjuAz28Sl5AJoUTb8vPqtTt7Q7orbTKqe+9L+FhZqQDmEOoL96hAoGQ6icT8sg2jCWEzs8aNfR1N7DQgkDLF5aoDKPOpc9h34o8qW7O5/yqQv7x2T0GIUjPT8ek58IuBHqBKVHLi5tBQEuqKnF7w3yPusJm4euDU4XUNXLLMHzL3Lfh3NJjDhhwKh6Pe+qj99exRDG3apnPLkvSRO/eaT9fejQF3jftEk5FV7cQls8bABplz5kbRXibeI7m+21MKWtID6gc7jpxG8yl0ivMJlRQrC284vt+tjpo+elMIVjJGISPfYh0wudGfBosKhHrpHMwAIlrC8VLqe2LfdR17gh7WMDsXV4ZBZmoYXe4qXDsBe0pOj2OJXongHm/wav8uEL1tcDhdGEkpZ3mnNp/WuXy2IHdbAiXj+vzFDOY9mw1OVT8Du8VRLeIX6ZMcuCbnzdA5WM8t9pqHnssYjZ/ToMJ4ZqZ4/FckGbX3i9/HW93HCJZ5Odtu7VYK69yRtoq3nE5r8hg+GkSTC980OzdwRBpKmzmulIU4dh/sL27BV4RhUm140gVeFys/gA="
+  on:
+    tags: true
+    all_branches: true
+    condition: "$DEPLOY_TO_FORGE = yes"
