@@ -7,7 +7,7 @@
 define cassandra::java::runtimeoption (
   Optional[String] $value = undef,
 ) {
-  $_opt = inline_epp('X<%= $prop -%><% if $value { -%>=<%= $value -%><% } -%>',
+  $_opt = inline_epp('X<%= $prop -%><% if $value { -%>:<%= $value -%><% } -%>',
       'prop'  => $name,
       'value' => $value,
     )

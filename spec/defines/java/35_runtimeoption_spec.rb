@@ -26,7 +26,7 @@ describe 'cassandra::java::runtimeoption' do
 
         it { is_expected.to compile }
         it do
-          is_expected.to contain_cassandra__environment__jvm_option('Xtestoption2=testvalue')
+          is_expected.to contain_cassandra__environment__jvm_option('Xtestoption2:testvalue')
         end
       end
     end

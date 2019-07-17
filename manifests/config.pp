@@ -16,6 +16,25 @@ class cassandra::config {
     source => 'puppet:///modules/cassandra/cassandra.in.sh.header',
   }
 
+  $cassandra::environment.each |String $name, String $value| {
+    cassandra::environment::variable { $name: value => $value, }
+  }
+  $cassandra::jvm_options.each |String $name| {
+    cassandra::environment::jvm_option { $name: }
+  }
+  merge({}, $cassandra::java['properties']).each |String $name, $value| {
+    cassandra::java::property { $name: value => $value, }
+  }
+  merge({}, $cassandra::java['agents']).each |String $name, $value| {
+    cassandra::java::agent { $name: value => $value, }
+  }
+  merge({}, $cassandra::java['runtime_options']).each |String $name, $value| {
+    cassandra::java::runtimeoption { $name: value => $value, }
+  }
+  merge({}, $cassandra::java['adv_runtime_options']).each |String $name, $value| {
+    cassandra::java::advancedruntimeoption { $name: value => $value, }
+  }
+
   contain cassandra::config::rackdc
 
   # Merge cassandra.yaml with config hash on the target node
