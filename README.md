@@ -3,6 +3,14 @@
 
 A Puppet module to run Cassandra nodes.
 
+# Project state
+
+GitHub: [![GitHub issues](https://img.shields.io/github/issues/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/issues) [![GitHub license](https://img.shields.io/github/license/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra) [![GitHub tag](https://img.shields.io/github/tag/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/releases)
+
+Travis-CI: [![Build Status](https://travis-ci.org/rtib/puppet-cassandra.svg?branch=master)](https://travis-ci.org/rtib/puppet-cassandra)
+
+Puppet Forge: [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/f/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/dt/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra)
+
 # Table of Contents
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
@@ -10,6 +18,7 @@ A Puppet module to run Cassandra nodes.
 <!-- code_chunk_output -->
 
 - [Cassandra](#Cassandra)
+- [Project state](#Project-state)
 - [Table of Contents](#Table-of-Contents)
   - [Description](#Description)
   - [Setup](#Setup)
