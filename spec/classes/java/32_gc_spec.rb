@@ -64,7 +64,7 @@ describe 'cassandra::java::gc' do
             'collector' => 'cms',
             'params'    => {
               'gCLogFileSize' => '5M',
-            }
+            },
           }
         end
 

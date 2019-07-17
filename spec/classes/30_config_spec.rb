@@ -75,7 +75,7 @@ describe 'cassandra' do
             {
               'jvm_options' => [
                 'verbose:gc',
-                'server'
+                'server',
               ],
             }
           end
@@ -105,7 +105,7 @@ describe 'cassandra' do
                   'LargePageSizeInBytes' => '2m',
                   'UseLargePages' => true,
                   'AlwaysPreTouch' => true,
-                }
+                },
               },
             }
           end
@@ -113,7 +113,7 @@ describe 'cassandra' do
           it do
             is_expected.to contain_cassandra__java__property('cassandra.consistent.rangemovement')
               .with_value('false')
-              is_expected.to contain_cassandra__java__property('cassandra.replace_address')
+            is_expected.to contain_cassandra__java__property('cassandra.replace_address')
               .with_value('10.0.0.2')
           end
           it do
@@ -140,7 +140,7 @@ describe 'cassandra' do
           let(:params) do
             {
               'java_gc' => {
-                'collector' => 'g1'
+                'collector' => 'g1',
               },
             }
           end
@@ -155,7 +155,7 @@ describe 'cassandra' do
           let(:params) do
             {
               'java_gc' => {
-                'collector' => 'cms'
+                'collector' => 'cms',
               },
             }
           end
@@ -170,7 +170,7 @@ describe 'cassandra' do
           let(:params) do
             {
               'java_gc' => {
-                'collector' => 'bad'
+                'collector' => 'bad',
               },
             }
           end
