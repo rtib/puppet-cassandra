@@ -22,10 +22,8 @@ A Puppet module to run Cassandra nodes.
     - [Environment settings](#Environment-settings)
       - [Environment variables](#Environment-variables)
       - [JVM options](#JVM-options)
-      - [Java agent](#Java-agent)
-      - [Java properties](#Java-properties)
-      - [JVM Runtime options and advanced runtime options](#JVM-Runtime-options-and-advanced-runtime-options)
-      - [Java garbage collection](#Java-garbage-collection)
+      - [Java runtime settings](#Java-runtime-settings)
+    - [Java garbage collection settings](#Java-garbage-collection-settings)
   - [Reference](#Reference)
   - [Development](#Development)
 
@@ -178,27 +176,65 @@ The module provides a variety of settings to the runtime environment and  variou
 
 #### Environment variables
 
-The defined type `cassandra::environment::variable` can be used to created env variable given to the Cassandra process. These typically contain such as `MAX_HEAP_SIZE`, `HEAP_NEWSIZE`, `LOCAL_JMX` and other.
+The defined type `cassandra::environment::variable` can be used to created env variable given to the Cassandra process. These typically contain such as `MAX_HEAP_SIZE`, `HEAP_NEWSIZE`, `JAVA_HOME`, `LOCAL_JMX` and other.
+
+You can also use the `environment` parameter of this module to create `cassandra::environment::variable` instances, e.g.:
+
+```yaml
+cassandra::environment:
+  MAX_HEAP_SIZE: 8G
+  HEAP_NEWSIZE: 2G
+```
 
 #### JVM options
 
 The defined type `cassandra::environment::jvm_option` adds JVM options to the process running Cassandra.
 
-#### Java agent
+You can also use the `jvm_options` parameter of this module to create instances of `cassandra::environment::jvm_option`. E.g.:
 
-To add an Java agent to the JVM running Cassandra, use the `cassandra::java::agent` defined type.
+```yaml
+cassandra::jvm_options:
+  - verbose:gc
+  - server
+```
 
-#### Java properties
+#### Java runtime settings
 
-You can pass properties to Cassandra by instanciating the `cassandra::java::property` type.
+This module provides a variety of Java runtime settings. Within the `cassandra::java` namespace there are components to allowing to setup:
 
-#### JVM Runtime options and advanced runtime options
+- Java agents using the defined type `cassandra::java::agent`
+- Properties using the defined type `cassandra::java::property`
+- runtime options using the defined type `cassandra::java::runtimeoption`
+- advanced runtime options using the defined type `cassandra::java::advancedruntimeoption`
+- garbage collector settings using the class `cassandra::java::gc`
 
-The JVM runtime can be configured through various instances of `cassandra::java::runtimeoption` and `cassandra::java::advancedruntimeoption`.
+You can use the `java` property to create instances of the above types and classes. E.g.:
 
-#### Java garbage collection
+```yaml
+cassandra::java:
+  properties:
+    cassandra.consistent.rangemovement: false
+    cassandra.replace_address: 10.0.0.2
+  agents:
+    jmx_prometheus_javaagent-0.12.0.jar: 8080:config.yaml
+  runtime_options:
+    check: jni
+  adv_runtime_options:
+    LargePageSizeInBytes: 2m
+    UseLargePages: true
+    AlwaysPreTouch: true
+```
 
-You can configure the Java GC using, the templates provided, by instanciating the class `cassandra::java::gc`.
+### Java garbage collection settings
+
+Settings to Java garbage collector can be made though `cassandra::java::gc` class. This can be instanciated via the `java_gc` parameter of this module. E.g.:
+
+```yaml
+cassandra::java_gc:
+  collector: g1
+  params:
+    maxGCPauseMillis: 300
+```
 
 ## Reference
 
