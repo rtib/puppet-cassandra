@@ -74,7 +74,7 @@ class cassandra (
   }]                          $java = {},
   Optional[Hash]              $java_gc = undef,
   Hash                        $config = {},
-  Optional[Hash[String,Pattern[/^[0-9]+$/]]]  
+  Optional[Hash[Stdlib::Host,Pattern[/^[0-9]+$/]]]  
                               $initial_tokens = undef,
   Stdlib::Host                $node_key = $facts['networking']['fqdn'],
   Stdlib::Absolutepath        $cassandra_home = '/var/lib/cassandra',
