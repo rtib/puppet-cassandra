@@ -22,6 +22,12 @@
 * [`cassandra::java::property`](#cassandrajavaproperty): Add a Java property to the JVM running Cassandra.
 * [`cassandra::java::runtimeoption`](#cassandrajavaruntimeoption): Add a runtime option to the JVM running Cassandra.
 
+**Data types**
+
+* [`Cassandra::Rackdc`](#cassandrarackdc): Hash allowing to setup the content of `cassandra-rackdc.properties`. Note, that the fields `dc` and `rack` mandatory to setup rackdc, while `
+* [`Cassandra::Service::Enable`](#cassandraserviceenable): Service enable can be `manual` or `mask` besides the Boolean.
+* [`Cassandra::Service::Ensure`](#cassandraserviceensure): This type is simply missing from Stdlib.
+
 ## Classes
 
 ### cassandra
@@ -163,6 +169,22 @@ Data type: `Hash`
 configuration hash to be merged with local cassandra.yaml on the node
 
 Default value: {}
+
+##### `initial_tokens`
+
+Data type: `Optional[Hash[Stdlib::Host,Pattern[/^[0-9]+$/]]]`
+
+mapping inital token to nodes and merge them into the config
+
+Default value: `undef`
+
+##### `node_key`
+
+Data type: `Stdlib::Host`
+
+the key used in initial_tokens to identify nodes
+
+Default value: $facts['networking']['fqdn']
 
 ##### `cassandra_home`
 
@@ -638,4 +660,31 @@ Data type: `Optional[String]`
 value to be added to the runtime option
 
 Default value: `undef`
+
+## Data types
+
+### Cassandra::Rackdc
+
+Hash allowing to setup the content of `cassandra-rackdc.properties`.
+Note, that the fields `dc` and `rack` mandatory to setup rackdc, while
+`dc_suffix` and `prefer_local` can be set optionally.
+
+Alias of `Struct[{
+  dc           => String,
+  rack         => String,
+  dc_suffix    => Optional[String],
+  prefer_local => Optional[Boolean],
+}]`
+
+### Cassandra::Service::Enable
+
+Service enable can be `manual` or `mask` besides the Boolean.
+
+Alias of `Variant[Boolean, Enum['manual','mask']]`
+
+### Cassandra::Service::Ensure
+
+This type is simply missing from Stdlib.
+
+Alias of `Optional[Variant[Boolean,Enum['stopped', 'running']]]`
 
