@@ -62,9 +62,30 @@
 
 <p>A Puppet module to run Cassandra nodes.</p>
 
+<h1 id="label-Project+state">Project state</h1>
+
+<p>GitHub: <a href="https://github.com/rtib/puppet-cassandra/issues"><img
+src="https://img.shields.io/github/issues/rtib/puppet-cassandra.svg"></a>
+<a href="https://github.com/rtib/puppet-cassandra"><img
+src="https://img.shields.io/github/license/rtib/puppet-cassandra.svg"></a>
+<a href="https://github.com/rtib/puppet-cassandra/releases"><img
+src="https://img.shields.io/github/tag/rtib/puppet-cassandra.svg"></a></p>
+
+<p>Travis-CI: <a href="https://travis-ci.org/rtib/puppet-cassandra"><img
+src="https://travis-ci.org/rtib/puppet-cassandra.svg?branch=master"></a></p>
+
+<p>Puppet Forge: <a href="https://forge.puppet.com/trepasi/cassandra"><img
+src="https://img.shields.io/puppetforge/v/trepasi/cassandra.svg"></a> <a
+href="https://forge.puppet.com/trepasi/cassandra"><img
+src="https://img.shields.io/puppetforge/f/trepasi/cassandra.svg"></a> <a
+href="https://forge.puppet.com/trepasi/cassandra"><img
+src="https://img.shields.io/puppetforge/dt/trepasi/cassandra.svg"></a></p>
+
 <h1 id="label-Table+of+Contents">Table of Contents</h1>
 <!-- @import "[TOC]" depthFrom=2 depthTo=6 orderedList=false --><!-- code_chunk_output --><ul><li>
 <p><a href="#label-Cassandra">Cassandra</a></p>
+</li><li>
+<p><a href="#label-Project+state">Project state</a></p>
 </li><li>
 <p><a href="#label-Table+of+contents">Table of Contents</a></p>
 </li><li>
@@ -81,11 +102,14 @@
 <ul><li>
 <p><a href="#label-Main+node+configuration">Main node configuration</a></p>
 </li><li>
+<p><a href="#label-Setting+up+initialtoken">Setting up initial_token</a></p>
+</li><li>
 <p><a href="#label-Rack+and+dc+settings">Rack and DC settings</a></p>
 </li><li>
 <p><a href="#label-Topology+settings">Topology settings</a></p>
 </li><li>
-<p><a href="#label-Environment+settings">Environment settings</a></p>
+<p><a href="#label-Setting+the+runtime+environment">Setting the runtime
+environment</a></p>
 </li><li>
 <p><a href="#label-Environment+variables">Environment variables</a></p>
 </li><li>
@@ -105,17 +129,18 @@ settings</a></p>
 <h2 id="label-Description">Description</h2>
 
 <p>This Puppet module is a spin-off of several years of experience we
-collected in running Cassandra in a production environment and using Puppet
-to maintain node configurations. During its evolution it has proven to be
-useful for Cassandra versions ranging from early 1.1, over many 2.x to
-latest 3.11 releases and multiple distributions, e.g. DSE, Apache and
-other. Its main distincion feature is that this module does not incorporate
-templating of the main configuration file, the <code>cassandra.yaml</code>
-at all and also no other version switches.</p>
+collected in running Cassandra in a production environment, using Puppet to
+maintain the configuration of the nodes. During its evolution the module
+has proven to be useful for Cassandra versions ranging from early 1.1, over
+many 2.x to latest 3.11 releases and multiple distributions, e.g. DSE,
+Apache and other. The main distinction feature is that this module does not
+incorporate templating of the main configuration file and no version
+switches.</p>
 
 <p>Conceptualized to fit into a roles/profiles design pattern, this module
-keeps a strong focus on the topic Cassandra node configuration disregarding
-many aspects bound to the use-case and/or the infrastructure environment.</p>
+keeps a strong focus on the topic of Cassandra node configuration
+disregarding many aspects bound to the use-case and the infrastructure
+environment.</p>
 
 <h2 id="label-Setup">Setup</h2>
 
@@ -142,15 +167,16 @@ from the package.</p>
 
 <p>A bit more important to know is that it does not control the contents of
 <code>cassandra-env.sh</code> and many other files, which might lead to
-conflicts durong package updates.</p>
+conflicts during package updates.</p>
 
 <h3 id="label-Setup+Requirements">Setup Requirements</h3>
 
 <p>To use this module it is required, that your nodes have package repository
-setup in place which enables the installation of the cassandra packages and
-the runtime environment for operating Cassandra, i.e. Kernel settings, NTP
-setup, Java JDK installation, firewall settings, etc. are already in place.
-All these can be setup in your profile and role modules.</p>
+setup in place which enables the installation of the Cassandra packages
+using the regular package manager of your operating system and the runtime
+environment for operating Cassandra, i.e. Kernel settings, NTP setup, Java
+JDK installation, firewall settings, etc. are already in place. All these
+can be setup in your profile and role modules.</p>
 
 <p>For operating Cassandra it will be necessary to orchestrate diverse
 operations over the cluster. Puppet is not intended to do that, thus these
@@ -158,19 +184,20 @@ requirements have to be fulfilled with other tools.</p>
 
 <h2 id="label-Usage">Usage</h2>
 
-<p>As soon you have all presiquisites fulfilled to run Cassandra on your
+<p>As soon you have fulfilled the above prerequisites to run Cassandra on your
 nodes, this module can install an run your cluster.</p>
 
-<p>Include the module to your node manifests:</p>
+<p>Include the module to your node manifests (or your role or profile module):</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_include'>include</span> <span class='id identifier rubyid_cassandra'>cassandra</span>
 </code></pre>
 
 <p>This will install the latest available version of packages
 <code>cassandra</code> and <code>cassandra-tools</code> and ensure they
-stay installed. Upgrades are not automatically done.</p>
+stay installed. The default settings will prevent autoatic upgrading.</p>
 
-<p>If you want Puppet to install a specific version, set:</p>
+<p>If you want Puppet to install a specific version, e.g. 3.0.18, just add the
+following parameter to your Hiera DB:</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::cassandra_ensure: 3.0.18
 </code></pre>
@@ -182,14 +209,14 @@ defining:</p>
 <pre class="code ruby"><code class="ruby">cassandra::tools_ensure: latest
 </code></pre>
 
-<p>If your don&#39;t want to install the tools package, you can:</p>
+<p>If you don&#39;t want to install the tools package, you can set:</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::tools_ensure: absent
 </code></pre>
 
-<p>In the case, your package name is other you may use
-<code>cassandra_package</code> and/or <code>tools_package</code> to set the
-name, e.g.</p>
+<p>In the case, your package name is differs from default Apache release, you
+may use <code>cassandra_package</code> and/or <code>tools_package</code> to
+set the name, e.g.</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::cassandra_package: dsc22
 </code></pre>
@@ -197,15 +224,15 @@ name, e.g.</p>
 <h3 id="label-Main+node+configuration">Main node configuration</h3>
 
 <p>The module provides you access to the main configuration file, the
-<code>cassandra.yaml</code>, though the configuration parameter
-<code>config</code>. This can contain a hash resembling the structure of
+<code>cassandra.yaml</code>, through the configuration parameter
+<code>config</code>. This may contain a hash resembling the structure of
 the <code>cassandra.yaml</code>, which will be merged to the current
 content of the <code>cassandra.yaml</code> file on the node. This merge
 will only happen on the node itself.</p>
 
-<p>The <code>config</code> parameter should contain only those settings you
-want to have non-default, i.e. want to change on the node. Keep in mind,
-that the structure of this hash must fit to the structure of
+<p>Thus the <code>config</code> parameter should contain only those settings
+you want to have non-default, i.e. want to change on the node. Keep in
+mind, that the structure of this hash must fit to the structure of
 <code>cassandra.yaml</code>, e.g.</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::config:
@@ -219,29 +246,47 @@ that the structure of this hash must fit to the structure of
 </code></pre>
 
 <p>As seen for <code>listen_address</code> in the example, you can use Hiera
-interpolation here to access Facts to setup the Cassandra node.</p>
+interpolation to access Facts to setup the Cassandra node.</p>
 
 <p>For deeper understanding of this merge procedure refer to the <a
 href="https://forge.puppet.com/cataphract/yaml_settings">cataphract/yaml_settings</a>
-module, which is used to merge the <code>config</code> hash to the
+module, which is used to merge the <code>config</code> hash with the
 <code>cassandra.yaml</code> on the node.</p>
+
+<h4 id="label-Setting+up+initial_token">Setting up initial_token</h4>
+
+<p>Under some circumstances it is necessary to setup the
+<code>initial_token</code> within <code>cassandra.yaml</code>. While this
+needs to be a unique value for each node and you probably don&#39;t want to
+create per-node hiera files just for a single value, the module is
+providing a workaround. You can set the <code>initial_tokens</code>
+parameter to contain a hash mapping the initial token for each node. As
+soon the parameter is set, the module will mangle the config hash by adding
+the <code>initial_token</code> with the value looked up from
+<code>inital_tokens</code>. Example:</p>
+
+<pre class="code ruby"><code class="ruby">cassandra::initial_tokens:
+  node01.server.lan: &#39;0&#39;
+  node02.server.lan: &#39;56713727820156410577229101238628035242&#39;
+  node03.server.lan: &#39;113427455640312821154458202477256070484&#39;
+</code></pre>
+
+<p>The lookup for the initial_token takes place by the key within the
+<code>node_key</code> parameter, which defaults to
+<code>$facts['networking'][&#39;fqdn&#39;]</code>. If you want to map the
+initial_token by some other ID, change the <code>node_key</code> param
+accordingly.</p>
 
 <h3 id="label-Rack+and+DC+settings">Rack and DC settings</h3>
 
-<p>When using <code>GossipingPropertyFileSnitch</code> class on your cluster,
-you need to setup the <code>cassandra-rackdc.properties</code> file. This
-is done through the <code>rackdc</code> parameter of this module.</p>
+<p>When using <code>GossipingPropertyFileSnitch</code> class for endpoint
+snitch your cluster, you need to setup the
+<code>cassandra-rackdc.properties</code> file. This is done through the
+<code>rackdc</code> parameter of this module.</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::rackdc:
   dc: dc1
   rack: rackA
-</code></pre>
-
-<p>This will end up in a <code>cassandra-rackdc.properties</code> file
-containing:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_dc'>dc</span><span class='op'>=</span><span class='id identifier rubyid_dc1'>dc1</span>
-<span class='id identifier rubyid_rack'>rack</span><span class='op'>=</span><span class='id identifier rubyid_rackA'>rackA</span>
 </code></pre>
 
 <p>You can optionally add the <code>prefer_local</code> and
@@ -249,12 +294,12 @@ containing:</p>
 
 <h3 id="label-Topology+settings">Topology settings</h3>
 
-<p>When using <code>PropertyFileSnitch</code> or
-<code>GossipingPropertyFileSnitch</code> classes on your setup, you might
-want to control the contents of <code>cassandra-topology.properties</code>
-file. This is done through the <code>topology</code> parameter of this
-module. This contains a multi-leveld hash mapping your datacenters to your
-racks and your racks to the array of nodes.</p>
+<p>When you set the enpoint snitch using <code>PropertyFileSnitch</code> or
+<code>GossipingPropertyFileSnitch</code> classes, you might want to control
+the contents of <code>cassandra-topology.properties</code> file. This is
+done through the <code>topology</code> parameter of this module. This
+contains a multi-leveld hash mapping arrays of your nodes to the racks and
+the racks to the datacenters.</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::topology:
   dc1:
@@ -292,21 +337,21 @@ containing:</p>
 intended to support the migration from <code>PropertyFileSnitch</code> to
 <code>GossipingPropertyFileSnitch</code>.</p>
 
-<p>Note, that the module will, other than with config changes, not notify the
-service on updates the <code>cassandra-topology.properties</code> file is
-receiving, as both snitch classes using this file are able to on-the-fly
-reload it.</p>
+<p>Note, that the module will not notify the service on updates to the
+<code>cassandra-topology.properties</code> file, as both snitch classes
+using this file are able to reload it in runtime. All other configuration
+changes will notify the service.</p>
 
-<h3 id="label-Environment+settings">Environment settings</h3>
+<h3 id="label-Setting+the+runtime+environment">Setting the runtime environment</h3>
 
 <p>The module provides a variety of settings to the runtime environment and
-various JVM settings.</p>
+various settings to the Java VM.</p>
 
 <h4 id="label-Environment+variables">Environment variables</h4>
 
 <p>The defined type <code>cassandra::environment::variable</code> can be used
-to created env variable given to the Cassandra process. These typically
-contain such as <code>MAX_HEAP_SIZE</code>, <code>HEAP_NEWSIZE</code>,
+to created variable in the Cassandra process&#39;s environment. These
+typically contain <code>MAX_HEAP_SIZE</code>, <code>HEAP_NEWSIZE</code>,
 <code>JAVA_HOME</code>, <code>LOCAL_JMX</code> and other.</p>
 
 <p>You can also use the <code>environment</code> parameter of this module to
@@ -323,7 +368,7 @@ create <code>cassandra::environment::variable</code> instances, e.g.:</p>
 options to the process running Cassandra.</p>
 
 <p>You can also use the <code>jvm_options</code> parameter of this module to
-create instances of <code>cassandra::environment::jvm_option</code>. E.g.:</p>
+create instances of <code>cassandra::environment::jvm_option</code>, e.g.:</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::jvm_options:
   - verbose:gc
@@ -333,20 +378,20 @@ create instances of <code>cassandra::environment::jvm_option</code>. E.g.:</p>
 <h4 id="label-Java+runtime+settings">Java runtime settings</h4>
 
 <p>This module provides a variety of Java runtime settings. Within the
-<code>cassandra::java</code> namespace there are components to allowing to
+<code>cassandra::java</code> namespace there are components allowing to
 setup:</p>
 <ul><li>
-<p>Java agents using the defined type <code>cassandra::java::agent</code></p>
+<p>Java agents through defined type <code>cassandra::java::agent</code></p>
 </li><li>
-<p>Properties using the defined type <code>cassandra::java::property</code></p>
+<p>Properties through defined type <code>cassandra::java::property</code></p>
 </li><li>
-<p>runtime options using the defined type
+<p>runtime options through defined type
 <code>cassandra::java::runtimeoption</code></p>
 </li><li>
-<p>advanced runtime options using the defined type
+<p>advanced runtime options through defined type
 <code>cassandra::java::advancedruntimeoption</code></p>
 </li><li>
-<p>garbage collector settings using the class <code>cassandra::java::gc</code></p>
+<p>garbage collector settings through class <code>cassandra::java::gc</code></p>
 </li></ul>
 
 <p>You can use the <code>java</code> property to create instances of the above
@@ -368,8 +413,8 @@ types and classes. E.g.:</p>
 
 <h3 id="label-Java+garbage+collection+settings">Java garbage collection settings</h3>
 
-<p>Settings to Java garbage collector can be made though
-<code>cassandra::java::gc</code> class. This can be instanciated via the
+<p>Settings to Java garbage collector can be made by instanciating the
+<code>cassandra::java::gc</code> class. This can be done via the
 <code>java_gc</code> parameter of this module. E.g.:</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::java_gc:
@@ -387,8 +432,9 @@ or within the REFERNCE.md file.</p>
 
 <h2 id="label-Development">Development</h2>
 
-<p>In the Development section, tell other users the ground rules for
-contributing to your project and how they should submit their work.</p>
+<p>According to the license, you are free to contribute changes to this
+module. You may aware of the general workflows when contributing to GitHub
+projects, if not yet, please read CONTRIBUTING.md.</p>
 </div></div>
 
       <div id="footer">

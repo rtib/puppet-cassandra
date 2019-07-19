@@ -168,7 +168,19 @@ that the structure of this hash must fit to the structure of
 67
 68
 69
-70</pre>
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 28</span>
@@ -210,10 +222,22 @@ class cassandra::config {
 
   contain cassandra::config::rackdc
 
+  if $cassandra::initial_tokens {
+    if $cassandra::node_key in $cassandra::initial_tokens {
+      $_initial_token = {
+        &#39;initial_token&#39; =&gt; $cassandra::initial_tokens[$cassandra::node_key]
+      }
+    } else {
+      fail(&#39;Token missing for this node in initial_token.&#39;)
+    }
+  } else {
+    $_initial_token = {}
+  }
+
   # Merge cassandra.yaml with config hash on the target node
   yaml_settings {&#39;cassandra::config&#39;:
     target =&gt; &quot;${cassandra::config_dir}/cassandra.yaml&quot;,
-    values =&gt; $cassandra::config,
+    values =&gt; merge($cassandra::config, $_initial_token)
   }
 }</pre>
       </td>
