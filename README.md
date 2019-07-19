@@ -26,6 +26,7 @@ Puppet Forge: [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cass
     - [Setup Requirements](#Setup-Requirements)
   - [Usage](#Usage)
     - [Main node configuration](#Main-node-configuration)
+      - [Setting up initial_token](#Setting-up-initialtoken)
     - [Rack and DC settings](#Rack-and-DC-settings)
     - [Topology settings](#Topology-settings)
     - [Setting the runtime environment](#Setting-the-runtime-environment)
@@ -120,6 +121,19 @@ cassandra::config:
 As seen for `listen_address` in the example, you can use Hiera interpolation to access Facts to setup the Cassandra node.
 
 For deeper understanding of this merge procedure refer to the [cataphract/yaml_settings](https://forge.puppet.com/cataphract/yaml_settings) module, which is used to merge the `config` hash with the `cassandra.yaml` on the node.
+
+#### Setting up initial_token
+
+Under some circumstances it is necessary to setup the `initial_token` within `cassandra.yaml`. While this needs to be a unique value for each node and you probably don't want to create per-node hiera files just for a single value, the module is providing a workaround. You can set the `initial_tokens` parameter to contain a hash mapping the initial token for each node. As soon the parameter is set, the module will mangle the config hash by adding the `initial_token` with the value looked up from `inital_tokens`. Example:
+
+```yaml
+cassandra::initial_tokens:
+  node01.server.lan: '0'
+  node02.server.lan: '56713727820156410577229101238628035242'
+  node03.server.lan: '113427455640312821154458202477256070484'
+```
+
+The lookup for the initial_token takes place by the key within the `node_key` parameter, which defaults to `$facts['networking']['fqdn']`. If you want to map the initial_token by some other ID, change the `node_key` param accordingly.
 
 ### Rack and DC settings
 
