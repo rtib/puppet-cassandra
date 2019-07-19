@@ -40,6 +40,10 @@
 #   input hash to the `java::gc` class
 # @param config
 #   configuration hash to be merged with local cassandra.yaml on the node
+# @param initial_tokens
+#   mapping inital token to nodes and merge them into the config
+# @param node_key
+#   the key used in initial_tokens to identify nodes
 # @param cassandra_home
 #   homedirectory of cassandra user
 # @param envfile
@@ -70,6 +74,9 @@ class cassandra (
   }]                          $java = {},
   Optional[Hash]              $java_gc = undef,
   Hash                        $config = {},
+  Optional[Hash[String,Pattern[/^[0-9]+$/]]]  
+                              $initial_tokens = undef,
+  Stdlib::Host                $node_key = $facts['networking']['fqdn'],
   Stdlib::Absolutepath        $cassandra_home = '/var/lib/cassandra',
   Stdlib::Absolutepath        $envfile = "${cassandra_home}/.cassandra.in.sh",
   Optional[Cassandra::Rackdc] $rackdc = undef,

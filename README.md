@@ -26,6 +26,7 @@ Puppet Forge: [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cass
     - [Setup Requirements](#Setup-Requirements)
   - [Usage](#Usage)
     - [Main node configuration](#Main-node-configuration)
+      - [Setting up initial_token](#Setting-up-initialtoken)
     - [Rack and DC settings](#Rack-and-DC-settings)
     - [Topology settings](#Topology-settings)
     - [Environment settings](#Environment-settings)
@@ -120,6 +121,10 @@ cassandra::config:
 As seen for `listen_address` in the example, you can use Hiera interpolation here to access Facts to setup the Cassandra node.
 
 For deeper understanding of this merge procedure refer to the [cataphract/yaml_settings](https://forge.puppet.com/cataphract/yaml_settings) module, which is used to merge the `config` hash to the `cassandra.yaml` on the node.
+
+#### Setting up initial_token
+
+Under some circumstances it is necessary to setup the `initial_token` value within `cassandra.yaml` 
 
 ### Rack and DC settings
 

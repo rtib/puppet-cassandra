@@ -1,0 +1,4 @@
+---
+networking:
+  fqdn: node02.example.org
+  ip: 172.16.254.254

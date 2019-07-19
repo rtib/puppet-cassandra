@@ -25,6 +25,7 @@ describe 'cassandra' do
               .with_target('/etc/cassandra/cassandra.yaml')
           end
         end
+
         context 'alternate path setup' do
           let(:params) do
             {
@@ -179,6 +180,56 @@ describe 'cassandra' do
             expect {
               is_expected.to contain_class('cassandra::java::gc')
                 .with_collector('bad')
+            }.to raise_error(Puppet::Error)
+          end
+        end
+
+        context 'initial_token fqdn based setup' do
+          let(:params) do
+            {
+              'initial_tokens' => {
+                'node01.example.org' => '987654321',
+                'node02.example.org' => '123456789',
+              },
+            }
+          end
+
+          it do
+            is_expected.to contain_yaml_settings('cassandra::config')
+              .with_values('initial_token' => '123456789')
+          end
+        end
+
+        context 'initial_token ip based setup' do
+          let(:params) do
+            {
+              'initial_tokens' => {
+                '172.16.254.253' => '987654321',
+                '172.16.254.254' => '123456789',
+              },
+              'node_key' => facts['networking']['ip'],
+            }
+          end
+
+          it do
+            is_expected.to contain_yaml_settings('cassandra::config')
+              .with_values('initial_token' => '123456789')
+          end
+        end
+
+        context 'missing initial_token setup' do
+          let(:params) do
+            {
+              'initial_tokens' => {
+                'node01.example.org' => '987654321',
+              },
+            }
+          end
+
+          it do
+            expect {
+              is_expected.to contain_yaml_settings('cassandra::config')
+                .with_values('initial_token' => '123456789')
             }.to raise_error(Puppet::Error)
           end
         end
