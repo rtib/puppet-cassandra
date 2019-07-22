@@ -115,7 +115,7 @@ cassandra::config:
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
         - seeds: 10.0.0.1,10.0.1.1
-  listen_address: %{facts.networking.ip}
+  listen_address: "%{facts.networking.ip}"
 ```
 
 As seen for `listen_address` in the example, you can use Hiera interpolation to access Facts to setup the Cassandra node.
@@ -124,7 +124,7 @@ For deeper understanding of this merge procedure refer to the [cataphract/yaml_s
 
 #### Setting up initial_token
 
-Under some circumstances it is necessary to setup the `initial_token` within `cassandra.yaml`. While this needs to be a unique value for each node and you probably don't want to create per-node hiera files just for a single value, the module is providing a workaround. You can set the `initial_tokens` parameter to contain a hash mapping the initial token for each node. As soon the parameter is set, the module will mangle the config hash by adding the `initial_token` with the value looked up from `inital_tokens`. Example:
+Under some circumstances it is necessary to setup the `initial_token` within `cassandra.yaml`. While this needs to be a unique value for each node and you probably don't want to create per-node hiera files just for a single value, the module is providing a workaround. You can set the `initial_tokens` parameter which may contain a hash mapping the initial token for each node by a node key. As soon the parameter is set, the module will lookup the initial_token for each node by the configured `node_key`, which defaults to the FQDN of the node and set the `initial_token` within the config hash to that value. If there is no entry for a node found, an error is raised which stops the Puppet agent. Example:
 
 ```yaml
 cassandra::initial_tokens:
@@ -133,7 +133,7 @@ cassandra::initial_tokens:
   node03.server.lan: '113427455640312821154458202477256070484'
 ```
 
-The lookup for the initial_token takes place by the key within the `node_key` parameter, which defaults to `$facts['networking']['fqdn']`. If you want to map the initial_token by some other ID, change the `node_key` param accordingly.
+The `node_key` parameter, which defaults to `$facts['networking']['fqdn']` can be changed if you want to map the initial_token by some other ID.
 
 ### Rack and DC settings
 
