@@ -27,13 +27,15 @@ define cassandra::java::advancedruntimeoption (
 ) {
   $_opt = $value ? {
     Boolean => inline_epp('XX:<% if $value { -%>+<% } else { -%>-<% } -%><%= $name %>',
-                  'name'  => $name,
-                  'value' => $value,
-                ),
+      {
+        'name'  => $name,
+        'value' => $value,
+      }),
     String  => inline_epp('XX:<%= $name -%>=<%= $value %>',
-                  'name'  => $name,
-                  'value' => $value,
-                ),
+      {
+        'name'  => $name,
+        'value' => $value,
+      }),
     default => '',
   }
   cassandra::environment::jvm_option { $_opt: }

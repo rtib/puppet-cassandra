@@ -23,8 +23,10 @@ define cassandra::java::agent (
   Optional[String] $value = undef,
 ) {
   $_opt = inline_epp('javaagent:<%= $prop -%><% if $value { -%>=<%= $value -%><% } -%>',
+    {
       'prop'  => $name,
       'value' => $value,
-    )
+    }
+  )
   cassandra::environment::jvm_option { $_opt: }
 }
