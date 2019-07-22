@@ -149,7 +149,9 @@ create instances for each key of
 26
 27
 28
-29</pre>
+29
+30
+31</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/java/runtimeoption.pp', line 21</span>
@@ -158,9 +160,11 @@ define cassandra::java::runtimeoption (
   Optional[String] $value = undef,
 ) {
   $_opt = inline_epp(&#39;X&lt;%= $prop -%&gt;&lt;% if $value { -%&gt;:&lt;%= $value -%&gt;&lt;% } -%&gt;&#39;,
+    {
       &#39;prop&#39;  =&gt; $name,
       &#39;value&#39; =&gt; $value,
-    )
+    }
+  )
   cassandra::environment::jvm_option { $_opt: }
 }</pre>
       </td>

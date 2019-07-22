@@ -158,7 +158,9 @@ prefix the option with + or -</p>
 37
 38
 39
-40</pre>
+40
+41
+42</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/java/advancedruntimeoption.pp', line 25</span>
@@ -168,13 +170,15 @@ define cassandra::java::advancedruntimeoption (
 ) {
   $_opt = $value ? {
     Boolean =&gt; inline_epp(&#39;XX:&lt;% if $value { -%&gt;+&lt;% } else { -%&gt;-&lt;% } -%&gt;&lt;%= $name %&gt;&#39;,
-                  &#39;name&#39;  =&gt; $name,
-                  &#39;value&#39; =&gt; $value,
-                ),
+      {
+        &#39;name&#39;  =&gt; $name,
+        &#39;value&#39; =&gt; $value,
+      }),
     String  =&gt; inline_epp(&#39;XX:&lt;%= $name -%&gt;=&lt;%= $value %&gt;&#39;,
-                  &#39;name&#39;  =&gt; $name,
-                  &#39;value&#39; =&gt; $value,
-                ),
+      {
+        &#39;name&#39;  =&gt; $name,
+        &#39;value&#39; =&gt; $value,
+      }),
     default =&gt; &#39;&#39;,
   }
   cassandra::environment::jvm_option { $_opt: }

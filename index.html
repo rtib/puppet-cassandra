@@ -242,7 +242,7 @@ mind, that the structure of this hash must fit to the structure of
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
         - seeds: 10.0.0.1,10.0.1.1
-  listen_address: %{facts.networking.ip}
+  listen_address: &quot;%{facts.networking.ip}&quot;
 </code></pre>
 
 <p>As seen for <code>listen_address</code> in the example, you can use Hiera
@@ -260,10 +260,12 @@ module, which is used to merge the <code>config</code> hash with the
 needs to be a unique value for each node and you probably don&#39;t want to
 create per-node hiera files just for a single value, the module is
 providing a workaround. You can set the <code>initial_tokens</code>
-parameter to contain a hash mapping the initial token for each node. As
-soon the parameter is set, the module will mangle the config hash by adding
-the <code>initial_token</code> with the value looked up from
-<code>inital_tokens</code>. Example:</p>
+parameter which may contain a hash mapping the initial token for each node
+by a node key. As soon the parameter is set, the module will lookup the
+initial_token for each node by the configured <code>node_key</code>, which
+defaults to the FQDN of the node and set the <code>initial_token</code>
+within the config hash to that value. If there is no entry for a node
+found, an error is raised which stops the Puppet agent. Example:</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::initial_tokens:
   node01.server.lan: &#39;0&#39;
@@ -271,11 +273,9 @@ the <code>initial_token</code> with the value looked up from
   node03.server.lan: &#39;113427455640312821154458202477256070484&#39;
 </code></pre>
 
-<p>The lookup for the initial_token takes place by the key within the
-<code>node_key</code> parameter, which defaults to
-<code>$facts['networking'][&#39;fqdn&#39;]</code>. If you want to map the
-initial_token by some other ID, change the <code>node_key</code> param
-accordingly.</p>
+<p>The <code>node_key</code> parameter, which defaults to
+<code>$facts['networking'][&#39;fqdn&#39;]</code> can be changed if you
+want to map the initial_token by some other ID.</p>
 
 <h3 id="label-Rack+and+DC+settings">Rack and DC settings</h3>
 

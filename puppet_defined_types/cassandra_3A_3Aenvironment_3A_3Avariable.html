@@ -170,7 +170,9 @@ create instances for each key of <code>cassandra::environment</code>.</p>
 34
 35
 36
-37</pre>
+37
+38
+39</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/environment/variable.pp', line 25</span>
@@ -180,11 +182,13 @@ define cassandra::environment::variable (
   String $id = $title,
 ) {
   concat::fragment{ &quot;cassandra::environment::variable[${id}]=${value}&quot;:
-    target   =&gt; $cassandra::envfile,
-    order    =&gt; &#39;10&#39;,
-    content  =&gt; inline_epp(&#39;&lt;%= $name %&gt;=&quot;&lt;%= $val -%&gt;&quot;&#39;,
-      &#39;name&#39; =&gt; $id,
-      &#39;val&#39;  =&gt; $value,
+    target  =&gt; $cassandra::envfile,
+    order   =&gt; &#39;10&#39;,
+    content =&gt; inline_epp(&#39;&lt;%= $name %&gt;=&quot;&lt;%= $val -%&gt;&quot;&#39;,
+      {
+        &#39;name&#39; =&gt; $id,
+        &#39;val&#39;  =&gt; $value,
+      }
     )
   }
 }</pre>
