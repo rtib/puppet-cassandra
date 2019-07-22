@@ -256,7 +256,7 @@ cassandra::config:
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
         - seeds: 10.0.0.1,10.0.1.1
-  listen_address: %{facts.networking.ip}
+  listen_address: "%{facts.networking.ip}"
 ```
 
 ### cassandra::config::rackdc
