@@ -115,7 +115,7 @@ cassandra::config:
     - class_name: org.apache.cassandra.locator.SimpleSeedProvider
       parameters:
         - seeds: 10.0.0.1,10.0.1.1
-  listen_address: %{facts.networking.ip}
+  listen_address: "%{facts.networking.ip}"
 ```
 
 As seen for `listen_address` in the example, you can use Hiera interpolation to access Facts to setup the Cassandra node.
