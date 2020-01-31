@@ -25,7 +25,8 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-        "9"
+        "9",
+        "10"
       ]
     },
     {
@@ -46,6 +47,6 @@
     "Cassandra"
   ],
   "pdk-version": "1.15.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#master",
-  "template-ref": "heads/master-0-g2193f1f"
+  "template-url": "file:///Users/trepasi/git/GH/pdk-templates#master",
+  "template-ref": "heads/travis_warnings-0-g8db56b4"
 }
