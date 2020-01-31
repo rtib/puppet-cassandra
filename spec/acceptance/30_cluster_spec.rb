@@ -1,5 +1,4 @@
 require 'spec_helper_acceptance'
-require 'rspec/retry'
 
 context 'service tests' do
   describe port(9042) do

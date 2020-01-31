@@ -2,21 +2,12 @@
 changelog_user: rtib
 changelog_project: puppet-cassandra
 mock_with: ':rspec'
+use_litmus: true
 .travis.yml:
   user: trepasi
   secure: oBs3i4UDUUH8q3aA6W3VywKz0bp/MGO2hwHvZ/pIIbKY6KyTBaV2jHSUgeBwSxkhI4EfmvkE6HDKn2oRrr5nft9ZGjnWUyRWbK6KMSRrS98MH4Ld3uCX6zMK5yCJpB6MX1xCm0jfnb4c2NJVgBrBaJFrrSYG0Jj+YILGYcomUmM4+yfF6JdtqVefRV2YHKxrOpTh8WUr9OJRzo7JwMdkWUP67orfz7/KGkqYc58INKK4qAp70n/G8qEo5YbCdTshhSbBjaXqBMb4T2VeCpJTbbvn8ZpeXF9FlHmASs+Bp08AFC/BIX19gjgPPpqqZ6hfPWZ+u6OfWIMy46qLdDwQv9tbEdRQIydl5He429AQM8CapRT52sjDg0OaUi9B2m3JFnPjxZq+qiuVRfDIjORdxB6+Xrxl3bky+laWPgbfEidTgHr2xuyGZhPEmhBEHmSPEocodsRjRP+inYfbaU+Qzsk4TXn6o8M/oDvMK+yPlSrDwOy6GYlU+Ba66FiS7cda6NErAc8z+D6blLhyGUeQ78ZW7X+EthX916MTZImvm5rFSULt82cvJe5PFaqzWRPW7mUukYLC9vgW1ldJaTLeH3YS5rfWm/EDztT+72mdo2ltOQKuqlv1ocuEUYVNk3NL/5M+F9AxlnuEU8Vnf1+YwhATCSS+YQDo8PKu/LcRjsM=
-  litmus_sets:
-    - set: debian
-      collection: puppet5
-      commands:
-      - 'echo "deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
-      - 'apt-get update'
-      - 'apt-get install iproute2 wget openjdk-8-jdk -y'
-    - set: debian
-      commands:
-      - 'echo "deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
-      - 'apt-get update'
-      - 'apt-get install iproute2 wget openjdk-8-jdk -y'
+  litmus:
+    provision_list: [---travis_el]
 Rakefile:
   extras:
     - |
@@ -26,14 +17,7 @@ Rakefile:
       end
 Gemfile:
   required:
-    ':system_tests':
-      - gem: 'puppet-module-posix-system-r#{minor_version}'
-        platforms: ruby
-      - gem: 'puppet-module-win-system-r#{minor_version}'
-        platforms:
-          - mswin
-          - mingw
-          - x64_mingw
+    ':development':
       - gem: rspec-retry
   optional:
     ':development':
