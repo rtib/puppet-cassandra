@@ -48,5 +48,5 @@
   ],
   "pdk-version": "1.15.0",
   "template-url": "https://github.com/rtib/pdk-templates#travis_warnings",
-  "template-ref": "remotes/origin/travis_warnings-0-g8db56b4"
+  "template-ref": "remotes/origin/travis_warnings-0-g8077dbb"
 }
