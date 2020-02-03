@@ -41,12 +41,36 @@ jobs:
       stage: acceptance
     -
       before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_v4]'"
+      - "bundle exec rake 'litmus:install_agent[puppet5]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_v4_puppet5
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
       - "bundle exec rake 'litmus:provision_list[travis_deb]'"
       - "bundle exec rake 'litmus:install_agent[puppet6]'"
       - "bundle exec rake litmus:install_module"
       bundler_args: 
       dist: trusty
       env: PLATFORMS=travis_deb_puppet6
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_v4]'"
+      - "bundle exec rake 'litmus:install_agent[puppet6]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_v4_puppet6
       rvm: 2.5.3
       script: ["bundle exec rake litmus:acceptance:parallel"]
       services: docker
@@ -65,6 +89,11 @@ jobs:
     -
       env: DEPLOY_TO_FORGE=yes
       stage: deploy
+  allow_failures:
+    -
+      env: PLATFORMS=travis_deb_v4_puppet5
+    -
+      env: PLATFORMS=travis_deb_v4_puppet6
 branches:
   only:
     - master
