@@ -1,9 +1,21 @@
 ---
-travis_deb:
+travis_deb_c21:
+  provisioner: docker
+  images: ['litmusimage/debian:9', 'litmusimage/ubuntu:16.04', 'litmusimage/ubuntu:18.04']
+  vars: '{apt_sources_list: cassandra_21x.sources.list}'
+travis_deb_c22:
+  provisioner: docker
+  images: ['litmusimage/debian:9', 'litmusimage/ubuntu:16.04', 'litmusimage/ubuntu:18.04']
+  vars: '{apt_sources_list: cassandra_22x.sources.list}'
+travis_deb_c30:
+  provisioner: docker
+  images: ['litmusimage/debian:9', 'litmusimage/ubuntu:16.04', 'litmusimage/ubuntu:18.04']
+  vars: '{apt_sources_list: cassandra_30x.sources.list}'
+travis_deb_c311:
   provisioner: docker
   images: ['litmusimage/debian:9', 'litmusimage/ubuntu:16.04', 'litmusimage/ubuntu:18.04']
   vars: '{apt_sources_list: cassandra_311x.sources.list}'
-travis_deb_v4:
+travis_deb_c40:
   provisioner: docker
   images: ['litmusimage/debian:9', 'litmusimage/debian:10', 'litmusimage/ubuntu:16.04', 'litmusimage/ubuntu:18.04']
   vars: '{apt_sources_list: cassandra_40x.sources.list}'
