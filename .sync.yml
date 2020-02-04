@@ -13,6 +13,7 @@ use_litmus: true
       - travis_deb_c30
       - travis_deb_c311
       - travis_deb_c40
+      - ---travis_deb
       - ---travis_el
   allow_failures:
     - env: PLATFORMS=travis_deb_v4_puppet5
