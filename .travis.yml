@@ -29,24 +29,120 @@ jobs:
   include:
     -
       before_script:
-      - "bundle exec rake 'litmus:provision_list[travis_deb]'"
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c21]'"
       - "bundle exec rake 'litmus:install_agent[puppet5]'"
       - "bundle exec rake litmus:install_module"
       bundler_args: 
       dist: trusty
-      env: PLATFORMS=travis_deb_puppet5
+      env: PLATFORMS=travis_deb_c21_puppet5
       rvm: 2.5.3
       script: ["bundle exec rake litmus:acceptance:parallel"]
       services: docker
       stage: acceptance
     -
       before_script:
-      - "bundle exec rake 'litmus:provision_list[travis_deb]'"
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c22]'"
+      - "bundle exec rake 'litmus:install_agent[puppet5]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c22_puppet5
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c30]'"
+      - "bundle exec rake 'litmus:install_agent[puppet5]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c30_puppet5
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c311]'"
+      - "bundle exec rake 'litmus:install_agent[puppet5]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c311_puppet5
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c40]'"
+      - "bundle exec rake 'litmus:install_agent[puppet5]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c40_puppet5
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c21]'"
       - "bundle exec rake 'litmus:install_agent[puppet6]'"
       - "bundle exec rake litmus:install_module"
       bundler_args: 
       dist: trusty
-      env: PLATFORMS=travis_deb_puppet6
+      env: PLATFORMS=travis_deb_c21_puppet6
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c22]'"
+      - "bundle exec rake 'litmus:install_agent[puppet6]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c22_puppet6
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c30]'"
+      - "bundle exec rake 'litmus:install_agent[puppet6]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c30_puppet6
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c311]'"
+      - "bundle exec rake 'litmus:install_agent[puppet6]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c311_puppet6
+      rvm: 2.5.3
+      script: ["bundle exec rake litmus:acceptance:parallel"]
+      services: docker
+      stage: acceptance
+    -
+      before_script:
+      - "bundle exec rake 'litmus:provision_list[travis_deb_c40]'"
+      - "bundle exec rake 'litmus:install_agent[puppet6]'"
+      - "bundle exec rake litmus:install_module"
+      bundler_args: 
+      dist: trusty
+      env: PLATFORMS=travis_deb_c40_puppet6
       rvm: 2.5.3
       script: ["bundle exec rake litmus:acceptance:parallel"]
       services: docker

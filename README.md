@@ -17,25 +17,26 @@ Puppet Forge: [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cass
 
 <!-- code_chunk_output -->
 
-- [Cassandra](#Cassandra)
-- [Project state](#Project-state)
-- [Table of Contents](#Table-of-Contents)
-  - [Description](#Description)
-  - [Setup](#Setup)
-    - [What cassandra affects](#What-cassandra-affects)
-    - [Setup Requirements](#Setup-Requirements)
-  - [Usage](#Usage)
-    - [Main node configuration](#Main-node-configuration)
-      - [Setting up initial_token](#Setting-up-initialtoken)
-    - [Rack and DC settings](#Rack-and-DC-settings)
-    - [Topology settings](#Topology-settings)
-    - [Setting the runtime environment](#Setting-the-runtime-environment)
-      - [Environment variables](#Environment-variables)
-      - [JVM options](#JVM-options)
-      - [Java runtime settings](#Java-runtime-settings)
-    - [Java garbage collection settings](#Java-garbage-collection-settings)
-  - [Reference](#Reference)
-  - [Development](#Development)
+- [Cassandra](#cassandra)
+- [Project state](#project-state)
+- [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Integration test matrix](#integration-test-matrix)
+  - [Setup](#setup)
+    - [What cassandra affects](#what-cassandra-affects)
+    - [Setup Requirements](#setup-requirements)
+  - [Usage](#usage)
+    - [Main node configuration](#main-node-configuration)
+      - [Setting up initial_token](#setting-up-initialtoken)
+    - [Rack and DC settings](#rack-and-dc-settings)
+    - [Topology settings](#topology-settings)
+    - [Setting the runtime environment](#setting-the-runtime-environment)
+      - [Environment variables](#environment-variables)
+      - [JVM options](#jvm-options)
+      - [Java runtime settings](#java-runtime-settings)
+    - [Java garbage collection settings](#java-garbage-collection-settings)
+  - [Reference](#reference)
+  - [Development](#development)
 
 <!-- /code_chunk_output -->
 
@@ -44,6 +45,20 @@ Puppet Forge: [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cass
 This Puppet module is a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x to latest 3.11 releases and multiple distributions, e.g. DSE, Apache and other. The main distinction feature is that this module does not incorporate templating of the main configuration file and no version switches.
 
 Conceptualized to fit into a roles/profiles design pattern, this module keeps a strong focus on the topic of Cassandra node configuration disregarding many aspects bound to the use-case and the infrastructure environment.
+
+## Integration test matrix
+
+The module undergoes automated acceptance test, assessing its capability of deploying a Cassandra node of all supported version branches on multiple OS distribution and JDK conbinations. The table below is summerizing this test matrix.
+
+| Cassandra branch | OS distro | JDK[<sup>1</sup>](#java) |
+|---|---|---|
+| 2.1 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 |
+| 2.2 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 |
+| 3.0 | Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 |
+| 3.11 | Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 |
+| 4.0 | Debian:9<br>Debian:10<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8<br>OpenJDK-11<br>OpenJDK-8<br>OpenJDK-8<br> |
+
+<a class="anchor" id="java">1</a>: Note, that this module will not manage any JDK installation. The JDK versions listed here are automatically installed via dependencies while the module is installing the latest available Cassandra version from the release branch.
 
 ## Setup
 
