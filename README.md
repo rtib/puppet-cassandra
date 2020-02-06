@@ -50,7 +50,7 @@ Conceptualized to fit into a roles/profiles design pattern, this module keeps a 
 
 The module undergoes automated acceptance test, assessing its capability of deploying a Cassandra node of all supported version branches on multiple OS distribution and JDK conbinations. The table below is summerizing this test matrix.
 
-| Cassandra branch | OS distro | JDK[^java] |
+| Cassandra branch | OS distro | JDK[<sup>1</sup>](#java) |
 |---|---|---|
 | 2.1 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 |
 | 2.2 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 |
@@ -58,7 +58,7 @@ The module undergoes automated acceptance test, assessing its capability of depl
 | 3.11 | Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 |
 | 4.0 | Debian:9<br>Debian:10<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8<br>OpenJDK-11<br>OpenJDK-8<br>OpenJDK-8<br> |
 
-[^java]: Note, that this module will not manage any JDK installation. The JDK versions listed here are automatically installed via dependencies while the module is installing the latest available Cassandra version from the release branch.
+<a class="anchor" id="java">1</a>: Note, that this module will not manage any JDK installation. The JDK versions listed here are automatically installed via dependencies while the module is installing the latest available Cassandra version from the release branch.
 
 ## Setup
 
