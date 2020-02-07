@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v2.1.2](https://github.com/rtib/puppet-cassandra/tree/v2.1.2) (2020-02-07)
+
+[Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v2.1.1...v2.1.2)
+
+### Added
+
+- Prepare for Cassandra 4 [\#7](https://github.com/rtib/puppet-cassandra/pull/7) ([rtib](https://github.com/rtib))
+
 ## [v2.1.1](https://github.com/rtib/puppet-cassandra/tree/v2.1.1) (2019-07-22)
 
 [Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v2.1.0...v2.1.1)
