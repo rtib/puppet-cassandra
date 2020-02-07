@@ -5,11 +5,11 @@ A Puppet module to run Cassandra nodes.
 
 # Project state
 
-GitHub: [![GitHub issues](https://img.shields.io/github/issues/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/issues) [![GitHub license](https://img.shields.io/github/license/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra) [![GitHub tag](https://img.shields.io/github/tag/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/releases)
+GitHub: [![GitHub issues](https://img.shields.io/github/issues/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/issues) [![GitHub license](https://img.shields.io/github/license/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra) [![GitHub tag](https://img.shields.io/github/commit-activity/y/rtib/puppet-cassandra)](https://github.com/rtib/puppet-cassandra/releases) [![GitHub tag](https://img.shields.io/github/last-commit/rtib/puppet-cassandra)](https://github.com/rtib/puppet-cassandra/releases) [![GitHub tag](https://img.shields.io/github/tag/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/releases)
 
 Travis-CI: [![Build Status](https://travis-ci.org/rtib/puppet-cassandra.svg?branch=master)](https://travis-ci.org/rtib/puppet-cassandra)
 
-Puppet Forge: [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/f/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/dt/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra)
+Puppet: [![PDK Version](https://img.shields.io/puppetforge/pdk-version/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/dt/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra)
 
 # Table of Contents
 
@@ -17,26 +17,23 @@ Puppet Forge: [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cass
 
 <!-- code_chunk_output -->
 
-- [Cassandra](#cassandra)
-- [Project state](#project-state)
-- [Table of Contents](#table-of-contents)
-  - [Description](#description)
-  - [Integration test matrix](#integration-test-matrix)
-  - [Setup](#setup)
-    - [What cassandra affects](#what-cassandra-affects)
-    - [Setup Requirements](#setup-requirements)
-  - [Usage](#usage)
-    - [Main node configuration](#main-node-configuration)
-      - [Setting up initial_token](#setting-up-initialtoken)
-    - [Rack and DC settings](#rack-and-dc-settings)
-    - [Topology settings](#topology-settings)
-    - [Setting the runtime environment](#setting-the-runtime-environment)
-      - [Environment variables](#environment-variables)
-      - [JVM options](#jvm-options)
-      - [Java runtime settings](#java-runtime-settings)
-    - [Java garbage collection settings](#java-garbage-collection-settings)
-  - [Reference](#reference)
-  - [Development](#development)
+- [Description](#description)
+- [Integration test matrix](#integration-test-matrix)
+- [Setup](#setup)
+  - [What cassandra affects](#what-cassandra-affects)
+  - [Setup Requirements](#setup-requirements)
+- [Usage](#usage)
+  - [Main node configuration](#main-node-configuration)
+    - [Setting up initial_token](#setting-up-initial_token)
+  - [Rack and DC settings](#rack-and-dc-settings)
+  - [Topology settings](#topology-settings)
+  - [Setting the runtime environment](#setting-the-runtime-environment)
+    - [Environment variables](#environment-variables)
+    - [JVM options](#jvm-options)
+    - [Java runtime settings](#java-runtime-settings)
+  - [Java garbage collection settings](#java-garbage-collection-settings)
+- [Reference](#reference)
+- [Development](#development)
 
 <!-- /code_chunk_output -->
 
