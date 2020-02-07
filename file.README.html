@@ -6,15 +6,15 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.20
+    &mdash; Documentation by YARD 0.9.24
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
 
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
   pathId = "";
   relpath = '';
 </script>
@@ -91,6 +91,8 @@ src="https://img.shields.io/puppetforge/dt/trepasi/cassandra.svg"></a></p>
 </li><li>
 <p><a href="#label-Description">Description</a></p>
 </li><li>
+<p><a href="#label-Integration+test+matrix">Integration test matrix</a></p>
+</li><li>
 <p><a href="#label-Setup">Setup</a></p>
 <ul><li>
 <p><a href="#label-What+cassandra+affects">What cassandra affects</a></p>
@@ -141,6 +143,26 @@ switches.</p>
 keeps a strong focus on the topic of Cassandra node configuration
 disregarding many aspects bound to the use-case and the infrastructure
 environment.</p>
+
+<h2 id="label-Integration+test+matrix">Integration test matrix</h2>
+
+<p>The module undergoes automated acceptance test, assessing its capability of
+deploying a Cassandra node of all supported version branches on multiple OS
+distribution and JDK conbinations. The table below is summerizing this test
+matrix.</p>
+
+<p>| Cassandra branch | OS distro | JDK<a href="#label-Java"><sup>1</sup></a> |
+|—|—|—| | 2.1 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 | | 2.2 |
+Debian:9<br>Ubuntu:18.04 | OpenJDK-8 | | 3.0 |
+Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 | | 3.11 |
+Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 | | 4.0 |
+Debian:9<br>Debian:10<br>Ubuntu:16.04<br>Ubuntu:18.04 |
+OpenJDK-8<br>OpenJDK-11<br>OpenJDK-8<br>OpenJDK-8<br> |</p>
+
+<p>&lt;a class=“anchor” id=“java”&gt;1&lt;/a&gt;: Note, that this module will
+not manage any JDK installation. The JDK versions listed here are
+automatically installed via dependencies while the module is installing the
+latest available Cassandra version from the release branch.</p>
 
 <h2 id="label-Setup">Setup</h2>
 
