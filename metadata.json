@@ -46,7 +46,7 @@
   "tags": [
     "Cassandra"
   ],
-  "pdk-version": "1.16.0",
-  "template-url": "https://github.com/rtib/pdk-templates#travis_warnings",
-  "template-ref": "remotes/origin/travis_warnings-0-gbda16ec"
+  "pdk-version": "1.18.0",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#1.18.0",
+  "template-ref": "tags/1.18.0-0-g095317c"
 }
