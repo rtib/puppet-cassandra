@@ -22,8 +22,8 @@ define cassandra::jvm_option_set (
   $_file = "${cassandra::config_dir}/${optsfile}-${variant}.options"
 
   $options.each |String $_opt| {
-    if $_opt ~= /^~/ {
-      $_value = ${_opt[2,-1]}
+    if $_opt =~ /^~/ {
+      $_value = $_opt[1,-1]
       file_line { "${name} remove option ${_value}":
         ensure => absent,
         path   => $_file,
