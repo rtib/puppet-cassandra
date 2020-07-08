@@ -1,9 +1,16 @@
-# @summary A short summary of the purpose of this defined type.
+# @summary Set JVM options by controlling particular lines of jvm.options file.
 #
-# A description of what this defined type does
+# Select the file to be controlled by choosing, jvm, jvm8 or jvm11 and the
+# variant server or clients. Options, properties and advanced runtime options
+# can be defined to have particular values or to be removed from the configuration.
+# Any option not mentioned will not be touched.
 #
-# @example
-#   cassandra::jvm_option_set { 'namevar': }
+# @param optsfile determine the file to control, either `jvm` for the independet
+#    options or `jvm8` or `jvm11` for the version dependant options
+# @param variant options variant to be used for
+# @param options list of basic JVM options, e.g. `ea`, `server`, `Xms4g`, etc.
+# @param properties java properties to be passed to the JVM
+# @param advancedoptions advanced runtime options which may be feature toggles or values
 define cassandra::jvm_option_set (
   Enum['jvm', 'jvm8', 'jvm11']  $optsfile = 'jvm',
   Enum['clients', 'server']     $variant = 'server',
@@ -11,6 +18,7 @@ define cassandra::jvm_option_set (
   Hash[String,Optional[Scalar]] $properties = {},
   Hash[String,Optional[Scalar]] $advancedoptions = {},
 ) {
+  # ToDo: we need jvm.options to be handled as well for < 4.0
   $_file = "${cassandra::config_dir}/${optsfile}-${variant}.options"
 
   $options.each |String $_opt| {
