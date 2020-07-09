@@ -39,7 +39,7 @@ define cassandra::jvm_option_set (
   } # $options.each
 
   $properties.each |String $_prop, Data $_value| {
-    if ! $_value {
+    if $_value =~ Undef {
       file_line { "${name} remove property ${_prop}":
         ensure            => absent,
         path              => $_file,
@@ -57,7 +57,7 @@ define cassandra::jvm_option_set (
   } # $properties.each
 
   $advancedoptions.each |String $_aopt, Data $_value| {
-    if ! $_value {
+    if $_value =~ Undef {
       file_line { "${name} remove advanced runtime option ${_aopt}":
         ensure            => absent,
         path              => $_file,
