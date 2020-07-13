@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra::config
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -119,6 +119,7 @@ that the structure of this hash must fit to the structure of
   </div>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -180,7 +181,12 @@ that the structure of this hash must fit to the structure of
 79
 80
 81
-82</pre>
+82
+83
+84
+85
+86
+87</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/config.pp', line 28</span>
@@ -198,6 +204,11 @@ class cassandra::config {
 
   $cassandra::environment.each |String $name, String $value| {
     cassandra::environment::variable { $name: value =&gt; $value, }
+  }
+  $cassandra::jvm_option_sets.each |String $name, Hash $params| {
+    cassandra::jvm_option_set { $name:
+      * =&gt; $params,
+    }
   }
   $cassandra::jvm_options.each |String $name| {
     cassandra::environment::jvm_option { $name: }

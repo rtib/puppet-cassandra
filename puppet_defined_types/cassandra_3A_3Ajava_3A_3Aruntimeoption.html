@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::java::runtimeoption
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -118,7 +118,7 @@ create instances for each key of
         <span class='name'>value</span>
       
       
-        <span class='type'>(<tt>Optional[String]</tt>)</span>
+        <span class='type'>(<tt>Optional[Scalar]</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>undef</tt>)</em>
@@ -132,6 +132,7 @@ create instances for each key of
     </li>
   
 </ul>
+
 
 
 </div><div class="method_details_list">
@@ -157,7 +158,7 @@ create instances for each key of
         <pre class="code"><span class="info file"># File 'manifests/java/runtimeoption.pp', line 21</span>
 
 define cassandra::java::runtimeoption (
-  Optional[String] $value = undef,
+  Optional[Scalar] $value = undef,
 ) {
   $_opt = inline_epp(&#39;X&lt;%= $prop -%&gt;&lt;% if $value { -%&gt;:&lt;%= $value -%&gt;&lt;% } -%&gt;&#39;,
     {

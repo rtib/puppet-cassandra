@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -120,6 +120,13 @@ environment</a></p>
 </li><li>
 <p><a href="#label-Java+garbage+collection+settings">Java garbage collection
 settings</a></p>
+</li><li>
+<p><a href="#label-Jvm+option+sets">JVM option sets</a></p>
+<ul><li>
+<p><a href="#label-Cassandra+3x+jvm+options">Cassandra 3.x JVM options</a></p>
+</li><li>
+<p><a href="#label-Cassandra+40+jvm+setup">Cassandra 4.0 JVM setup</a></p>
+</li></ul>
 </li><li>
 <p><a href="#label-Reference">Reference</a></p>
 </li><li>
@@ -433,6 +440,10 @@ types and classes. E.g.:</p>
 
 <h3 id="label-Java+garbage+collection+settings">Java garbage collection settings</h3>
 
+<p><strong>Deprication notice:</strong> <code>cassandra::java_gc</code> and
+the class <code>cassandra::java::gc</code> are now deprecated. Consider
+using JVM option sets instead.</p>
+
 <p>Settings to Java garbage collector can be made by instanciating the
 <code>cassandra::java::gc</code> class. This can be done via the
 <code>java_gc</code> parameter of this module. E.g.:</p>
@@ -441,6 +452,106 @@ types and classes. E.g.:</p>
   collector: g1
   params:
     maxGCPauseMillis: 300
+</code></pre>
+
+<h3 id="label-JVM+option+sets">JVM option sets</h3>
+
+<p>Since version 2.2 this module is supporting a novel approach to set JVM
+options for the Cassandra runtime. This is provided by the JVM option set
+feature, which is controlling the <code>jvm.options</code> file of
+Cassandra 3.x and many combinations used by Cassandra 4.0 and later.</p>
+
+<p>Note, that much of the settings here will override settings done with
+<code>cassandra::java</code> and all of this will collide with
+<code>cassandra::java_gc</code> if set. Thus remove
+<code>cassandra::java_gc</code> at all when starting with
+<code>cassandra::jvm_option_sets</code> and consider migrating settings
+within <code>cassandra::java</code>, <code>cassandra::jvm_options</code>
+and most of <code>cassandra::environment</code> (i.e. heap setting) to JVM
+option sets.</p>
+
+<h4 id="label-Cassandra+3.x+JVM+options">Cassandra 3.x JVM options</h4>
+
+<p>The default behaviour will control the <code>jvm.options</code> file of
+Cassandra 3.x installations. The defined type
+<code>cassandra::jvm_option_set</code> resource takes parameters
+<code>options</code>, <code>properties</code> and
+<code>advancedruntimeoptions</code> and add the settings to the
+<code>jvm.options</code> file.</p>
+
+<p>The main class is taking the parameter
+<code>cassandra::jvm_option_sets</code> to build instances of
+<code>cassandra::jvm_option_set</code> type. This also enables to pass the
+option sets via hiera to the module.</p>
+
+<pre class="code ruby"><code class="ruby">cassandra::jvm_option_sets:
+  example:
+    options:
+      - Xms4G
+      - Xmx4G
+      - Xmn800M
+    advancedruntimeoptions:
+      LargePageSizeInBytes: 2m
+      UseLargePages: true
+      AlwaysPreTouch: true
+    properties:
+      cassandra.start_rpc: false
+</code></pre>
+
+<p>For all options, advanced runtime options and properties in the above
+example Puppet will take control over the according line in the
+<code>jvm.options</code> file and set the desired option. The top level ID
+(<code>example</code> in this case) is the name of the option set allowing
+the grouping of options. Many option sets are allowed, however, it is not
+allowed to set the same option within different option sets.</p>
+
+<p>Note, that many other settings may be contained in the
+<code>jvm.options</code> file, which are not touched by Puppet.</p>
+
+<p>In order to enable the removal of specific settings from the
+<code>jvm.options</code> file use a tilde <code>~</code> to prefix options,
+and undef value (denoted with tilede <code>~</code> in Hiera) of
+<code>properties</code> and <code>advancedruntimeoptions</code>. The
+example below show how to remove specific options, advancedruntimeoptions
+and properties.</p>
+
+<pre class="code ruby"><code class="ruby">cassandra::jvm_option_sets:
+  remove:
+    options:
+      - ~ea
+    advancedruntimeoptions:
+      FlightRecorder: ~
+    properties:
+      cassandra.initial_token: ~
+</code></pre>
+
+<h4 id="label-Cassandra+4.0+JVM+setup">Cassandra 4.0 JVM setup</h4>
+
+<p>Note, that as Cassandra 4.0 is not released yet (i.e. at the time of the
+release of this module version), consider this as subject to change
+(without prior deprecation notice).</p>
+
+<p>Cassandra 4.0 and later is using distinct options files for server
+operation and client tools, for Java version independent options and for
+Java-8 or Java-11 respectively. Set the parameters <code>optsfile</code> to
+<code>jvm</code>, <code>jvm8</code> or <code>jvm11</code> and
+<code>variant</code> to <code>server</code> or <code>clients</code>
+accordingly.</p>
+
+<pre class="code ruby"><code class="ruby">cassandra::jvm_option_sets:
+  java8example:
+    optsfile: jvm8
+    variant: server
+    advancedruntimeoptions:
+      ThreadPriorityPolicy: 42
+  java11example:
+    optsfile: jvm11
+    variant: server
+    advancedruntimeoptions:
+      UseConcMarkSweepGC: false
+      CMSParallelRemarkEnabled: ~
+      UnlockExperimentalVMOptions: true
+      UseZGC: true
 </code></pre>
 
 <h2 id="label-Reference">Reference</h2>

@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -287,6 +287,25 @@ feature, refer to the reference documentation of the other components.</p>
   
     <li>
       
+        <span class='name'>jvm_option_sets</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>list of option sets containing JVM options, properties and advanced runtime
+options</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>jvm_options</span>
       
       
@@ -493,6 +512,7 @@ GossipingPropertyFileSnitch</p>
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -500,8 +520,6 @@ GossipingPropertyFileSnitch</p>
         <pre class="lines">
 
 
-57
-58
 59
 60
 61
@@ -540,10 +558,13 @@ GossipingPropertyFileSnitch</p>
 94
 95
 96
-97</pre>
+97
+98
+99
+100</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 57</span>
+        <pre class="code"><span class="info file"># File 'manifests/init.pp', line 59</span>
 
 class cassandra (
   String                      $cassandra_package = &#39;cassandra&#39;,
@@ -556,6 +577,7 @@ class cassandra (
   String                      $service_name = &#39;cassandra&#39;,
   Stdlib::Absolutepath        $config_dir = &#39;/etc/cassandra&#39;,
   Hash                        $environment = {},
+  Hash                        $jvm_option_sets = {},
   Array[String]               $jvm_options = [],
   Struct[{
     properties          =&gt; Optional[Hash],

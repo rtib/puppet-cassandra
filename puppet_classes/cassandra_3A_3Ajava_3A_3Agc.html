@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra::java::gc
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -78,6 +78,9 @@
 <div class="docstring">
   <div class="discussion">
     
+<p>Deprication notice: this class is now deprecated. Consider using JVM option
+sets instead.</p>
+
 <p>This class allows to set consistent JVM options at once, especially for the
 purpose of garbage collection settings. This is enabled by managing
 jvm.options file, available from Cassandra version 3.0 and later.</p>
@@ -168,6 +171,7 @@ if not undef.</p>
 </ul>
 
 
+
 </div><div class="method_details_list">
   <table class="source_code">
     <tr>
@@ -175,23 +179,25 @@ if not undef.</p>
         <pre class="lines">
 
 
-38
-39
 40
 41
 42
 43
 44
 45
-46</pre>
+46
+47
+48
+49</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/java/gc.pp', line 38</span>
+        <pre class="code"><span class="info file"># File 'manifests/java/gc.pp', line 40</span>
 
 class cassandra::java::gc (
   Enum[&#39;cms&#39;,&#39;g1&#39;]  $collector,
   Hash[String,Data] $params = {},
 ) {
+  notify { &#39;The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!&#39;: }
   file{ &quot;${cassandra::config_dir}/jvm.options&quot;:
     ensure  =&gt; file,
     content =&gt; epp(&quot;cassandra/jvm.${collector}.options.epp&quot;, $params),

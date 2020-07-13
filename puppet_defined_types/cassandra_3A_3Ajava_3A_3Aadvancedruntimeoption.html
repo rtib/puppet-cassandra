@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::java::advancedruntimeoption
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -121,7 +121,7 @@ create instances for each key of
         <span class='name'>value</span>
       
       
-        <span class='type'>(<tt>Variant[Boolean,String]</tt>)</span>
+        <span class='type'>(<tt>Scalar</tt>)</span>
       
       
       
@@ -134,6 +134,7 @@ prefix the option with + or -</p>
     </li>
   
 </ul>
+
 
 
 </div><div class="method_details_list">
@@ -159,14 +160,13 @@ prefix the option with + or -</p>
 38
 39
 40
-41
-42</pre>
+41</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/java/advancedruntimeoption.pp', line 25</span>
 
 define cassandra::java::advancedruntimeoption (
-  Variant[Boolean,String] $value,
+  Scalar $value,
 ) {
   $_opt = $value ? {
     Boolean =&gt; inline_epp(&#39;XX:&lt;% if $value { -%&gt;+&lt;% } else { -%&gt;-&lt;% } -%&gt;&lt;%= $name %&gt;&#39;,
@@ -174,12 +174,11 @@ define cassandra::java::advancedruntimeoption (
         &#39;name&#39;  =&gt; $name,
         &#39;value&#39; =&gt; $value,
       }),
-    String  =&gt; inline_epp(&#39;XX:&lt;%= $name -%&gt;=&lt;%= $value %&gt;&#39;,
+    default  =&gt; inline_epp(&#39;XX:&lt;%= $name -%&gt;=&lt;%= $value %&gt;&#39;,
       {
         &#39;name&#39;  =&gt; $name,
         &#39;value&#39; =&gt; $value,
       }),
-    default =&gt; &#39;&#39;,
   }
   cassandra::environment::jvm_option { $_opt: }
 }</pre>

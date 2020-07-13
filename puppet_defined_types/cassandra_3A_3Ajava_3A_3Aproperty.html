@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::java::property
   
-    &mdash; Documentation by YARD 0.9.24
+    &mdash; Documentation by YARD 0.9.25
   
 </title>
 
@@ -118,7 +118,7 @@ create instances for each key of <code>cassandra::java::properties</code>.</p>
         <span class='name'>value</span>
       
       
-        <span class='type'>(<tt>String</tt>)</span>
+        <span class='type'>(<tt>Scalar</tt>)</span>
       
       
       
@@ -130,6 +130,7 @@ create instances for each key of <code>cassandra::java::properties</code>.</p>
     </li>
   
 </ul>
+
 
 
 </div><div class="method_details_list">
@@ -149,7 +150,7 @@ create instances for each key of <code>cassandra::java::properties</code>.</p>
         <pre class="code"><span class="info file"># File 'manifests/java/property.pp', line 23</span>
 
 define cassandra::java::property (
-  String $value,
+  Scalar $value,
 ) {
   cassandra::environment::jvm_option{ &quot;D${name}=${value}&quot;: }
 }</pre>
