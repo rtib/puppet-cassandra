@@ -32,6 +32,8 @@
 #   cassandra configuration directory
 # @param environment
 #   hash of environment variable name-value pairs which should be add
+# @param jvm_option_sets
+#   list of option sets containing JVM options, properties and advanced runtime options
 # @param jvm_options
 #   list of options to be passed to the JVM
 # @param java
@@ -65,6 +67,7 @@ class cassandra (
   String                      $service_name = 'cassandra',
   Stdlib::Absolutepath        $config_dir = '/etc/cassandra',
   Hash                        $environment = {},
+  Hash                        $jvm_option_sets = {},
   Array[String]               $jvm_options = [],
   Struct[{
     properties          => Optional[Hash],

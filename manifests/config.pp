@@ -39,6 +39,11 @@ class cassandra::config {
   $cassandra::environment.each |String $name, String $value| {
     cassandra::environment::variable { $name: value => $value, }
   }
+  $cassandra::jvm_option_sets.each |String $name, Hash $params| {
+    cassandra::jvm_option_set { $name:
+      * => $params,
+    }
+  }
   $cassandra::jvm_options.each |String $name| {
     cassandra::environment::jvm_option { $name: }
   }

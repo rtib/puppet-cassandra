@@ -5,12 +5,22 @@
 # can be defined to have particular values or to be removed from the configuration.
 # Any option not mentioned will not be touched.
 #
-# @param optsfile determine the file to control, either `jvm` for the independet
-#    options or `jvm8` or `jvm11` for the version dependant options
-# @param variant leave this undef for Cassandra < 4.0, set it to `server` or `clients` if running >= 4.0
-# @param options list of basic JVM options, e.g. `ea`, `server`, `Xms4g`, etc.
-# @param properties java properties to be passed to the JVM
-# @param advancedoptions advanced runtime options which may be feature toggles or values
+# For Cassandra 3.x versions, only `optsfile = jvm` with `variant = undef` is supported,
+# which will control the `/etc/cassandra/jvm.options` file. Since Cassandra versions >= 4.0
+# use distinct option files for server and clients, as well as Java independent, Java-8 and
+# Java-11, use parameters `optsfile` and `variant` to select a particular options file.
+#
+# @param optsfile
+#   determine the file to control, either `jvm` for the independet
+#   options or `jvm8` or `jvm11` for the version dependant options
+# @param variant
+#   leave this undef for Cassandra < 4.0, set it to `server` or `clients` if running >= 4.0
+# @param options
+#   list of basic JVM options, e.g. `ea`, `server`, `Xms4g`, etc.
+# @param properties
+#   java properties to be passed to the JVM
+# @param advancedoptions
+#   advanced runtime options which may be feature toggles or values
 define cassandra::jvm_option_set (
   Enum['jvm', 'jvm8', 'jvm11']        $optsfile = 'jvm',
   Optional[Enum['clients', 'server']] $variant = undef,

@@ -71,6 +71,28 @@ describe 'cassandra' do
           end
         end
 
+        context 'JVM option sets' do
+          let(:params) do
+            {
+              'jvm_option_sets' => {
+                'test1 opts' => {
+                  'options' => ['ea', 'Xms4G'],
+                },
+                'test2 opts' => {
+                  'optsfile' => 'jvm11',
+                  'variant'  => 'server',
+                  'properties' => {
+                    'ThreadPriorityPolicy' => 42,
+                  },
+                },
+              },
+            }
+          end
+
+          it { is_expected.to contain_cassandra__jvm_option_set('test1 opts') }
+          it { is_expected.to contain_cassandra__jvm_option_set('test2 opts') }
+        end
+
         context 'environment jvm_options' do
           let(:params) do
             {
