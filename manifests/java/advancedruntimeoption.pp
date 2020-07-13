@@ -23,7 +23,7 @@
 #   which will prefix the option with + or -
 #
 define cassandra::java::advancedruntimeoption (
-  Variant[Boolean,String] $value,
+  Scalar $value,
 ) {
   $_opt = $value ? {
     Boolean => inline_epp('XX:<% if $value { -%>+<% } else { -%>-<% } -%><%= $name %>',
@@ -31,12 +31,11 @@ define cassandra::java::advancedruntimeoption (
         'name'  => $name,
         'value' => $value,
       }),
-    String  => inline_epp('XX:<%= $name -%>=<%= $value %>',
+    default  => inline_epp('XX:<%= $name -%>=<%= $value %>',
       {
         'name'  => $name,
         'value' => $value,
       }),
-    default => '',
   }
   cassandra::environment::jvm_option { $_opt: }
 }

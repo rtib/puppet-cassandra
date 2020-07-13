@@ -16,7 +16,7 @@ describe 'cassandra::java::runtimeoption' do
         end
       end
 
-      context 'option /w parameter' do
+      context 'option /w string parameter' do
         let(:title) { 'testoption2' }
         let(:params) do
           {
@@ -27,6 +27,32 @@ describe 'cassandra::java::runtimeoption' do
         it { is_expected.to compile }
         it do
           is_expected.to contain_cassandra__environment__jvm_option('Xtestoption2:testvalue')
+        end
+      end
+      context 'option /w integer parameter' do
+        let(:title) { 'testoption3' }
+        let(:params) do
+          {
+            'value' => 1234,
+          }
+        end
+
+        it { is_expected.to compile }
+        it do
+          is_expected.to contain_cassandra__environment__jvm_option('Xtestoption3:1234')
+        end
+      end
+      context 'option /w boolean parameter' do
+        let(:title) { 'testoption4' }
+        let(:params) do
+          {
+            'value' => true,
+          }
+        end
+
+        it { is_expected.to compile }
+        it do
+          is_expected.to contain_cassandra__environment__jvm_option('Xtestoption4:true')
         end
       end
     end

@@ -21,7 +21,7 @@
 #   the value the property is set to
 #
 define cassandra::java::property (
-  String $value,
+  Scalar $value,
 ) {
   cassandra::environment::jvm_option{ "D${name}=${value}": }
 }

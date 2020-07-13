@@ -48,6 +48,20 @@ describe 'cassandra::java::advancedruntimeoption' do
           is_expected.to contain_cassandra__environment__jvm_option('XX:Option=Parameter')
         end
       end
+
+      context 'option integer parameter' do
+        let(:title) { 'Option' }
+        let(:params) do
+          {
+            'value' => 1234,
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it do
+          is_expected.to contain_cassandra__environment__jvm_option('XX:Option=1234')
+        end
+      end
     end
   end
 end
