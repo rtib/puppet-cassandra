@@ -14,7 +14,7 @@ describe 'cassandra::java::property' do
             'value' => 'testvalue',
           }
         end
-      
+
         it { is_expected.to compile }
         it do
           is_expected.to contain_cassandra__environment__jvm_option('Dstrproperty=testvalue')
@@ -27,7 +27,7 @@ describe 'cassandra::java::property' do
             'value' => 1234,
           }
         end
-      
+
         it { is_expected.to compile }
         it do
           is_expected.to contain_cassandra__environment__jvm_option('Dintproperty=1234')
@@ -40,7 +40,7 @@ describe 'cassandra::java::property' do
             'value' => true,
           }
         end
-      
+
         it { is_expected.to compile }
         it do
           is_expected.to contain_cassandra__environment__jvm_option('Dboolproperty1=true')
@@ -53,7 +53,7 @@ describe 'cassandra::java::property' do
             'value' => false,
           }
         end
-      
+
         it { is_expected.to compile }
         it do
           is_expected.to contain_cassandra__environment__jvm_option('Dboolproperty0=false')
