@@ -8,6 +8,68 @@ describe 'cassandra::jvm_option_set' do
   on_supported_os.each do |os, os_facts|
     let(:facts) { os_facts }
 
+    context 'Cassandra 4 Java-8 server options' do
+      let(:title) { 'C*4 Java-8 server options'}
+      let(:params) do
+        {
+          'optsfile'   => 'jvm8',
+          'variant'    => 'server',
+          'advancedoptions' => {
+            'ThreadPriorityPolicy' => 42,
+          }
+        }
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it do
+        is_expected.to contain_file_line('C*4 Java-8 server options set advanced runtime option ThreadPriorityPolicy')
+        .with_ensure('present')
+        .with_path('/etc/cassandra/jvm8-server.options')
+        .with_match('^-XX:ThreadPriorityPolicy')
+        .with_line('-XX:ThreadPriorityPolicy=42')
+      end
+    end
+    context 'Cassandra 4 Java-11 server options' do
+      let(:title) { 'C*4 Java-11 server options'}
+      let(:params) do
+        {
+          'optsfile'   => 'jvm11',
+          'variant'    => 'server',
+          'advancedoptions' => {
+            'ThreadPriorityPolicy' => 42,
+          }
+        }
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it do
+        is_expected.to contain_file_line('C*4 Java-11 server options set advanced runtime option ThreadPriorityPolicy')
+        .with_ensure('present')
+        .with_path('/etc/cassandra/jvm11-server.options')
+        .with_match('^-XX:ThreadPriorityPolicy')
+        .with_line('-XX:ThreadPriorityPolicy=42')
+      end
+    end
+    context 'Cassandra 4 indep server options' do
+      let(:title) { 'C*4 indep server options'}
+      let(:params) do
+        {
+          'variant'    => 'server',
+          'properties' => {
+            'cassandra.available_processors' => 4,
+          }
+        }
+      end
+
+      it { is_expected.to compile.with_all_deps }
+      it do
+        is_expected.to contain_file_line('C*4 indep server options set property cassandra.available_processors')
+        .with_ensure('present')
+        .with_path('/etc/cassandra/jvm-server.options')
+        .with_match('^-Dcassandra.available_processors')
+        .with_line('-Dcassandra.available_processors=4')
+      end
+    end
     context 'add/remove options' do
       let(:title) { 'a/r opts' }
       let(:params) do

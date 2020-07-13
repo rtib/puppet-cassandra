@@ -7,19 +7,21 @@
 #
 # @param optsfile determine the file to control, either `jvm` for the independet
 #    options or `jvm8` or `jvm11` for the version dependant options
-# @param variant options variant to be used for
+# @param variant leave this undef for Cassandra < 4.0, set it to `server` or `clients` if running >= 4.0
 # @param options list of basic JVM options, e.g. `ea`, `server`, `Xms4g`, etc.
 # @param properties java properties to be passed to the JVM
 # @param advancedoptions advanced runtime options which may be feature toggles or values
 define cassandra::jvm_option_set (
-  Enum['jvm', 'jvm8', 'jvm11']  $optsfile = 'jvm',
-  Enum['clients', 'server']     $variant = 'server',
-  Array[String]                 $options = [],
-  Hash[String,Optional[Scalar]] $properties = {},
-  Hash[String,Optional[Scalar]] $advancedoptions = {},
+  Enum['jvm', 'jvm8', 'jvm11']        $optsfile = 'jvm',
+  Optional[Enum['clients', 'server']] $variant = undef,
+  Array[String]                       $options = [],
+  Hash[String,Optional[Scalar]]       $properties = {},
+  Hash[String,Optional[Scalar]]       $advancedoptions = {},
 ) {
-  # ToDo: we need jvm.options to be handled as well for < 4.0
-  $_file = "${cassandra::config_dir}/${optsfile}-${variant}.options"
+  $_file = $variant ? {
+    /^(server|clients)$/ => "${cassandra::config_dir}/${optsfile}-${variant}.options",
+    default              => "${cassandra::config_dir}/${optsfile}.options",
+  }
 
   $options.each |String $_opt| {
     if $_opt =~ /^~/ {
