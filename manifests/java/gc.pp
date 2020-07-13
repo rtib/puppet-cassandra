@@ -1,5 +1,7 @@
 # @summary Setup the Java garbage collection for Cassandra
 #
+# Deprication notice: this class is now deprecated. Consider using JVM option sets instead.
+#
 # This class allows to set consistent JVM options at once, especially for the
 # purpose of garbage collection settings. This is enabled by managing
 # jvm.options file, available from Cassandra version 3.0 and later.
@@ -39,6 +41,7 @@ class cassandra::java::gc (
   Enum['cms','g1']  $collector,
   Hash[String,Data] $params = {},
 ) {
+  notify { 'The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!': }
   file{ "${cassandra::config_dir}/jvm.options":
     ensure  => file,
     content => epp("cassandra/jvm.${collector}.options.epp", $params),

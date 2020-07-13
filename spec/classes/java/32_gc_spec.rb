@@ -14,6 +14,7 @@ describe 'cassandra::java::gc' do
         end
 
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_notify('The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!') }
         it do
           is_expected.to contain_file('/etc/cassandra/jvm.options')
             .with_ensure('file')
@@ -32,6 +33,7 @@ describe 'cassandra::java::gc' do
         end
 
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_notify('The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!') }
         it do
           is_expected.to contain_file('/etc/cassandra/jvm.options')
             .with_ensure('file')
@@ -48,6 +50,7 @@ describe 'cassandra::java::gc' do
         end
 
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_notify('The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!') }
         it do
           is_expected.to contain_file('/etc/cassandra/jvm.options')
             .with_ensure('file')
@@ -69,6 +72,7 @@ describe 'cassandra::java::gc' do
         end
 
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_notify('The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!') }
         it do
           is_expected.to contain_file('/etc/cassandra/jvm.options')
             .with_ensure('file')
