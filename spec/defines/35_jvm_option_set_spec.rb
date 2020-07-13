@@ -10,65 +10,65 @@ describe 'cassandra::jvm_option_set' do
       let(:facts) { os_facts }
 
       context 'Cassandra 4 Java-8 server options' do
-        let(:title) { 'C*4 Java-8 server options'}
+        let(:title) { 'C*4 Java-8 server options' }
         let(:params) do
           {
             'optsfile'   => 'jvm8',
             'variant'    => 'server',
             'advancedoptions' => {
               'ThreadPriorityPolicy' => 42,
-            }
+            },
           }
         end
 
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file_line('C*4 Java-8 server options set advanced runtime option ThreadPriorityPolicy')
-          .with_ensure('present')
-          .with_path('/etc/cassandra/jvm8-server.options')
-          .with_match('^-XX:ThreadPriorityPolicy')
-          .with_line('-XX:ThreadPriorityPolicy=42')
+            .with_ensure('present')
+            .with_path('/etc/cassandra/jvm8-server.options')
+            .with_match('^-XX:ThreadPriorityPolicy')
+            .with_line('-XX:ThreadPriorityPolicy=42')
         end
       end
       context 'Cassandra 4 Java-11 server options' do
-        let(:title) { 'C*4 Java-11 server options'}
+        let(:title) { 'C*4 Java-11 server options' }
         let(:params) do
           {
             'optsfile'   => 'jvm11',
             'variant'    => 'server',
             'advancedoptions' => {
               'ThreadPriorityPolicy' => 42,
-            }
+            },
           }
         end
 
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file_line('C*4 Java-11 server options set advanced runtime option ThreadPriorityPolicy')
-          .with_ensure('present')
-          .with_path('/etc/cassandra/jvm11-server.options')
-          .with_match('^-XX:ThreadPriorityPolicy')
-          .with_line('-XX:ThreadPriorityPolicy=42')
+            .with_ensure('present')
+            .with_path('/etc/cassandra/jvm11-server.options')
+            .with_match('^-XX:ThreadPriorityPolicy')
+            .with_line('-XX:ThreadPriorityPolicy=42')
         end
       end
       context 'Cassandra 4 indep server options' do
-        let(:title) { 'C*4 indep server options'}
+        let(:title) { 'C*4 indep server options' }
         let(:params) do
           {
             'variant'    => 'server',
             'properties' => {
               'cassandra.available_processors' => 4,
-            }
+            },
           }
         end
 
         it { is_expected.to compile.with_all_deps }
         it do
           is_expected.to contain_file_line('C*4 indep server options set property cassandra.available_processors')
-          .with_ensure('present')
-          .with_path('/etc/cassandra/jvm-server.options')
-          .with_match('^-Dcassandra.available_processors')
-          .with_line('-Dcassandra.available_processors=4')
+            .with_ensure('present')
+            .with_path('/etc/cassandra/jvm-server.options')
+            .with_match('^-Dcassandra.available_processors')
+            .with_line('-Dcassandra.available_processors=4')
         end
       end
       context 'add/remove options' do
@@ -83,12 +83,12 @@ describe 'cassandra::jvm_option_set' do
         it do
           is_expected.to contain_file_line('a/r opts remove option ea')
             .with_ensure('absent')
-            .with_line("-ea")
+            .with_line('-ea')
         end
         it do
           is_expected.to contain_file_line('a/r opts set option server')
             .with_ensure('present')
-            .with_line("-server")
+            .with_line('-server')
         end
       end
       context 'add/remove properties' do
@@ -106,7 +106,7 @@ describe 'cassandra::jvm_option_set' do
         it do
           is_expected.to contain_file_line('a/r props remove property test1')
             .with_ensure('absent')
-            .with_match("^-Dtest1")
+            .with_match('^-Dtest1')
             .with_match_for_absence(true)
         end
         it do
@@ -133,7 +133,7 @@ describe 'cassandra::jvm_option_set' do
         it do
           is_expected.to contain_file_line('a/r adv opts remove advanced runtime option test1')
             .with_ensure('absent')
-            .with_match("^-XX:[+-]?test1")
+            .with_match('^-XX:[+-]?test1')
             .with_match_for_absence(true)
         end
         it do
