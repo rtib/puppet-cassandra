@@ -32,6 +32,9 @@ Puppet: [![PDK Version](https://img.shields.io/puppetforge/pdk-version/trepasi/c
     - [JVM options](#jvm-options)
     - [Java runtime settings](#java-runtime-settings)
   - [Java garbage collection settings](#java-garbage-collection-settings)
+  - [JVM option sets](#jvm-option-sets)
+    - [Cassandra 3.x JVM options](#cassandra-3x-jvm-options)
+    - [Cassandra 4.0 JVM setup](#cassandra-40-jvm-setup)
 - [Reference](#reference)
 - [Development](#development)
 
@@ -262,6 +265,73 @@ cassandra::java_gc:
   collector: g1
   params:
     maxGCPauseMillis: 300
+```
+
+### JVM option sets
+
+Since version 2.2 this module is supporting a novel approach to set JVM options for the Cassandra runtime. This is provided by the JVM option set feature, which is controlling the `jvm.options` file of Cassandra 3.x and many combinations used by Cassandra 4.0 and later.
+
+Note, that much of the settings here will override settings done with `cassandra::java` and all of this will collide with `cassandra::java_gc` if set. Thus remove `cassandra::java_gc` at all when starting with `cassandra::jvm_option_sets` and consider migrating settings within `cassandra::java`, `cassandra::jvm_options` and most of `cassandra::environment` (i.e. heap setting) to JVM option sets.
+
+#### Cassandra 3.x JVM options
+
+The default behaviour will control the `jvm.options` file of Cassandra 3.x installations. The defined type `cassandra::jvm_option_set` resource takes parameters `options`, `properties` and `advancedruntimeoptions` and add the settings to the `jvm.options` file.
+
+The main class is taking the parameter `cassandra::jvm_option_sets` to build instances of `cassandra::jvm_option_set` type. This also enables to pass the option sets via hiera to the module.
+
+```yaml
+cassandra::jvm_option_sets:
+  example:
+    options:
+      - Xms4G
+      - Xmx4G
+      - Xmn800M
+    advancedruntimeoptions:
+      LargePageSizeInBytes: 2m
+      UseLargePages: true
+      AlwaysPreTouch: true
+    properties:
+      cassandra.start_rpc: false
+```
+
+For all options, advanced runtime options and properties in the above example Puppet will take control over the according line in the `jvm.options` file and set the desired option. The top level ID (`example` in this case) is the name of the option set allowing the grouping of options. Many option sets are allowed, however, it is not allowed to set the same option within different option sets.
+
+Note, that many other settings may be contained in the `jvm.options` file, which are not touched by Puppet.
+
+In order to enable the removal of specific settings from the `jvm.options` file use a tilde `~` to prefix options, and undef value (denoted with tilede `~` in Hiera) of `properties` and `advancedruntimeoptions`. The example below show how to remove specific options, advancedruntimeoptions and properties.
+
+```yaml
+cassandra::jvm_option_sets:
+  remove:
+    options:
+      - ~ea
+    advancedruntimeoptions:
+      FlightRecorder: ~
+    properties:
+      cassandra.initial_token: ~
+```
+
+#### Cassandra 4.0 JVM setup
+
+Note, that as Cassandra 4.0 is not released yet (i.e. at the time of the release of this module version), consider this as subject to change (without prior deprecation notice).
+
+Cassandra 4.0 and later is using distinct options files for server operation and client tools, for Java version independent options and for Java-8 or Java-11 respectively. Set the parameters `optsfile` to `jvm`, `jvm8` or `jvm11` and `variant` to `server` or `clients` accordingly.
+
+```yaml
+cassandra::jvm_option_sets:
+  java8example:
+    optsfile: jvm8
+    variant: server
+    advancedruntimeoptions:
+      ThreadPriorityPolicy: 42
+  java11example:
+    optsfile: jvm11
+    variant: server
+    advancedruntimeoptions:
+      UseConcMarkSweepGC: false
+      CMSParallelRemarkEnabled: ~
+      UnlockExperimentalVMOptions: true
+      UseZGC: true
 ```
 
 ## Reference
