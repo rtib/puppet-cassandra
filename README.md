@@ -255,6 +255,8 @@ cassandra::java:
 
 ### Java garbage collection settings
 
+__Deprication notice:__ `cassandra::java_gc` and the class `cassandra::java::gc` are now deprecated. Consider using JVM option sets instead.
+
 Settings to Java garbage collector can be made by instanciating the `cassandra::java::gc` class. This can be done via the `java_gc` parameter of this module. E.g.:
 
 ```yaml
