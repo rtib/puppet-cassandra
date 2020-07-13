@@ -21,6 +21,7 @@
 * [`cassandra::java::agent`](#cassandrajavaagent): Add an agent to the JVM running Cassandra.
 * [`cassandra::java::property`](#cassandrajavaproperty): Add a Java property to the JVM running Cassandra.
 * [`cassandra::java::runtimeoption`](#cassandrajavaruntimeoption): Add a runtime option to the JVM running Cassandra.
+* [`cassandra::jvm_option_set`](#cassandrajvm_option_set): Set JVM options by controlling particular lines of jvm.options file.
 
 **Data types**
 
@@ -130,6 +131,14 @@ Default value: '/etc/cassandra'
 Data type: `Hash`
 
 hash of environment variable name-value pairs which should be add
+
+Default value: {}
+
+##### `jvm_option_sets`
+
+Data type: `Hash`
+
+list of option sets containing JVM options, properties and advanced runtime options
 
 Default value: {}
 
@@ -373,6 +382,8 @@ cassandra::cassandra_package: dsc22
 
 ### cassandra::java::gc
 
+Deprication notice: this class is now deprecated. Consider using JVM option sets instead.
+
 This class allows to set consistent JVM options at once, especially for the
 purpose of garbage collection settings. This is enabled by managing
 jvm.options file, available from Cassandra version 3.0 and later.
@@ -544,7 +555,7 @@ The following parameters are available in the `cassandra::java::advancedruntimeo
 
 ##### `value`
 
-Data type: `Variant[Boolean,String]`
+Data type: `Scalar`
 
 a string value to be added to the runtime option or a boolean
 which will prefix the option with + or -
@@ -620,7 +631,7 @@ The following parameters are available in the `cassandra::java::property` define
 
 ##### `value`
 
-Data type: `String`
+Data type: `Scalar`
 
 the value the property is set to
 
@@ -655,11 +666,68 @@ The following parameters are available in the `cassandra::java::runtimeoption` d
 
 ##### `value`
 
-Data type: `Optional[String]`
+Data type: `Optional[Scalar]`
 
 value to be added to the runtime option
 
 Default value: `undef`
+
+### cassandra::jvm_option_set
+
+Select the file to be controlled by choosing, jvm, jvm8 or jvm11 and the
+variant server or clients. Options, properties and advanced runtime options
+can be defined to have particular values or to be removed from the configuration.
+Any option not mentioned will not be touched.
+
+For Cassandra 3.x versions, only `optsfile = jvm` with `variant = undef` is supported,
+which will control the `/etc/cassandra/jvm.options` file. Since Cassandra versions >= 4.0
+use distinct option files for server and clients, as well as Java independent, Java-8 and
+Java-11, use parameters `optsfile` and `variant` to select a particular options file.
+
+#### Parameters
+
+The following parameters are available in the `cassandra::jvm_option_set` defined type.
+
+##### `optsfile`
+
+Data type: `Enum['jvm', 'jvm8', 'jvm11']`
+
+determine the file to control, either `jvm` for the independet
+options or `jvm8` or `jvm11` for the version dependant options
+
+Default value: 'jvm'
+
+##### `variant`
+
+Data type: `Optional[Enum['clients', 'server']]`
+
+leave this undef for Cassandra < 4.0, set it to `server` or `clients` if running >= 4.0
+
+Default value: `undef`
+
+##### `options`
+
+Data type: `Array[String]`
+
+list of basic JVM options, e.g. `ea`, `server`, `Xms4g`, etc.
+
+Default value: []
+
+##### `properties`
+
+Data type: `Hash[String,Optional[Scalar]]`
+
+java properties to be passed to the JVM
+
+Default value: {}
+
+##### `advancedoptions`
+
+Data type: `Hash[String,Optional[Scalar]]`
+
+advanced runtime options which may be feature toggles or values
+
+Default value: {}
 
 ## Data types
 

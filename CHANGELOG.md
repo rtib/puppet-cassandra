@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v2.2.0](https://github.com/rtib/puppet-cassandra/tree/v2.2.0) (2020-07-13)
+
+[Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v2.1.2...v2.2.0)
+
+### Added
+
+- Deprecate cassandra::java::gc [\#12](https://github.com/rtib/puppet-cassandra/pull/12) ([rtib](https://github.com/rtib))
+- New feature: JVM option sets [\#11](https://github.com/rtib/puppet-cassandra/pull/11) ([rtib](https://github.com/rtib))
+
+### Fixed
+
+- Make type enforcement less restrictive [\#13](https://github.com/rtib/puppet-cassandra/pull/13) ([rtib](https://github.com/rtib))
+
 ## [v2.1.2](https://github.com/rtib/puppet-cassandra/tree/v2.1.2) (2020-02-07)
 
 [Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v2.1.1...v2.1.2)
