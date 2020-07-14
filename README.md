@@ -288,7 +288,7 @@ cassandra::jvm_option_sets:
       - Xms4G
       - Xmx4G
       - Xmn800M
-    advancedruntimeoptions:
+    advancedoptions:
       LargePageSizeInBytes: 2m
       UseLargePages: true
       AlwaysPreTouch: true
@@ -300,14 +300,14 @@ For all options, advanced runtime options and properties in the above example Pu
 
 Note, that many other settings may be contained in the `jvm.options` file, which are not touched by Puppet.
 
-In order to enable the removal of specific settings from the `jvm.options` file use a tilde `~` to prefix options, and undef value (denoted with tilede `~` in Hiera) of `properties` and `advancedruntimeoptions`. The example below show how to remove specific options, advancedruntimeoptions and properties.
+In order to enable the removal of specific settings from the `jvm.options` file use a tilde `~` to prefix options, and undef value (denoted with tilede `~` in Hiera) of `properties` and `advancedoptions`. The example below show how to remove specific options, advancedruntimeoptions and properties.
 
 ```yaml
 cassandra::jvm_option_sets:
   remove:
     options:
       - ~ea
-    advancedruntimeoptions:
+    advancedoptions:
       FlightRecorder: ~
     properties:
       cassandra.initial_token: ~
@@ -324,12 +324,12 @@ cassandra::jvm_option_sets:
   java8example:
     optsfile: jvm8
     variant: server
-    advancedruntimeoptions:
+    advancedoptions:
       ThreadPriorityPolicy: 42
   java11example:
     optsfile: jvm11
     variant: server
-    advancedruntimeoptions:
+    advancedoptions:
       UseConcMarkSweepGC: false
       CMSParallelRemarkEnabled: ~
       UnlockExperimentalVMOptions: true
