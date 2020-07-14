@@ -490,7 +490,7 @@ option sets via hiera to the module.</p>
       - Xms4G
       - Xmx4G
       - Xmn800M
-    advancedruntimeoptions:
+    advancedoptions:
       LargePageSizeInBytes: 2m
       UseLargePages: true
       AlwaysPreTouch: true
@@ -511,15 +511,14 @@ allowed to set the same option within different option sets.</p>
 <p>In order to enable the removal of specific settings from the
 <code>jvm.options</code> file use a tilde <code>~</code> to prefix options,
 and undef value (denoted with tilede <code>~</code> in Hiera) of
-<code>properties</code> and <code>advancedruntimeoptions</code>. The
-example below show how to remove specific options, advancedruntimeoptions
-and properties.</p>
+<code>properties</code> and <code>advancedoptions</code>. The example below
+show how to remove specific options, advancedruntimeoptions and properties.</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::jvm_option_sets:
   remove:
     options:
       - ~ea
-    advancedruntimeoptions:
+    advancedoptions:
       FlightRecorder: ~
     properties:
       cassandra.initial_token: ~
@@ -542,12 +541,12 @@ accordingly.</p>
   java8example:
     optsfile: jvm8
     variant: server
-    advancedruntimeoptions:
+    advancedoptions:
       ThreadPriorityPolicy: 42
   java11example:
     optsfile: jvm11
     variant: server
-    advancedruntimeoptions:
+    advancedoptions:
       UseConcMarkSweepGC: false
       CMSParallelRemarkEnabled: ~
       UnlockExperimentalVMOptions: true
