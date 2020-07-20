@@ -91,6 +91,31 @@ describe 'cassandra::jvm_option_set' do
             .with_line('-server')
         end
       end
+      context 'add/remove size options' do
+        let(:title) { 'a/r size options' }
+        let(:params) do
+          {
+            'sizeoptions' => {
+              'Xmn' => :undef,
+              'Xmx' => '8G',
+            },
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it do
+          is_expected.to contain_file_line('a/r size options remove size option Xmn')
+            .with_ensure('absent')
+            .with_match('^-Xmn')
+            .with_match_for_absence(true)
+        end
+        it do
+          is_expected.to contain_file_line('a/r size options set size option Xmx')
+            .with_ensure('present')
+            .with_line('-Xmx8G')
+            .with_match('^-Xmx')
+        end
+      end
       context 'add/remove properties' do
         let(:title) { 'a/r props' }
         let(:params) do
