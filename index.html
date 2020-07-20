@@ -475,8 +475,8 @@ option sets.</p>
 <p>The default behaviour will control the <code>jvm.options</code> file of
 Cassandra 3.x installations. The defined type
 <code>cassandra::jvm_option_set</code> resource takes parameters
-<code>options</code>, <code>properties</code> and
-<code>advancedruntimeoptions</code> and add the settings to the
+<code>options</code>, <code>sizeoptions</code>, <code>properties</code> and
+<code>advancedoptions</code> and add the settings to the
 <code>jvm.options</code> file.</p>
 
 <p>The main class is taking the parameter
@@ -487,9 +487,12 @@ option sets via hiera to the module.</p>
 <pre class="code ruby"><code class="ruby">cassandra::jvm_option_sets:
   example:
     options:
-      - Xms4G
-      - Xmx4G
-      - Xmn800M
+      - ea
+      - server
+    sizeoptions:
+      Xms: 4G
+      Xmx: 4G
+      Xmn: 800M
     advancedoptions:
       LargePageSizeInBytes: 2m
       UseLargePages: true
@@ -511,13 +514,16 @@ allowed to set the same option within different option sets.</p>
 <p>In order to enable the removal of specific settings from the
 <code>jvm.options</code> file use a tilde <code>~</code> to prefix options,
 and undef value (denoted with tilede <code>~</code> in Hiera) of
-<code>properties</code> and <code>advancedoptions</code>. The example below
-show how to remove specific options, advancedruntimeoptions and properties.</p>
+<code>properties</code>, <code>sizeoptions</code> and
+<code>advancedoptions</code>. The example below show how to remove specific
+options, advancedruntimeoptions and properties.</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::jvm_option_sets:
   remove:
     options:
       - ~ea
+    sizeoptions:
+      Xmn: ~
     advancedoptions:
       FlightRecorder: ~
     properties:

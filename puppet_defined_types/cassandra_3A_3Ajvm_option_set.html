@@ -174,6 +174,25 @@ dependant options</p>
   
     <li>
       
+        <span class='name'>sizeoptions</span>
+      
+      
+        <span class='type'>(<tt>Hash[String,Optional[Scalar]]</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>JVM options having a value concatenated directly to the options, e.g.
+<code>Xmx4g</code>.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
         <span class='name'>advancedoptions</span>
       
       
@@ -201,8 +220,6 @@ dependant options</p>
         <pre class="lines">
 
 
-24
-25
 26
 27
 28
@@ -278,16 +295,38 @@ dependant options</p>
 98
 99
 100
-101</pre>
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122</pre>
       </td>
       <td>
-        <pre class="code"><span class="info file"># File 'manifests/jvm_option_set.pp', line 24</span>
+        <pre class="code"><span class="info file"># File 'manifests/jvm_option_set.pp', line 26</span>
 
 define cassandra::jvm_option_set (
   Enum[&#39;jvm&#39;, &#39;jvm8&#39;, &#39;jvm11&#39;]        $optsfile = &#39;jvm&#39;,
   Optional[Enum[&#39;clients&#39;, &#39;server&#39;]] $variant = undef,
   Array[String]                       $options = [],
   Hash[String,Optional[Scalar]]       $properties = {},
+  Hash[String,Optional[Scalar]]       $sizeoptions = {},
   Hash[String,Optional[Scalar]]       $advancedoptions = {},
 ) {
   $_file = $variant ? {
@@ -311,6 +350,24 @@ define cassandra::jvm_option_set (
       }
     }
   } # $options.each
+
+  $sizeoptions.each |String $_prop, Data $_value| {
+    if $_value =~ Undef {
+      file_line { &quot;${name} remove size option ${_prop}&quot;:
+        ensure            =&gt; absent,
+        path              =&gt; $_file,
+        match             =&gt; &quot;^-${_prop}&quot;,
+        match_for_absence =&gt; true,
+      }
+    } else {
+      file_line { &quot;${name} set size option ${_prop}&quot;:
+        ensure =&gt; present,
+        path   =&gt; $_file,
+        match  =&gt; &quot;^-${_prop}&quot;,
+        line   =&gt; &quot;-${_prop}${_value}&quot;,
+      }
+    }
+  } # $sizeoptions.each
 
   $properties.each |String $_prop, Data $_value| {
     if $_value =~ Undef {

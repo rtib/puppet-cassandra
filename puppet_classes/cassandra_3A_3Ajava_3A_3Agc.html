@@ -188,7 +188,9 @@ if not undef.</p>
 46
 47
 48
-49</pre>
+49
+50
+51</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/java/gc.pp', line 40</span>
@@ -197,7 +199,9 @@ class cassandra::java::gc (
   Enum[&#39;cms&#39;,&#39;g1&#39;]  $collector,
   Hash[String,Data] $params = {},
 ) {
-  notify { &#39;The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!&#39;: }
+  notify { &#39;The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!&#39;:
+    loglevel =&gt; warning,
+  }
   file{ &quot;${cassandra::config_dir}/jvm.options&quot;:
     ensure  =&gt; file,
     content =&gt; epp(&quot;cassandra/jvm.${collector}.options.epp&quot;, $params),
