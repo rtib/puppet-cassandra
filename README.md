@@ -277,7 +277,7 @@ Note, that much of the settings here will override settings done with `cassandra
 
 #### Cassandra 3.x JVM options
 
-The default behaviour will control the `jvm.options` file of Cassandra 3.x installations. The defined type `cassandra::jvm_option_set` resource takes parameters `options`, `properties` and `advancedruntimeoptions` and add the settings to the `jvm.options` file.
+The default behaviour will control the `jvm.options` file of Cassandra 3.x installations. The defined type `cassandra::jvm_option_set` resource takes parameters `options`, `sizeoptions`, `properties` and `advancedoptions` and add the settings to the `jvm.options` file.
 
 The main class is taking the parameter `cassandra::jvm_option_sets` to build instances of `cassandra::jvm_option_set` type. This also enables to pass the option sets via hiera to the module.
 
@@ -285,9 +285,12 @@ The main class is taking the parameter `cassandra::jvm_option_sets` to build ins
 cassandra::jvm_option_sets:
   example:
     options:
-      - Xms4G
-      - Xmx4G
-      - Xmn800M
+      - ea
+      - server
+    sizeoptions:
+      Xms: 4G
+      Xmx: 4G
+      Xmn: 800M
     advancedoptions:
       LargePageSizeInBytes: 2m
       UseLargePages: true
@@ -300,13 +303,15 @@ For all options, advanced runtime options and properties in the above example Pu
 
 Note, that many other settings may be contained in the `jvm.options` file, which are not touched by Puppet.
 
-In order to enable the removal of specific settings from the `jvm.options` file use a tilde `~` to prefix options, and undef value (denoted with tilede `~` in Hiera) of `properties` and `advancedoptions`. The example below show how to remove specific options, advancedruntimeoptions and properties.
+In order to enable the removal of specific settings from the `jvm.options` file use a tilde `~` to prefix options, and undef value (denoted with tilede `~` in Hiera) of `properties`, `sizeoptions` and `advancedoptions`. The example below show how to remove specific options, advancedruntimeoptions and properties.
 
 ```yaml
 cassandra::jvm_option_sets:
   remove:
     options:
       - ~ea
+    sizeoptions:
+      Xmn: ~
     advancedoptions:
       FlightRecorder: ~
     properties:

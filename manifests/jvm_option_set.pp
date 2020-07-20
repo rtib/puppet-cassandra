@@ -19,6 +19,8 @@
 #   list of basic JVM options, e.g. `ea`, `server`, `Xms4g`, etc.
 # @param properties
 #   java properties to be passed to the JVM
+# @param sizeoptions
+#   JVM options having a value concatenated directly to the options, e.g. `Xmx4g`.
 # @param advancedoptions
 #   advanced runtime options which may be feature toggles or values
 define cassandra::jvm_option_set (
@@ -26,6 +28,7 @@ define cassandra::jvm_option_set (
   Optional[Enum['clients', 'server']] $variant = undef,
   Array[String]                       $options = [],
   Hash[String,Optional[Scalar]]       $properties = {},
+  Hash[String,Optional[Scalar]]       $sizeoptions = {},
   Hash[String,Optional[Scalar]]       $advancedoptions = {},
 ) {
   $_file = $variant ? {
@@ -49,6 +52,24 @@ define cassandra::jvm_option_set (
       }
     }
   } # $options.each
+
+  $sizeoptions.each |String $_prop, Data $_value| {
+    if $_value =~ Undef {
+      file_line { "${name} remove size option ${_prop}":
+        ensure            => absent,
+        path              => $_file,
+        match             => "^-${_prop}",
+        match_for_absence => true,
+      }
+    } else {
+      file_line { "${name} set size option ${_prop}":
+        ensure => present,
+        path   => $_file,
+        match  => "^-${_prop}",
+        line   => "-${_prop}${_value}",
+      }
+    }
+  } # $sizeoptions.each
 
   $properties.each |String $_prop, Data $_value| {
     if $_value =~ Undef {
