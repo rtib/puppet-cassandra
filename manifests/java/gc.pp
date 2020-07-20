@@ -41,7 +41,9 @@ class cassandra::java::gc (
   Enum['cms','g1']  $collector,
   Hash[String,Data] $params = {},
 ) {
-  notify { 'The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!': }
+  notify { 'The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!':
+    loglevel => warning,
+  }
   file{ "${cassandra::config_dir}/jvm.options":
     ensure  => file,
     content => epp("cassandra/jvm.${collector}.options.epp", $params),
