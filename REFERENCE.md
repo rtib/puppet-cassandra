@@ -721,6 +721,14 @@ java properties to be passed to the JVM
 
 Default value: {}
 
+##### `sizeoptions`
+
+Data type: `Hash[String,Optional[Scalar]]`
+
+JVM options having a value concatenated directly to the options, e.g. `Xmx4g`.
+
+Default value: {}
+
 ##### `advancedoptions`
 
 Data type: `Hash[String,Optional[Scalar]]`

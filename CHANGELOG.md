@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v2.3.0](https://github.com/rtib/puppet-cassandra/tree/v2.3.0) (2020-07-20)
+
+[Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v2.2.1...v2.3.0)
+
+### Added
+
+- add sizeoptions parameter to jvm\_option\_set [\#16](https://github.com/rtib/puppet-cassandra/pull/16) ([rtib](https://github.com/rtib))
+
+### Fixed
+
+- raise loglevel of deprecation message to warning [\#17](https://github.com/rtib/puppet-cassandra/pull/17) ([rtib](https://github.com/rtib))
+
 ## [v2.2.1](https://github.com/rtib/puppet-cassandra/tree/v2.2.1) (2020-07-14)
 
 [Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v2.2.0...v2.2.1)
