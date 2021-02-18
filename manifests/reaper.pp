@@ -5,7 +5,14 @@
 # @example
 #   include cassandra::reaper
 class cassandra::reaper (
+  # install params
   String                     $package_ensure = 'latest',
+  # config params
+  Optional[String]           $template = undef,
+  Hash                       $settings = {},
+  Stdlib::Absolutepath       $configdir = '/etc/cassandra-reaper',
+  Stdlib::Absolutepath       $templatedir = "${configdir}/configs",
+  # service params
   Cassandra::Service::Ensure $service_ensure = 'running',
   Cassandra::Service::Enable $service_enable = true,
 ) {
