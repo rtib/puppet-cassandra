@@ -4,19 +4,14 @@
 #
 # @example
 #   include cassandra::reaper::config
-class cassandra::reaper::config (
-  Optional[String]     $template = undef,
-  Hash                 $settings = {},
-  Stdlib::Absolutepath $configdir = '/etc/cassandra-reaper',
-  Stdlib::Absolutepath $templatedir = "${configdir}/configs",
-) {
-  $_source = $template ? {
+class cassandra::reaper::config {
+  $_source = $cassandra::reaper::template ? {
     undef   => undef,
-    default => "${templatedir}/${template}.yaml"
+    default => "${cassandra::reaper::templatedir}/${cassandra::reaper::template}.yaml"
   }
   yaml_settings {'cassandra::reaper::config':
     source => $_source,
-    target => "${configdir}/cassandra-reaper.yaml",
-    values => $settings,
+    target => "${cassandra::reaper::configdir}/cassandra-reaper.yaml",
+    values => $cassandra::reaper::settings,
   }
 }
