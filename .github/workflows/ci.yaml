@@ -1,0 +1,76 @@
+---
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  static:
+    name: static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.7
+
+      - name: Prepare environment
+        run: |
+          bundle config set --local without 'system_tests'
+          bundle install
+
+      - name: check symlinks absent
+        run: bundle exec rake check:symlinks
+
+      - name: check ignored files absent
+        run: bundle exec rake check:git_ignore
+        
+      - name: check dot_underscore files absent
+        run: bundle exec rake check:dot_underscore
+        
+      - name: check test_files
+        run: bundle exec rake check:test_file
+        
+      - name: check ruby style
+        run: bundle exec rake rubocop
+        
+      - name: check puppet syntax
+        run: bundle exec rake syntax
+
+      - name: check puppet style
+        run: bundle exec rake lint
+        
+      - name: check puppet module metadata
+        run: bundle exec rake metadata_lint
+  spec:
+    needs: static
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - puppet: "~> 6.0"
+            ruby: 2.5.7
+          - puppet: "~> 7.0"
+            ruby: 2.7.2
+    env:
+      PUPPET_GEM_VERSION: "${{ matrix.puppet }}"
+    name: Spec tests for Puppet ${{ matrix.puppet }} on Ruby ${{ matrix.ruby }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.7
+
+      - name: Prepare environment
+        run: |
+          bundle config set --local without 'system_tests'
+          bundle install
+
+      - name: Spec tests
+        run: bundle exec rake parallel_spec
