@@ -1,6 +1,6 @@
 {
   "name": "trepasi-cassandra",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "author": "T. Repasi",
   "summary": "Puppet module to manage a Cassandra cluster.",
   "license": "Apache-2.0",
@@ -40,13 +40,13 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 5.5.0 < 7.0.0"
+      "version_requirement": ">= 6.0.0 < 8.0.0"
     }
   ],
   "tags": [
     "Cassandra"
   ],
-  "pdk-version": "1.18.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#1.18.0",
-  "template-ref": "tags/1.18.0-0-g095317c"
+  "pdk-version": "1.18.1",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#1.18.1",
+  "template-ref": "tags/1.18.1-0-g3d2e75c"
 }
