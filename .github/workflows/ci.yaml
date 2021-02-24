@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+env:
+  HONEYCOMB_WRITEKEY: "${{ secrets.HONEYCOMB_WRITEKEY }}"
+  HONEYCOMB_DATASET: puppet-cassandra
 jobs:
   static:
     name: static checks
@@ -74,3 +77,41 @@ jobs:
 
       - name: Spec tests
         run: bundle exec rake parallel_spec
+  acceptance:
+    needs: spec
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        collection: ['puppet6']
+        provision:
+          - deb_c21
+          - deb_c22
+          - deb_c30
+          - deb_c311
+          # - deb_c40
+    name: Litmus tests for ${{ matrix.provision }} with ${{ matrix.collection }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.7
+
+      - name: Prepare environment
+        run: |
+          bundle config set --local with 'system_tests'
+          bundle install
+
+      - name: Provision test environment
+        run: bundle exec rake 'litmus:provision_list[${{ matrix.provision }}]'
+
+      - name: Install Agent
+        run: bundle exec rake 'litmus:install_agent[${{ matrix.collection }}]'
+
+      - name: Install Module
+        run: bundle exec rake 'litmus:install_module'
+
+      - name: Running acceptance tests
+        run: bundle exec rake 'litmus:acceptance:parallel'
