@@ -1,0 +1,58 @@
+---
+name: release
+
+on: workflow_dispatch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.5.7
+
+      - name: Prepare environment
+        run: |
+          bundle config set --local without 'system_tests'
+          bundle install
+          git config --global user.name "${{ github.workflow }} #${{ github.run_number }}"
+          git config --global user.email "${{ github.repository_owner }}@users.noreply.github.com"
+
+      - name: Update Reference.md
+        run: bundle exec rake strings:generate:reference
+
+      - name: Update Changelog.md
+        run: bundle exec rake changelog
+        env:
+          CHANGELOG_GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Check for changes
+        id: changes
+        uses: UnicornGlobal/has-changes-action@v1.0.11
+
+      - name: Commit changes and release
+        if: steps.changes.outputs.changed == 1
+        run: |
+          git add .
+          git commit -m "[GH-Action] update reference and changelog"
+          git push
+          bundle exec rake module:tag
+          git push --tags
+
+      - name: Publish the module
+        if: (steps.changes.outputs.changed == 1)
+        run: |
+          if [ -n $BLACKSMITH_FORGE_USERNAME ]; then
+            bundle exec rake module:push
+          else
+            echo "Not publishing module to Puppet Forge. To enable deployment, set secrets forge_name and forge_password."
+          fi
+        env:
+          BLACKSMITH_FORGE_USERNAME: ${{ secrets.forge_username }}
+          BLACKSMITH_FORGE_PASSWORD: ${{ secrets.forge_password }}
