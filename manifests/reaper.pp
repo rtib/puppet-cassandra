@@ -4,6 +4,28 @@
 #
 # @example
 #   include cassandra::reaper
+#
+# @param package_ensure
+#   package state to be ensured
+#
+# @param template
+#   select the configuration template to which the settings are going to be merged
+#
+# @param settings
+#   hash of cassandra-reaper settings to be merged
+#
+# @param configdir
+#   directory where to place the configuration file
+#
+# @param templatedir
+#   directory containing the template configurations
+#
+# @param service_ensure
+#   serivce state to be ensured
+#
+# @param service_enable
+#   whether to enable or disable the service
+#
 class cassandra::reaper (
   # install params
   String                     $package_ensure = 'latest',

@@ -1,9 +1,9 @@
-# @summary A short summary of the purpose of this class
+# @summary Do not include this class for its own.
 #
-# A description of what this class does
+# Managing the configuration of a cassandra reaper instance.
+# 
+# This class is included by cassandra::reaper and should not be used otherwise.
 #
-# @example
-#   include cassandra::reaper::config
 class cassandra::reaper::config {
   $_source = $cassandra::reaper::template ? {
     undef   => undef,
