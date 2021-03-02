@@ -36,7 +36,7 @@ describe 'cassandra::reaper' do
           let(:params) do
             {
               'template' => 'cassandra-reaper-cassandra-sidecar',
-              'settings' => {'purgeRecordsAfterInDays' => 30 }
+              'settings' => { 'purgeRecordsAfterInDays' => 30 },
             }
           end
 
