@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.25
+    &mdash; Documentation by YARD 0.9.26
   
 </title>
 
@@ -75,8 +75,12 @@ src="https://img.shields.io/github/last-commit/rtib/puppet-cassandra"></a>
 <a href="https://github.com/rtib/puppet-cassandra/releases"><img
 src="https://img.shields.io/github/tag/rtib/puppet-cassandra.svg"></a></p>
 
-<p>Travis-CI: <a href="https://travis-ci.org/rtib/puppet-cassandra"><img
-src="https://travis-ci.org/rtib/puppet-cassandra.svg?branch=master"></a></p>
+<p>Workflows: <a
+href="https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml"><img
+src="https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml/badge.svg"></a>
+<a
+href="https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml"><img
+src="https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml/badge.svg"></a></p>
 
 <p>Puppet: <a href="https://forge.puppet.com/trepasi/cassandra"><img
 src="https://img.shields.io/puppetforge/pdk-version/trepasi/cassandra.svg"></a>
@@ -87,50 +91,50 @@ src="https://img.shields.io/puppetforge/dt/trepasi/cassandra.svg"></a></p>
 
 <h1 id="label-Table+of+Contents">Table of Contents</h1>
 <!-- @import "[TOC]" depthFrom=2 depthTo=6 orderedList=false --><!-- code_chunk_output --><ul><li>
-<p><a href="#label-Description">Description</a></p>
+<p><a href="#description">Description</a></p>
 </li><li>
-<p><a href="#label-Integration+test+matrix">Integration test matrix</a></p>
+<p><a href="#integration-test-matrix">Integration test matrix</a></p>
 </li><li>
-<p><a href="#label-Setup">Setup</a></p>
+<p><a href="#setup">Setup</a></p>
 </li><li>
-<p><a href="#label-What+cassandra+affects">What cassandra affects</a></p>
+<p><a href="#what-cassandra-affects">What cassandra affects</a></p>
 </li><li>
-<p><a href="#label-Setup+requirements">Setup Requirements</a></p>
+<p><a href="#setup-requirements">Setup Requirements</a></p>
 </li><li>
-<p><a href="#label-Usage">Usage</a></p>
+<p><a href="#usage">Usage</a></p>
 </li><li>
-<p><a href="#label-Main+node+configuration">Main node configuration</a></p>
+<p><a href="#main-node-configuration">Main node configuration</a></p>
 <ul><li>
-<p><a href="#label-Setting+up+initial_token">Setting up initial_token</a></p>
+<p><a href="#setting-up-initial_token">Setting up initial_token</a></p>
 </li></ul>
 </li><li>
-<p><a href="#label-Rack+and+dc+settings">Rack and DC settings</a></p>
+<p><a href="#rack-and-dc-settings">Rack and DC settings</a></p>
 </li><li>
-<p><a href="#label-Topology+settings">Topology settings</a></p>
+<p><a href="#topology-settings">Topology settings</a></p>
 </li><li>
-<p><a href="#label-Setting+the+runtime+environment">Setting the runtime
+<p><a href="#setting-the-runtime-environment">Setting the runtime
 environment</a></p>
 <ul><li>
-<p><a href="#label-Environment+variables">Environment variables</a></p>
+<p><a href="#environment-variables">Environment variables</a></p>
 </li><li>
-<p><a href="#label-Jvm+options">JVM options</a></p>
+<p><a href="#jvm-options">JVM options</a></p>
 </li><li>
-<p><a href="#label-Java+runtime+settings">Java runtime settings</a></p>
+<p><a href="#java-runtime-settings">Java runtime settings</a></p>
 </li></ul>
 </li><li>
-<p><a href="#label-Java+garbage+collection+settings">Java garbage collection
+<p><a href="#java-garbage-collection-settings">Java garbage collection
 settings</a></p>
 </li><li>
-<p><a href="#label-Jvm+option+sets">JVM option sets</a></p>
+<p><a href="#jvm-option-sets">JVM option sets</a></p>
 <ul><li>
-<p><a href="#label-Cassandra+3x+jvm+options">Cassandra 3.x JVM options</a></p>
+<p><a href="#cassandra-3x-jvm-options">Cassandra 3.x JVM options</a></p>
 </li><li>
-<p><a href="#label-Cassandra+40+jvm+setup">Cassandra 4.0 JVM setup</a></p>
+<p><a href="#cassandra-40-jvm-setup">Cassandra 4.0 JVM setup</a></p>
 </li></ul>
 </li><li>
-<p><a href="#label-Reference">Reference</a></p>
+<p><a href="#reference">Reference</a></p>
 </li><li>
-<p><a href="#label-Development">Development</a></p>
+<p><a href="#development">Development</a></p>
 </li></ul>
 <!-- /code_chunk_output -->
 <h2 id="label-Description">Description</h2>
@@ -156,7 +160,7 @@ deploying a Cassandra node of all supported version branches on multiple OS
 distribution and JDK conbinations. The table below is summerizing this test
 matrix.</p>
 
-<p>| Cassandra branch | OS distro | JDK<a href="#label-Java"><sup>1</sup></a> |
+<p>| Cassandra branch | OS distro | JDK<a href="#java"><sup>1</sup></a> |
 |—|—|—| | 2.1 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 | | 2.2 |
 Debian:9<br>Ubuntu:18.04 | OpenJDK-8 | | 3.0 |
 Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 | | 3.11 |
