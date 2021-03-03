@@ -12,6 +12,10 @@
 * [`cassandra::config::topology`](#cassandraconfigtopology): Class to manage the cassandra-topology.properties file
 * [`cassandra::install`](#cassandrainstall): Installs the Cassandra packages.
 * [`cassandra::java::gc`](#cassandrajavagc): Setup the Java garbage collection for Cassandra
+* [`cassandra::reaper`](#cassandrareaper): Manage a cassandra-reaper instance
+* [`cassandra::reaper::config`](#cassandrareaperconfig): Do not include this class for its own.
+* [`cassandra::reaper::install`](#cassandrareaperinstall): Do not include this class for its own.
+* [`cassandra::reaper::service`](#cassandrareaperservice): Do not include this class for its own.
 * [`cassandra::service`](#cassandraservice): Controls the service
 
 ### Defined types
@@ -467,6 +471,104 @@ Data type: `Hash[String,Data]`
 parameter to set up the selected GC
 
 Default value: `{}`
+
+### <a name="cassandrareaper"></a>`cassandra::reaper`
+
+This class is installing and managing an instance of cassandra-repear.
+
+#### Examples
+
+##### 
+
+```puppet
+include cassandra::reaper
+```
+
+#### Parameters
+
+The following parameters are available in the `cassandra::reaper` class:
+
+* [`package_ensure`](#package_ensure)
+* [`template`](#template)
+* [`settings`](#settings)
+* [`configdir`](#configdir)
+* [`templatedir`](#templatedir)
+* [`service_ensure`](#service_ensure)
+* [`service_enable`](#service_enable)
+
+##### <a name="package_ensure"></a>`package_ensure`
+
+Data type: `String`
+
+package state to be ensured
+
+Default value: `'latest'`
+
+##### <a name="template"></a>`template`
+
+Data type: `Optional[String]`
+
+select the configuration template to which the settings are going to be merged
+
+Default value: ``undef``
+
+##### <a name="settings"></a>`settings`
+
+Data type: `Hash`
+
+hash of cassandra-reaper settings to be merged
+
+Default value: `{}`
+
+##### <a name="configdir"></a>`configdir`
+
+Data type: `Stdlib::Absolutepath`
+
+directory where to place the configuration file
+
+Default value: `'/etc/cassandra-reaper'`
+
+##### <a name="templatedir"></a>`templatedir`
+
+Data type: `Stdlib::Absolutepath`
+
+directory containing the template configurations
+
+Default value: `"${configdir}/configs"`
+
+##### <a name="service_ensure"></a>`service_ensure`
+
+Data type: `Cassandra::Service::Ensure`
+
+serivce state to be ensured
+
+Default value: `'running'`
+
+##### <a name="service_enable"></a>`service_enable`
+
+Data type: `Cassandra::Service::Enable`
+
+whether to enable or disable the service
+
+Default value: ``true``
+
+### <a name="cassandrareaperconfig"></a>`cassandra::reaper::config`
+
+Managing the configuration of a cassandra reaper instance.
+
+This class is included by cassandra::reaper and should not be used otherwise.
+
+### <a name="cassandrareaperinstall"></a>`cassandra::reaper::install`
+
+Installing a cassandra reaper instance.
+
+This class is included by cassandra::reaper and should not be used otherwise.
+
+### <a name="cassandrareaperservice"></a>`cassandra::reaper::service`
+
+Managing the service of a cassandra reaper instance.
+
+This class is included by cassandra::reaper and should not be used otherwise.
 
 ### <a name="cassandraservice"></a>`cassandra::service`
 

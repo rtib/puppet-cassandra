@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
+## [v3.1.0](https://github.com/rtib/puppet-cassandra/tree/v3.1.0) (2021-03-03)
+
+[Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v3.0.0...v3.1.0)
+
+### Added
+
+- Add management of reaper [\#24](https://github.com/rtib/puppet-cassandra/pull/24) ([rtib](https://github.com/rtib))
+
+### Fixed
+
+- Upgrade module dependencies [\#25](https://github.com/rtib/puppet-cassandra/pull/25) ([rtib](https://github.com/rtib))
+
 ## [v3.0.0](https://github.com/rtib/puppet-cassandra/tree/v3.0.0) (2021-03-02)
 
 [Full Changelog](https://github.com/rtib/puppet-cassandra/compare/v2.3.0...v3.0.0)
