@@ -19,7 +19,7 @@ describe 'cassandra::reaper' do
           let(:facts) { os_facts }
           let(:params) do
             {
-              'ensure_package' => '1.2.3',
+              'package_ensure' => '1.2.3',
             }
           end
 
