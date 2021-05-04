@@ -9,8 +9,29 @@ env:
   HONEYCOMB_WRITEKEY: "${{ secrets.HONEYCOMB_WRITEKEY }}"
   HONEYCOMB_DATASET: puppet-cassandra
 jobs:
+jobs:
+  setup_matrix:
+    name: 'Setup test matrix'
+    runs-on: ubuntu-latest
+    outputs:
+      spec_matrix: ${{ steps.get-matrix.outputs.spec_matrix }}
+      acceptance_matrix: ${{ steps.get-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v1
+
+      - name: Activate Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+          bundler-cache: true
+
+      - name: Get matrix
+        id: get-matrix
+        run: bundle exec matrix_from_metadata_v2
+
   static:
-    name: static checks
+    name: Static checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,7 +39,7 @@ jobs:
       - name: setup ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.5.7
+          ruby-version: 2.7
 
       - name: Prepare environment
         run: |
@@ -48,27 +69,26 @@ jobs:
         
       - name: check puppet module metadata
         run: bundle exec rake metadata_lint
+
   spec:
-    needs: static
+    needs: 
+      - static
+      - setup_matrix
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
-      matrix:
-        include:
-          - puppet: "~> 6.0"
-            ruby: 2.5.7
-          - puppet: "~> 7.0"
-            ruby: 2.7.2
+      matrix: ${{ fromJson(needs.setup_matrix.outputs.spec_matric) }}
     env:
       PUPPET_GEM_VERSION: "${{ matrix.puppet }}"
-    name: Spec tests for Puppet ${{ matrix.puppet }} on Ruby ${{ matrix.ruby }}
+    name: Spec tests for Puppet ${{ matrix.puppet_version }} on Ruby ${{ matrix.ruby_version }}
     steps:
       - uses: actions/checkout@v2
 
       - name: setup ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.5.7
+          ruby-version: ${{ matrix.ruby_version }}
+          bundler-cache: true
 
       - name: Prepare environment
         run: |
@@ -77,13 +97,14 @@ jobs:
 
       - name: Spec tests
         run: bundle exec rake parallel_spec
+
   acceptance:
     needs: spec
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        collection: ['puppet6']
+        collection: ['puppet6', 'puppet7']
         provision:
           - deb_c21
           - deb_c22
@@ -97,7 +118,7 @@ jobs:
       - name: setup ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.5.7
+          ruby-version: 2.7
 
       - name: Prepare environment
         run: |
