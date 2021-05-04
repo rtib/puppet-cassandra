@@ -109,7 +109,7 @@ jobs:
           - deb_c22
           - deb_c30
           - deb_c311
-          # - deb_c40
+          - deb_c40
     name: Litmus tests for ${{ matrix.provision }} with ${{ matrix.collection }}
     steps:
       - uses: actions/checkout@v2
