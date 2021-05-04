@@ -9,7 +9,6 @@ env:
   HONEYCOMB_WRITEKEY: "${{ secrets.HONEYCOMB_WRITEKEY }}"
   HONEYCOMB_DATASET: puppet-cassandra
 jobs:
-jobs:
   setup_matrix:
     name: 'Setup test matrix'
     runs-on: ubuntu-latest
