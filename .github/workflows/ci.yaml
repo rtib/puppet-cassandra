@@ -76,9 +76,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
-      matrix: ${{ fromJson(needs.setup_matrix.outputs.spec_matric) }}
+      matrix: ${{ fromJson(needs.setup_matrix.outputs.spec_matrix) }}
     env:
-      PUPPET_GEM_VERSION: "${{ matrix.puppet }}"
+      PUPPET_GEM_VERSION: "${{ matrix.puppet_version }}"
     name: Spec tests for Puppet ${{ matrix.puppet_version }} on Ruby ${{ matrix.ruby_version }}
     steps:
       - uses: actions/checkout@v2
