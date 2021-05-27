@@ -1,0 +1,53 @@
+---
+name: Static checks
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    
+env:
+  HONEYCOMB_WRITEKEY: "${{ secrets.HONEYCOMB_WRITEKEY }}"
+  HONEYCOMB_DATASET: puppet-cassandra static checks
+jobs:
+
+  static:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Prepare environment
+        run: |
+          bundle config set --local without 'system_tests'
+          bundle install
+
+      - name: check symlinks absent
+        run: bundle exec rake check:symlinks
+
+      - name: check ignored files absent
+        run: bundle exec rake check:git_ignore
+        
+      - name: check dot_underscore files absent
+        run: bundle exec rake check:dot_underscore
+        
+      - name: check test_files
+        run: bundle exec rake check:test_file
+        
+      - name: check ruby style
+        run: bundle exec rake rubocop
+        
+      - name: check puppet syntax
+        run: bundle exec rake syntax
+
+      - name: check puppet style
+        run: bundle exec rake lint
+        
+      - name: check puppet module metadata
+        run: bundle exec rake metadata_lint
