@@ -11,8 +11,10 @@ context 'service tests' do
     subject(:nodetool_info) { run_shell('nodetool info') }
 
     its(:exit_code) { is_expected.to eq 0 }
-    its(:stdout) { is_expected.to match %r{Gossip active *: true} }
-    its(:stdout) { is_expected.to match %r{Native Transport active *: true} }
+    its(:stdout) do
+      is_expected.to match %r{Gossip active *: true}
+      is_expected.to match %r{Native Transport active *: true}
+    end
   end
 
   describe 'nodetool describecluster', retry: 15, retry_wait: 10 do
