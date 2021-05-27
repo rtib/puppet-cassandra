@@ -3,9 +3,11 @@ require 'spec_helper_acceptance'
 context 'configuration checks' do
   describe file('/etc/cassandra/cassandra.yaml') do
     it { is_expected.to be_file }
-    its(:content_as_yaml) { is_expected.to include('cluster_name' => 'Test cluster') }
-    its(:content_as_yaml) { is_expected.to include('num_tokens'   => 64) }
-    its(:content_as_yaml) { is_expected.to include('seed_provider' => [include('parameters' => [include('seeds' => 'localhost')])]) }
+    its(:content_as_yaml) do
+      is_expected.to include('cluster_name' => 'Test cluster')
+      is_expected.to include('num_tokens'   => 64)
+      is_expected.to include('seed_provider' => [include('parameters' => [include('seeds' => 'localhost')])])
+    end
   end
 
   describe file('/etc/cassandra/cassandra-rackdc.properties') do
