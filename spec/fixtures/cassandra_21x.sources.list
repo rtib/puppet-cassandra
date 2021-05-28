@@ -1,1 +1,0 @@
-deb [trusted=yes] http://www.apache.org/dist/cassandra/debian 21x main
