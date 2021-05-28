@@ -4,7 +4,7 @@ name: release
 on: workflow_dispatch
 
 jobs:
-  build:
+  Prepare:
 
     runs-on: ubuntu-latest
 
@@ -15,7 +15,7 @@ jobs:
       - name: setup ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.5.7
+          ruby-version: 2.7
 
       - name: Prepare environment
         run: |
@@ -24,7 +24,7 @@ jobs:
           git config --global user.name "${{ github.workflow }} #${{ github.run_number }}"
           git config --global user.email "${{ github.repository_owner }}@users.noreply.github.com"
 
-      - name: Update Reference.md
+      - name: Update Reference
         run: bundle exec rake strings:generate:reference
 
       - name: Update Changelog.md
@@ -45,14 +45,21 @@ jobs:
           bundle exec rake module:tag
           git push --tags
 
-      - name: Publish the module
-        if: (steps.changes.outputs.changed == 1)
-        run: |
-          if [ -n $BLACKSMITH_FORGE_USERNAME ]; then
-            bundle exec rake module:push
-          else
-            echo "Not publishing module to Puppet Forge. To enable deployment, set secrets forge_name and forge_password."
-          fi
-        env:
-          BLACKSMITH_FORGE_USERNAME: ${{ secrets.forge_username }}
-          BLACKSMITH_FORGE_PASSWORD: ${{ secrets.forge_password }}
+  Deploy:
+    needs: Prepare
+    name: Deploy to Forge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+          clean: true
+      - name: "PDK Build"
+        uses: docker://puppet/pdk:nightly
+        with:
+          args: 'build'
+      - name: "Push to Forge"
+        uses: docker://puppet/pdk:nightly
+        with:
+          args: 'release publish --forge-token ${{ secrets.FORGE_API_KEY }} --force'
