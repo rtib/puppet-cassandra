@@ -1,6 +1,6 @@
 {
   "name": "trepasi-cassandra",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "author": "T. Repasi",
   "summary": "Puppet module to manage a Cassandra cluster.",
   "license": "Apache-2.0",
