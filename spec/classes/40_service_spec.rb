@@ -11,7 +11,7 @@ describe 'cassandra' do
           it do
             is_expected.to contain_service('cassandra')
               .without_ensure
-              .with_enable('manual')
+              .with_enable(false)
           end
         end
         context 'service enabled and running setup' do
