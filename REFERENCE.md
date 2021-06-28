@@ -136,7 +136,7 @@ Data type: `Cassandra::Service::Enable`
 
 enable state of cassandra service
 
-Default value: `'manual'`
+Default value: ``false``
 
 ##### <a name="service_name"></a>`service_name`
 
