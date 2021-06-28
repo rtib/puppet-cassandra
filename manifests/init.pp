@@ -63,7 +63,7 @@ class cassandra (
   String                      $tools_ensure = $cassandra_ensure,
   Boolean                     $manage_service = true,
   Cassandra::Service::Ensure  $service_ensure = undef,
-  Cassandra::Service::Enable  $service_enable = 'manual',
+  Cassandra::Service::Enable  $service_enable = false,
   String                      $service_name = 'cassandra',
   Stdlib::Absolutepath        $config_dir = '/etc/cassandra',
   Hash                        $environment = {},
