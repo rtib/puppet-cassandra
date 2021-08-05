@@ -42,7 +42,7 @@ Puppet: [![PDK Version](https://img.shields.io/puppetforge/pdk-version/trepasi/c
 
 ## Description
 
-This Puppet module is a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x to latest 3.11 releases and multiple distributions, e.g. DSE, Apache and other. The main distinction feature is that this module does not incorporate templating of the main configuration file and no version switches.
+This Puppet module is a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x, 3.0, 3.11 to latest 4.0 releases and multiple distributions, e.g. DSE, Apache and other. The main distinction feature is that this module does not incorporate templating of the main configuration file and no version switches.
 
 Conceptualized to fit into a roles/profiles design pattern, this module keeps a strong focus on the topic of Cassandra node configuration disregarding many aspects bound to the use-case and the infrastructure environment.
 
@@ -95,7 +95,7 @@ This will install the latest available version of packages `cassandra` and `cass
 If you want Puppet to install a specific version, e.g. 3.0.18, just add the following parameter to your Hiera DB:
 
 ```yaml
-cassandra::cassandra_ensure: 3.0.18
+cassandra::cassandra_ensure: 4.0.0
 ```
 
 The version ensurement of the tools package defaults to `cassandra::cassandra_ensure` but can be set differently by defining:
@@ -319,8 +319,6 @@ cassandra::jvm_option_sets:
 ```
 
 #### Cassandra 4.0 JVM setup
-
-Note, that as Cassandra 4.0 is not released yet (i.e. at the time of the release of this module version), consider this as subject to change (without prior deprecation notice).
 
 Cassandra 4.0 and later is using distinct options files for server operation and client tools, for Java version independent options and for Java-8 or Java-11 respectively. Set the parameters `optsfile` to `jvm`, `jvm8` or `jvm11` and `variant` to `server` or `clients` accordingly.
 
