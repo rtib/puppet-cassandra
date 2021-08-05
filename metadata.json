@@ -46,7 +46,7 @@
   "tags": [
     "Cassandra"
   ],
-  "pdk-version": "2.1.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#2.1.0",
-  "template-ref": "tags/2.1.0-0-ga675ea5"
+  "pdk-version": "2.2.0",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#2.2.0",
+  "template-ref": "tags/2.2.0-0-g2381db6"
 }
