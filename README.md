@@ -90,7 +90,7 @@ include cassandra
 
 This will install the latest available version of packages `cassandra` and `cassandra-tools` and ensure they stay installed. The default settings will prevent autoatic upgrading.
 
-If you want Puppet to install a specific version, e.g. 3.0.18, just add the following parameter to your Hiera DB:
+If you want Puppet to install a specific version, e.g. 4.0.0, just add the following parameter to your Hiera DB:
 
 ```yaml
 cassandra::cassandra_ensure: 4.0.0
