@@ -13,8 +13,6 @@ Puppet: [![PDK Version](https://img.shields.io/puppetforge/pdk-version/trepasi/c
 
 # Table of Contents
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=6 orderedList=false} -->
-
 <!-- code_chunk_output -->
 
 - [Description](#description)
