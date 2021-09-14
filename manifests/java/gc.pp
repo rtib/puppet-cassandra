@@ -1,6 +1,6 @@
 # @summary Setup the Java garbage collection for Cassandra
 #
-# Deprication notice: this class is now deprecated. Consider using JVM option sets instead.
+# *Depricated!*: This class is now deprecated. Consider using JVM option sets instead.
 #
 # This class allows to set consistent JVM options at once, especially for the
 # purpose of garbage collection settings. This is enabled by managing
