@@ -1,62 +1,48 @@
+# cassandra
 
-# Cassandra
+## Project status
 
-A Puppet module to run Cassandra nodes.
+GitHub: [![GitHub issues](https://img.shields.io/github/issues/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/issues) [![GitHub tag](https://img.shields.io/github/commit-activity/y/rtib/puppet-cassandra)](https://github.com/rtib/puppet-cassandra/releases) [![GitHub tag](https://img.shields.io/github/last-commit/rtib/puppet-cassandra)](https://github.com/rtib/puppet-cassandra/releases)
 
-# Project state
+Nightly Workflows: [![CI](https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml/badge.svg)](https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml)
 
-GitHub: [![GitHub issues](https://img.shields.io/github/issues/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/issues) [![GitHub license](https://img.shields.io/github/license/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra) [![GitHub tag](https://img.shields.io/github/commit-activity/y/rtib/puppet-cassandra)](https://github.com/rtib/puppet-cassandra/releases) [![GitHub tag](https://img.shields.io/github/last-commit/rtib/puppet-cassandra)](https://github.com/rtib/puppet-cassandra/releases) [![GitHub tag](https://img.shields.io/github/tag/rtib/puppet-cassandra.svg)](https://github.com/rtib/puppet-cassandra/releases)
+Puppet Forge:  ![PDK](https://img.shields.io/puppetforge/pdk-version/trepasi/cassandra.svg) [![release](https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml/badge.svg)](https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml) [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra)
 
-Workflows: [![CI](https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml/badge.svg)](https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml) [![release](https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml/badge.svg)](https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml)
+## Table of Contents
 
-Puppet: [![PDK Version](https://img.shields.io/puppetforge/pdk-version/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra) [![Puppet Forge](https://img.shields.io/puppetforge/dt/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra)
 
-# Table of Contents
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=3 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
+- [Project status](#project-status)
+- [Table of Contents](#table-of-contents)
 - [Description](#description)
-- [Integration test matrix](#integration-test-matrix)
 - [Setup](#setup)
   - [What cassandra affects](#what-cassandra-affects)
   - [Setup Requirements](#setup-requirements)
+  - [Beginning with cassandra](#beginning-with-cassandra)
 - [Usage](#usage)
+  - [Installation versions](#installation-versions)
   - [Main node configuration](#main-node-configuration)
-    - [Setting up initial_token](#setting-up-initial_token)
   - [Rack and DC settings](#rack-and-dc-settings)
   - [Topology settings](#topology-settings)
   - [Setting the runtime environment](#setting-the-runtime-environment)
-    - [Environment variables](#environment-variables)
-    - [JVM options](#jvm-options)
-    - [Java runtime settings](#java-runtime-settings)
   - [Java garbage collection settings](#java-garbage-collection-settings)
   - [JVM option sets](#jvm-option-sets)
-    - [Cassandra 3.x JVM options](#cassandra-3x-jvm-options)
-    - [Cassandra 4.0 JVM setup](#cassandra-40-jvm-setup)
 - [Reference](#reference)
+- [Limitations](#limitations)
 - [Development](#development)
 
 <!-- /code_chunk_output -->
 
 ## Description
 
-This Puppet module is a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x, 3.0, 3.11 to latest 4.0 releases and multiple distributions, e.g. DSE, Apache and other. The main distinction feature is that this module does not incorporate templating of the main configuration file and no version switches.
+This module enables Puppet to install, configure and run [Apache Cassandra][1] nodes. As a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x, 3.0, 3.11 to latest 4.0 releases and multiple distributions, e.g. DSE, Apache and other.
+
+Leveraging the declarative nature of Puppet DSL, Cassandra configuration is considered a declarative description of the desired state and will be ensured in the node configuration. Configuration values not declared in the manifest will be kept untouched by this module.
 
 Conceptualized to fit into a roles/profiles design pattern, this module keeps a strong focus on the topic of Cassandra node configuration disregarding many aspects bound to the use-case and the infrastructure environment.
-
-## Integration test matrix
-
-The module undergoes automated acceptance test, assessing its capability of deploying a Cassandra node of all supported version branches on multiple OS distribution and JDK conbinations. The table below is summerizing this test matrix.
-
-| Cassandra branch | OS distro | JDK[<sup>1</sup>](#java) |
-|---|---|---|
-| 2.1 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 |
-| 2.2 | Debian:9<br>Ubuntu:18.04 | OpenJDK-8 |
-| 3.0 | Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 |
-| 3.11 | Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 |
-| 4.0 | Debian:9<br>Debian:10<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8<br>OpenJDK-11<br>OpenJDK-8<br>OpenJDK-8<br> |
-
-<a class="anchor" id="java">1</a>: Note, that this module will not manage any JDK installation. The JDK versions listed here are automatically installed via dependencies while the module is installing the latest available Cassandra version from the release branch.
 
 ## Setup
 
@@ -64,31 +50,38 @@ The module undergoes automated acceptance test, assessing its capability of depl
 
 This module affects the following component:
 
-- Install the Packages ``cassandra`` and ``cassandra-tools``.
-- It takes control over the file ``.cassandra.in.sh`` located in Cassandra user's home directory.
-- It takes control over ``cassandra-rackdc.properties`` and ``cassandra-topology.properties``
-- Optionally it can take control over the ``jvm.options`` file, used to configure Java GC parameter.
-- It manages the content of the ``cassandra.yaml`` by merging a configuration hash to the file as it is found on the node, i.e. installed from the package.
+* Install the Packages ``cassandra`` and ``cassandra-tools``.
+* It takes control over the file ``.cassandra.in.sh`` located in Cassandra user's home directory.
+* It takes control over ``cassandra-rackdc.properties`` and ``cassandra-topology.properties``
+* Optionally it can take control over the ``jvm.options`` file and its successors for multiple Java versions and variants, used to configure Java parameters.
+* It manages the content of the ``cassandra.yaml`` by merging a configuration hash to the file as it is found on the node, i.e. installed from the package.
 
 A bit more important to know is that it does not control the contents of ``cassandra-env.sh`` and many other files, which might lead to conflicts during package updates.
 
 ### Setup Requirements
 
-To use this module it is required, that your nodes have package repository setup in place which enables the installation of the Cassandra packages using the regular package manager of your operating system and the runtime environment for operating Cassandra, i.e. Kernel settings, NTP setup, Java JDK installation, firewall settings, etc. are already in place. All these can be setup in your profile and role modules.
+Installation and running of Cassandra will require some other settings not covered by this module, e.g.:
 
-For operating Cassandra it will be necessary to orchestrate diverse operations over the cluster. Puppet is not intended to do that, thus these requirements have to be fulfilled with other tools.
+* access to a package repository providing the necessery packages for your operating system distribution
+* installation of a suitable Java runtime environment
+* setup of a proper clock synchronisation, e.g. NTP
+* configuration of additional settings, e.g. kernel parameter, firewall, etc.
 
-## Usage
-
-As soon you have fulfilled the above prerequisites to run Cassandra on your nodes, this module can install an run your cluster.
+### Beginning with cassandra
 
 Include the module to your node manifests (or your role or profile module):
 
 ```puppet
-include cassandra
+contain cassandra
 ```
 
-This will install the latest available version of packages `cassandra` and `cassandra-tools` and ensure they stay installed. The default settings will prevent autoatic upgrading.
+## Usage
+
+Once included in the node manifest the module can be configured via Hiera.
+
+### Installation versions
+
+By default the latest available version of  `cassandra` and `cassandra-tools` packages will be installed. The default settings will prevent autoatic upgrades.
 
 If you want Puppet to install a specific version, e.g. 4.0.0, just add the following parameter to your Hiera DB:
 
@@ -96,7 +89,7 @@ If you want Puppet to install a specific version, e.g. 4.0.0, just add the follo
 cassandra::cassandra_ensure: 4.0.0
 ```
 
-The version ensurement of the tools package defaults to `cassandra::cassandra_ensure` but can be set differently by defining:
+The version ensurement of the tools package defaults to `cassandra::cassandra_ensure` but can be set differently, e.g.:
 
 ```yaml
 cassandra::tools_ensure: latest
@@ -108,7 +101,7 @@ If you don't want to install the tools package, you can set:
 cassandra::tools_ensure: absent
 ```
 
-In the case, your package name is differs from default Apache release, you may use `cassandra_package` and/or `tools_package` to set the name, e.g.
+In the case, your package name differs from default Apache releases you may change `cassandra_package` and/or `tools_package` settings, e.g.
 
 ```yaml
 cassandra::cassandra_package: dsc22
@@ -137,7 +130,7 @@ For deeper understanding of this merge procedure refer to the [cataphract/yaml_s
 
 #### Setting up initial_token
 
-Under some circumstances it is necessary to setup the `initial_token` within `cassandra.yaml`. While this needs to be a unique value for each node and you probably don't want to create per-node hiera files just for a single value, the module is providing a workaround. You can set the `initial_tokens` parameter which may contain a hash mapping the initial token for each node by a node key. As soon the parameter is set, the module will lookup the initial_token for each node by the configured `node_key`, which defaults to the FQDN of the node and set the `initial_token` within the config hash to that value. If there is no entry for a node found, an error is raised which stops the Puppet agent. Example:
+If your Cassandra setup relies on the setting of `initial_token` within `cassandra.yaml`, the module is providing a sophisticated feature. You may set the `initial_tokens` parameter containing a hash mapping the initial token for each node by a node key. The module will lookup the initial_token for each node by the configured `node_key` and set the `initial_token` within the config hash. If there is no entry for a node found, an error is raised which stops the Puppet agent on that node. Example:
 
 ```yaml
 cassandra::initial_tokens:
@@ -150,7 +143,7 @@ The `node_key` parameter, which defaults to `$facts['networking']['fqdn']` can b
 
 ### Rack and DC settings
 
-When using `GossipingPropertyFileSnitch` class for endpoint snitch your cluster, you need to setup the `cassandra-rackdc.properties` file. This is done through the `rackdc` parameter of this module.
+When using `GossipingPropertyFileSnitch` class for endpoint snitch your cluster, you can manage the `cassandra-rackdc.properties` file through the `rackdc` parameter of this module.
 
 ```yaml
 cassandra::rackdc:
@@ -158,11 +151,11 @@ cassandra::rackdc:
   rack: rackA
 ```
 
-You can optionally add the `prefer_local` and `dc_suffix` parameter to the `rackdc` hash.
+Optionally parameters `prefer_local` and `dc_suffix` are also accepted in the `rackdc` hash.
 
 ### Topology settings
 
-When you set the enpoint snitch using `PropertyFileSnitch` or `GossipingPropertyFileSnitch` classes, you might want to control the contents of `cassandra-topology.properties` file. This is done through the `topology` parameter of this module. This contains a multi-leveld hash mapping arrays of your nodes to the racks and the racks to the datacenters.
+Using enpoint snitch classes `PropertyFileSnitch` or `GossipingPropertyFileSnitch`, you might want to control the contents of `cassandra-topology.properties` file. This is enabled through the `topology` parameter of this module. Containing a multi-leveld hash mapping arrays of your nodes to the racks and the racks to the datacenters. For example:
 
 ```yaml
 cassandra::topology:
@@ -195,19 +188,19 @@ This will end up in a `cassandra-topology.properties` file containing:
 10.0.1.4=dc2:rackB
 ```
 
-Note, that if you leave the `topology` parameter `undef` (which is the default), the module will remove the `cassandra-topology.properties` file from your nodes. This is intended to support the migration from `PropertyFileSnitch` to `GossipingPropertyFileSnitch`.
+Note #1: leaving the `topology` parameter `undef` (which is default), the module will remove the `cassandra-topology.properties` file from your nodes. This is intended behaviour to support the migration from `PropertyFileSnitch` to `GossipingPropertyFileSnitch`.
 
-Note, that the module will not notify the service on updates to the `cassandra-topology.properties` file, as both snitch classes using this file are able to reload it in runtime. All other configuration changes will notify the service.
+Note #2: while many configuration changes will notify the service to restart, this is suppressed in the module on updates to the `cassandra-topology.properties` file. Changes made to the topology won't bump the Cassandra node, because both snitch classes using this file are reloading it in runtime to read its updated content.
 
 ### Setting the runtime environment
 
-The module provides a variety of settings to the runtime environment and various settings to the Java VM.
+The module provides a variety of settings to runtime environment and the Java VM.
 
 #### Environment variables
 
-The defined type `cassandra::environment::variable` can be used to created variable in the Cassandra process's environment. These typically contain `MAX_HEAP_SIZE`, `HEAP_NEWSIZE`, `JAVA_HOME`, `LOCAL_JMX` and other.
+The defined type `cassandra::environment::variable` can be used to created variables in the Cassandra process's environment. These typically contain `MAX_HEAP_SIZE`, `HEAP_NEWSIZE`, `JAVA_HOME`, `LOCAL_JMX` and other Cassandra specific variables.
 
-You can also use the `environment` parameter of this module to create `cassandra::environment::variable` instances, e.g.:
+Using the `environment` parameter will create `cassandra::environment::variable` instances, e.g.:
 
 ```yaml
 cassandra::environment:
@@ -217,9 +210,9 @@ cassandra::environment:
 
 #### JVM options
 
-The defined type `cassandra::environment::jvm_option` adds JVM options to the process running Cassandra.
+The defined type `cassandra::environment::jvm_option` add options to the JVM Cassandra is running on.
 
-You can also use the `jvm_options` parameter of this module to create instances of `cassandra::environment::jvm_option`, e.g.:
+Using the `jvm_options` parameter will create instances of `cassandra::environment::jvm_option`, e.g.:
 
 ```yaml
 cassandra::jvm_options:
@@ -229,15 +222,15 @@ cassandra::jvm_options:
 
 #### Java runtime settings
 
-This module provides a variety of Java runtime settings. Within the `cassandra::java` namespace there are components allowing to setup:
+Within the `cassandra::java` namespace there are components allowing to setup:
 
-- Java agents through defined type `cassandra::java::agent`
-- Properties through defined type `cassandra::java::property`
-- runtime options through defined type `cassandra::java::runtimeoption`
-- advanced runtime options through defined type `cassandra::java::advancedruntimeoption`
-- garbage collector settings through class `cassandra::java::gc`
+* Java agents through defined type `cassandra::java::agent`
+* Properties through defined type `cassandra::java::property`
+* runtime options through defined type `cassandra::java::runtimeoption`
+* advanced runtime options through defined type `cassandra::java::advancedruntimeoption`
+* garbage collector settings through class `cassandra::java::gc`
 
-You can use the `java` property to create instances of the above types and classes. E.g.:
+Using the `java` property will create instances of the above. E.g.:
 
 ```yaml
 cassandra::java:
@@ -258,7 +251,7 @@ cassandra::java:
 
 __Deprication notice:__ `cassandra::java_gc` and the class `cassandra::java::gc` are now deprecated. Consider using JVM option sets instead.
 
-Settings to Java garbage collector can be made by instanciating the `cassandra::java::gc` class. This can be done via the `java_gc` parameter of this module. E.g.:
+Settings to Java garbage collector can be made by instanciating the `cassandra::java::gc` class. Using the `java_gc` parameter will instantiate the class, e.g.:
 
 ```yaml
 cassandra::java_gc:
@@ -269,15 +262,15 @@ cassandra::java_gc:
 
 ### JVM option sets
 
-Since version 2.2 this module is supporting a novel approach to set JVM options for the Cassandra runtime. This is provided by the JVM option set feature, which is controlling the `jvm.options` file of Cassandra 3.x and many combinations used by Cassandra 4.0 and later.
+Since version 2.2 the module is supporting a novel approach to setup options of Cassandra Java runtime. The JVM option set feature is controlling the `jvm.options` file of Cassandra 3.x and many combinations used for different Java versions and use case scopes by Cassandra 4.0 and later.
 
-Note, that much of the settings here will override settings done with `cassandra::java` and all of this will collide with `cassandra::java_gc` if set. Thus remove `cassandra::java_gc` at all when starting with `cassandra::jvm_option_sets` and consider migrating settings within `cassandra::java`, `cassandra::jvm_options` and most of `cassandra::environment` (i.e. heap setting) to JVM option sets.
+__Note__, that much of these settings will override settings done with `cassandra::java` and all of this will collide with `cassandra::java_gc` if set. Thus remove `cassandra::java_gc` at all when starting with `cassandra::jvm_option_sets` and consider migrating `cassandra::java` settings to `cassandra::jvm_options`.
 
-#### Cassandra 3.x JVM options
+#### JVM options for Cassandra 3.x
 
-The default behaviour will control the `jvm.options` file of Cassandra 3.x installations. The defined type `cassandra::jvm_option_set` resource takes parameters `options`, `sizeoptions`, `properties` and `advancedoptions` and add the settings to the `jvm.options` file.
+Default behaviour will control the `jvm.options` file. The defined type `cassandra::jvm_option_set` resource take parameters `options`, `sizeoptions`, `properties` and `advancedoptions` and add the settings to the `jvm.options` file.
 
-The main class is taking the parameter `cassandra::jvm_option_sets` to build instances of `cassandra::jvm_option_set` type. This also enables to pass the option sets via hiera to the module.
+Use the `cassandra::jvm_option_sets` parameter to build instances of `cassandra::jvm_option_set` type. For example:
 
 ```yaml
 cassandra::jvm_option_sets:
@@ -297,11 +290,11 @@ cassandra::jvm_option_sets:
       cassandra.start_rpc: false
 ```
 
-For all options, advanced runtime options and properties in the above example Puppet will take control over the according line in the `jvm.options` file and set the desired option. The top level ID (`example` in this case) is the name of the option set allowing the grouping of options. Many option sets are allowed, however, it is not allowed to set the same option within different option sets.
+For all options, advanced runtime options and properties in the above example, the Puppet module will take control over the according lines in the `jvm.options` file only and set the desired options. Many other settings within `jvm.options` will not be touched by Puppet.
 
-Note, that many other settings may be contained in the `jvm.options` file, which are not touched by Puppet.
+The top level ID (`example`) is the name of the option set allowing the grouping of options. Multiple option sets are allowed, however, it is not allowed to set the same option within different option sets.
 
-In order to enable the removal of specific settings from the `jvm.options` file use a tilde `~` to prefix options, and undef value (denoted with tilede `~` in Hiera) of `properties`, `sizeoptions` and `advancedoptions`. The example below show how to remove specific options, advancedruntimeoptions and properties.
+In order to enable the removal of specific settings from `jvm.options`, use a tilde `~` to prefix options, and undef value (denoted with tilde `~` in Hiera) of `properties`, `sizeoptions` and `advancedoptions`. The example below show how to remove specific settings.
 
 ```yaml
 cassandra::jvm_option_sets:
@@ -318,7 +311,7 @@ cassandra::jvm_option_sets:
 
 #### Cassandra 4.0 JVM setup
 
-Cassandra 4.0 and later is using distinct options files for server operation and client tools, for Java version independent options and for Java-8 or Java-11 respectively. Set the parameters `optsfile` to `jvm`, `jvm8` or `jvm11` and `variant` to `server` or `clients` accordingly.
+Cassandra 4.0 and later is using distinct option files for server operation and client tools, for Java version independent options and for different Java versions. Set the parameters `optsfile` to `jvm`, `jvm8` or `jvm11` and `variant` to `server` or `clients` accordingly.
 
 ```yaml
 cassandra::jvm_option_sets:
@@ -337,10 +330,39 @@ cassandra::jvm_option_sets:
       UseZGC: true
 ```
 
+
 ## Reference
 
-This module contains automatically generated reference documentation that can be found at [https://rtib.github.io/puppet-cassandra/](https://rtib.github.io/puppet-cassandra/) or within the REFERNCE.md file.
+Automatically generated reference documentation is available in the [REFERENCE.md][2] file or at [https://rtib.github.io/puppet-cassandra/][3].
+
+## Limitations
+
+For supported operating systems and dependencies, see [metadata.json](https://github.com/rtib/puppet-cassandra/blob/main/metadata.json).
+
+Extensive itegration tests are run nightly to assure quality  and compatibility with next releases.
+
+The current integration test matrix:
+
+| Cassandra branch | OS distro | JDK[<sup>1</sup>](#java) |
+|---|---|---|
+| 3.0 | Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 |
+| 3.11 | Debian:9<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8 |
+| 4.0 | Debian:9<br>Debian:10<br>Ubuntu:16.04<br>Ubuntu:18.04 | OpenJDK-8<br>OpenJDK-11<br>OpenJDK-8<br>OpenJDK-8<br> |
+
+<a class="anchor" id="java">1</a>: Note, that this module will not manage any JDK installation. The JDK versions listed here are automatically installed via dependencies while the module is installing the latest available Cassandra version from the release branch.
 
 ## Development
 
-According to the license, you are free to contribute changes to this module. You may aware of the general workflows when contributing to GitHub projects, if not yet, please read CONTRIBUTING.md.
+The module is developed using recent [Puppet Development Kit][4], [validated][5] and extensively tested using [Puppet Litmus][6]. Automated workflows, implemented with [GitHub Actions][7] are run on demand and nightly, doing validation, spec tests and continuous integration tests.
+
+As an open project, you are welcome to contribute to this module. Currently, there is no contribution guide specific to this module, general information about the workflow may apply. In case of questions feel free to open a issue or join community Slack channels #forge-modules, #puppet, #puppet-dev, #testing on slack.puppet.com.
+
+Issues and pull requests will be addressed in a timely manner, according to community best practice. Releases are going to be published on demand, after having merged an set of sufficiently important changes and all tests succeeded. There may be automated rule enforcement in place to provide a healthy issue lifecycle.
+
+[1]: https://cassandra.apache.org/
+[2]: https://forge.puppet.com/modules/trepasi/cassandra/reference
+[3]: https://rtib.github.io/puppet-cassandra/
+[4]: https://puppet.com/docs/pdk/2.x/pdk.html
+[5]: https://puppet.com/docs/pdk/1.x/pdk_testing.html
+[6]: https://github.com/puppetlabs/puppet_litmus
+[7]: https://docs.github.com/en/actions
