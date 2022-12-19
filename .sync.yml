@@ -14,11 +14,6 @@ Gemfile:
   required:
     ':development':
       - gem: rspec-retry
-  optional:
-    ':development':
-      - gem: 'github_changelog_generator'
-        version: '~> 1.15'
-        condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.3.0')"
 appveyor.yml:
   delete: true
 .gitlab-ci.yml:
