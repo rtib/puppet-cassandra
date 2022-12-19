@@ -9,7 +9,7 @@ class cassandra::reaper::config {
     undef   => undef,
     default => "${cassandra::reaper::templatedir}/${cassandra::reaper::template}.yaml"
   }
-  yaml_settings {'cassandra::reaper::config':
+  yaml_settings { 'cassandra::reaper::config':
     source => $_source,
     target => "${cassandra::reaper::configdir}/cassandra-reaper.yaml",
     values => $cassandra::reaper::settings,

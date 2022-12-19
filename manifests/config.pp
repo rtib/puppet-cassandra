@@ -70,7 +70,7 @@ class cassandra::config {
   if $cassandra::initial_tokens {
     if $cassandra::node_key in $cassandra::initial_tokens {
       $_initial_token = {
-        'initial_token' => $cassandra::initial_tokens[$cassandra::node_key]
+        'initial_token' => $cassandra::initial_tokens[$cassandra::node_key],
       }
     } else {
       fail('Token missing for this node in initial_token.')
@@ -80,8 +80,8 @@ class cassandra::config {
   }
 
   # Merge cassandra.yaml with config hash on the target node
-  yaml_settings {'cassandra::config':
+  yaml_settings { 'cassandra::config':
     target => "${cassandra::config_dir}/cassandra.yaml",
-    values => merge($cassandra::config, $_initial_token)
+    values => merge($cassandra::config, $_initial_token),
   }
 }

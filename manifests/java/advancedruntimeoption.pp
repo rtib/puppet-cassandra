@@ -30,12 +30,12 @@ define cassandra::java::advancedruntimeoption (
       {
         'name'  => $name,
         'value' => $value,
-      }),
+    }),
     default  => inline_epp('XX:<%= $name -%>=<%= $value %>',
       {
         'name'  => $name,
         'value' => $value,
-      }),
+    }),
   }
   cassandra::environment::jvm_option { $_opt: }
 }
