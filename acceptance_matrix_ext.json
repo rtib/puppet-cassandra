@@ -1,39 +1,15 @@
 {
   "vars": [
     {
-      "release" : "30x"
-    },
-    {
       "release" : "311x"
     },
     {
       "release" : "40x"
+    },
+    {
+      "release" : "41x"
     }
   ],
   "exclude": [
-    {
-      "vars": {
-        "release" : "40x"
-      },
-      "platforms": {
-        "label": "Debian-9"
-      }
-    },
-    {
-      "vars": {
-        "release" : "30x"
-      },
-      "platforms": {
-        "label": "Debian-10"
-      }
-    },
-    {
-      "vars": {
-        "release" : "311x"
-      },
-      "platforms": {
-        "label": "Debian-10"
-      }
-    }
   ]
 }
