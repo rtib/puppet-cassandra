@@ -5,7 +5,7 @@
 # This class is included by cassandra::reaper and should not be used otherwise.
 #
 class cassandra::reaper::install {
-  package{ 'reaper':
+  package { 'reaper':
     ensure => $cassandra::reaper::package_ensure,
   }
 }

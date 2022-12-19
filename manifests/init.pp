@@ -70,22 +70,22 @@ class cassandra (
   Hash                        $jvm_option_sets = {},
   Array[String]               $jvm_options = [],
   Struct[{
-    properties          => Optional[Hash],
-    agents              => Optional[Hash],
-    runtime_options     => Optional[Hash],
-    adv_runtime_options => Optional[Hash],
+      properties          => Optional[Hash],
+      agents              => Optional[Hash],
+      runtime_options     => Optional[Hash],
+      adv_runtime_options => Optional[Hash],
   }]                          $java = {},
   Optional[Hash]              $java_gc = undef,
   Hash                        $config = {},
   Optional[Hash[Stdlib::Host,Pattern[/^[0-9]+$/]]]
-                              $initial_tokens = undef,
+  $initial_tokens = undef,
   Stdlib::Host                $node_key = $facts['networking']['fqdn'],
   Stdlib::Absolutepath        $cassandra_home = '/var/lib/cassandra',
   Stdlib::Absolutepath        $envfile = "${cassandra_home}/.cassandra.in.sh",
   Optional[Cassandra::Rackdc] $rackdc = undef,
   Optional[Hash]              $topology = undef,
   Optional[Pattern[/[a-zA-Z0-9.]:[a-zA-Z0-9.-]/]]
-                              $topology_default  = undef,
+  $topology_default  = undef,
 ) {
   contain cassandra::install
   contain cassandra::config

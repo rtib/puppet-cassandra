@@ -26,7 +26,7 @@ define cassandra::environment::variable (
   String $value,
   String $id = $title,
 ) {
-  concat::fragment{ "cassandra::environment::variable[${id}]=${value}":
+  concat::fragment { "cassandra::environment::variable[${id}]=${value}":
     target  => $cassandra::envfile,
     order   => '10',
     content => inline_epp('<%= $name %>="<%= $val -%>"',
@@ -34,6 +34,6 @@ define cassandra::environment::variable (
         'name' => $id,
         'val'  => $value,
       }
-    )
+    ),
   }
 }
