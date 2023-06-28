@@ -6,7 +6,7 @@ GitHub: [![GitHub issues](https://img.shields.io/github/issues/rtib/puppet-cassa
 
 Nightly Workflows: [![CI](https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml/badge.svg)](https://github.com/rtib/puppet-cassandra/actions/workflows/ci.yaml)
 
-Puppet Forge:  ![PDK](https://img.shields.io/puppetforge/pdk-version/trepasi/cassandra.svg) [![release](https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml/badge.svg)](https://github.com/rtib/puppet-cassandra/actions/workflows/release.yaml) [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra)
+Puppet Forge:  ![PDK](https://img.shields.io/puppetforge/pdk-version/trepasi/cassandra.svg) [![Puppet Forge](https://img.shields.io/puppetforge/v/trepasi/cassandra.svg)](https://forge.puppet.com/trepasi/cassandra)
 
 ## Table of Contents
 
@@ -15,24 +15,31 @@ Puppet Forge:  ![PDK](https://img.shields.io/puppetforge/pdk-version/trepasi/cas
 
 <!-- code_chunk_output -->
 
-- [Project status](#project-status)
-- [Table of Contents](#table-of-contents)
-- [Description](#description)
-- [Setup](#setup)
-  - [What cassandra affects](#what-cassandra-affects)
-  - [Setup Requirements](#setup-requirements)
-  - [Beginning with cassandra](#beginning-with-cassandra)
-- [Usage](#usage)
-  - [Installation versions](#installation-versions)
-  - [Main node configuration](#main-node-configuration)
-  - [Rack and DC settings](#rack-and-dc-settings)
-  - [Topology settings](#topology-settings)
-  - [Setting the runtime environment](#setting-the-runtime-environment)
-  - [Java garbage collection settings](#java-garbage-collection-settings)
-  - [JVM option sets](#jvm-option-sets)
-- [Reference](#reference)
-- [Limitations](#limitations)
-- [Development](#development)
+- [cassandra](#cassandra)
+  - [Project status](#project-status)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Setup](#setup)
+    - [What cassandra affects](#what-cassandra-affects)
+    - [Setup Requirements](#setup-requirements)
+    - [Beginning with cassandra](#beginning-with-cassandra)
+  - [Usage](#usage)
+    - [Installation versions](#installation-versions)
+    - [Main node configuration](#main-node-configuration)
+      - [Setting up initial\_token](#setting-up-initial_token)
+    - [Rack and DC settings](#rack-and-dc-settings)
+    - [Topology settings](#topology-settings)
+    - [Setting the runtime environment](#setting-the-runtime-environment)
+      - [Environment variables](#environment-variables)
+      - [JVM options](#jvm-options)
+      - [Java runtime settings](#java-runtime-settings)
+    - [Java garbage collection settings](#java-garbage-collection-settings)
+    - [JVM option sets](#jvm-option-sets)
+      - [JVM options for Cassandra 3.x](#jvm-options-for-cassandra-3x)
+      - [Cassandra 4.0 JVM setup](#cassandra-40-jvm-setup)
+  - [Reference](#reference)
+  - [Limitations](#limitations)
+  - [Development](#development)
 
 <!-- /code_chunk_output -->
 
