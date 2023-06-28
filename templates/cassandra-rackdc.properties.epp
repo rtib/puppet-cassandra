@@ -3,7 +3,7 @@
 
 dc=<%= $cassandra::rackdc['dc'] %>
 rack=<%= $cassandra::rackdc['rack'] %>
-<% if has_key($cassandra::rackdc, 'dc_suffix') { -%>
+<% if $cassandra::rackdc['dc_suffix'] { -%>
 dc_suffix=<%= $cassandra::rackdc['dc_suffix'] %>
 <% }
 if $cassandra::rackdc['prefer_local'] { -%>
