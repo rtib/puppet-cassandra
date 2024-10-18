@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra::install
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -80,13 +80,13 @@
     
 <p>This class is installing the Cassandra and optionally the Tools packages.</p>
 
-<p>The main class of this module will include this class, you should not
-invoke this at all.</p>
+<p>The main class of this module will include this class, you should not invoke this at all.</p>
 
 <p>All parameter necessery for this class are defined in the main class.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -103,15 +103,14 @@ invoke this at all.</p>
     
       
         <p class="example_title"><div class='inline'>
-<p>to install the latest version of cassandra-tools, independently from the
-cassandra version above</p>
+<p>to install the latest version of cassandra-tools, independently from the cassandra version above</p>
 </div></p>
       
       <pre class="example code"><code>cassandra::tools_ensure: latest</code></pre>
     
       
         <p class="example_title"><div class='inline'>
-<p>if you don&#39;t want to install the tools package</p>
+<p>if you don’t want to install the tools package</p>
 </div></p>
       
       <pre class="example code"><code>cassandra::tools_ensure: absent</code></pre>

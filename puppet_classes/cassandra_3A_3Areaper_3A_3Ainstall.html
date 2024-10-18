@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra::reaper::install
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -80,11 +80,11 @@
     
 <p>Installing a cassandra reaper instance.</p>
 
-<p>This class is included by cassandra::reaper and should not be used
-otherwise.</p>
+<p>This class is included by cassandra::reaper and should not be used otherwise.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -108,7 +108,7 @@ otherwise.</p>
         <pre class="code"><span class="info file"># File 'manifests/reaper/install.pp', line 7</span>
 
 class cassandra::reaper::install {
-  package{ &#39;reaper&#39;:
+  package { &#39;reaper&#39;:
     ensure =&gt; $cassandra::reaper::package_ensure,
   }
 }</pre>

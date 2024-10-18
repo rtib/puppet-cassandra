@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -78,19 +78,13 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Puppet module for Cassandra cluster which enables to install, configure and
-manage Cassandra nodes. The module consists of the <code>install</code>
-class, which is included first, followed by <code>config</code> and
-<code>config::topology</code> classes. Finally, the <code>service</code>
-class is included and notification from <code>config</code> are forwarded
-to <code>service</code>.</p>
+<p>Puppet module for Cassandra cluster which enables to install, configure and manage Cassandra nodes. The module consists of the <code>install</code> class, which is included first, followed by <code>config</code> and <code>config::topology</code> classes. Finally, the <code>service</code> class is included and notification from <code>config</code> are forwarded to <code>service</code>.</p>
 
-<p>This class is the main class of this module and the only one which should
-be included in your node manifests. For documentation of the particular
-feature, refer to the reference documentation of the other components.</p>
+<p>This class is the main class of this module and the only one which should be included in your node manifests. For documentation of the particular feature, refer to the reference documentation of the other components.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -221,7 +215,7 @@ feature, refer to the reference documentation of the other components.</p>
         <span class='type'>(<tt>Cassandra::Service::Enable</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;manual&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
         &mdash;
@@ -298,8 +292,7 @@ feature, refer to the reference documentation of the other components.</p>
       
         &mdash;
         <div class='inline'>
-<p>list of option sets containing JVM options, properties and advanced runtime
-options</p>
+<p>list of option sets containing JVM options, properties and advanced runtime options</p>
 </div>
       
     </li>
@@ -328,10 +321,10 @@ options</p>
       
       
         <span class='type'>(<tt>Struct[{
-    properties          =&gt; Optional[Hash],
-    agents              =&gt; Optional[Hash],
-    runtime_options     =&gt; Optional[Hash],
-    adv_runtime_options =&gt; Optional[Hash],
+      properties          =&gt; Optional[Hash],
+      agents              =&gt; Optional[Hash],
+      runtime_options     =&gt; Optional[Hash],
+      adv_runtime_options =&gt; Optional[Hash],
   }]</tt>)</span>
       
       
@@ -340,8 +333,7 @@ options</p>
       
         &mdash;
         <div class='inline'>
-<p>input hash to the factory of java properties, agents, runtime_options and
-advanced_runtime_options</p>
+<p>input hash to the factory of java properties, agents, runtime_options and advanced_runtime_options</p>
 </div>
       
     </li>
@@ -485,8 +477,7 @@ advanced_runtime_options</p>
       
         &mdash;
         <div class='inline'>
-<p>hash describing the topology to be used by PropertyFileSnitch and
-GossipingPropertyFileSnitch</p>
+<p>hash describing the topology to be used by PropertyFileSnitch and GossipingPropertyFileSnitch</p>
 </div>
       
     </li>
@@ -559,43 +550,39 @@ GossipingPropertyFileSnitch</p>
 95
 96
 97
-98
-99
-100</pre>
+98</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/init.pp', line 59</span>
 
 class cassandra (
-  String                      $cassandra_package = &#39;cassandra&#39;,
-  String                      $cassandra_ensure = &#39;installed&#39;,
-  String                      $tools_package = &#39;cassandra-tools&#39;,
-  String                      $tools_ensure = $cassandra_ensure,
-  Boolean                     $manage_service = true,
-  Cassandra::Service::Ensure  $service_ensure = undef,
-  Cassandra::Service::Enable  $service_enable = &#39;manual&#39;,
-  String                      $service_name = &#39;cassandra&#39;,
-  Stdlib::Absolutepath        $config_dir = &#39;/etc/cassandra&#39;,
-  Hash                        $environment = {},
-  Hash                        $jvm_option_sets = {},
-  Array[String]               $jvm_options = [],
+  String                                           $cassandra_package = &#39;cassandra&#39;,
+  String                                           $cassandra_ensure = &#39;installed&#39;,
+  String                                           $tools_package = &#39;cassandra-tools&#39;,
+  String                                           $tools_ensure = $cassandra_ensure,
+  Boolean                                          $manage_service = true,
+  Cassandra::Service::Ensure                       $service_ensure = undef,
+  Cassandra::Service::Enable                       $service_enable = false,
+  String                                           $service_name = &#39;cassandra&#39;,
+  Stdlib::Absolutepath                             $config_dir = &#39;/etc/cassandra&#39;,
+  Hash                                             $environment = {},
+  Hash                                             $jvm_option_sets = {},
+  Array[String]                                    $jvm_options = [],
   Struct[{
-    properties          =&gt; Optional[Hash],
-    agents              =&gt; Optional[Hash],
-    runtime_options     =&gt; Optional[Hash],
-    adv_runtime_options =&gt; Optional[Hash],
-  }]                          $java = {},
-  Optional[Hash]              $java_gc = undef,
-  Hash                        $config = {},
-  Optional[Hash[Stdlib::Host,Pattern[/^[0-9]+$/]]]
-                              $initial_tokens = undef,
-  Stdlib::Host                $node_key = $facts[&#39;networking&#39;][&#39;fqdn&#39;],
-  Stdlib::Absolutepath        $cassandra_home = &#39;/var/lib/cassandra&#39;,
-  Stdlib::Absolutepath        $envfile = &quot;${cassandra_home}/.cassandra.in.sh&quot;,
-  Optional[Cassandra::Rackdc] $rackdc = undef,
-  Optional[Hash]              $topology = undef,
-  Optional[Pattern[/[a-zA-Z0-9.]:[a-zA-Z0-9.-]/]]
-                              $topology_default  = undef,
+      properties          =&gt; Optional[Hash],
+      agents              =&gt; Optional[Hash],
+      runtime_options     =&gt; Optional[Hash],
+      adv_runtime_options =&gt; Optional[Hash],
+  }]                                               $java = {},
+  Optional[Hash]                                   $java_gc = undef,
+  Hash                                             $config = {},
+  Optional[Hash[Stdlib::Host,Pattern[/^[0-9]+$/]]] $initial_tokens = undef,
+  Stdlib::Host                                     $node_key = $facts[&#39;networking&#39;][&#39;fqdn&#39;],
+  Stdlib::Absolutepath                             $cassandra_home = &#39;/var/lib/cassandra&#39;,
+  Stdlib::Absolutepath                             $envfile = &quot;${cassandra_home}/.cassandra.in.sh&quot;,
+  Optional[Cassandra::Rackdc]                      $rackdc = undef,
+  Optional[Hash]                                   $topology = undef,
+  Optional[Pattern[/[a-zA-Z0-9.]:[a-zA-Z0-9.-]/]]  $topology_default  = undef,
 ) {
   contain cassandra::install
   contain cassandra::config

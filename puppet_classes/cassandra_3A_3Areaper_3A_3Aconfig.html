@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra::reaper::config
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -80,11 +80,11 @@
     
 <p>Managing the configuration of a cassandra reaper instance.</p>
 
-<p>This class is included by cassandra::reaper and should not be used
-otherwise.</p>
+<p>This class is included by cassandra::reaper and should not be used otherwise.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -118,7 +118,7 @@ class cassandra::reaper::config {
     undef   =&gt; undef,
     default =&gt; &quot;${cassandra::reaper::templatedir}/${cassandra::reaper::template}.yaml&quot;
   }
-  yaml_settings {&#39;cassandra::reaper::config&#39;:
+  yaml_settings { &#39;cassandra::reaper::config&#39;:
     source =&gt; $_source,
     target =&gt; &quot;${cassandra::reaper::configdir}/cassandra-reaper.yaml&quot;,
     values =&gt; $cassandra::reaper::settings,

@@ -6,7 +6,7 @@
 <title>
   Puppet Class: cassandra::java::gc
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -78,32 +78,17 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Deprication notice: this class is now deprecated. Consider using JVM option
-sets instead.</p>
+<p><em>Depricated!</em>: This class is now deprecated. Consider using JVM option sets instead.</p>
 
-<p>This class allows to set consistent JVM options at once, especially for the
-purpose of garbage collection settings. This is enabled by managing
-jvm.options file, available from Cassandra version 3.0 and later.</p>
+<p>This class allows to set consistent JVM options at once, especially for the purpose of garbage collection settings. This is enabled by managing jvm.options file, available from Cassandra version 3.0 and later.</p>
 
-<p>GC parameters could be: * common parameters  * numberOfGCLogFiles (Integer,
-defaults to: 10) - -XX:NumberOfGCLogFiles  * gCLogFileSize (String,
-defaults to: 10M) - -XX:GCLogFileSize * G1 specific parameters  *
-maxGCPauseMillis (Integer, defaults to: 500) - -XX:MaxGCPauseMillis  *
-g1RSetUpdatingPauseTimePercent (Integer, defaults to: 5) -
--XX:G1RSetUpdatingPauseTimePercent  * initiatingHeapOccupancyPercent
-(Integer, defaults to: 70) - -XX:InitiatingHeapOccupancyPercent  *
-parallelGCThreads (<a href="Integer">Optional</a>, defaults to: undef) -
--XX:ParallelGCThreads automatically set to number or cores-2 if &gt;10 
-cores present  * concGCThreads (<a href="Integer">Optional</a>, defaults
-to: undef) - -XX:ConcGCThreads automatically set to -XX:ParallelGCThreads
-if the above is  set</p>
+<p>GC parameters could be: * common parameters  * numberOfGCLogFiles (Integer, defaults to: 10) - -XX:NumberOfGCLogFiles  * gCLogFileSize (String, defaults to: 10M) - -XX:GCLogFileSize * G1 specific parameters  * maxGCPauseMillis (Integer, defaults to: 500) - -XX:MaxGCPauseMillis  * g1RSetUpdatingPauseTimePercent (Integer, defaults to: 5) - -XX:G1RSetUpdatingPauseTimePercent  * initiatingHeapOccupancyPercent (Integer, defaults to: 70) - -XX:InitiatingHeapOccupancyPercent  * parallelGCThreads (<a href="Integer">Optional</a>, defaults to: undef) - -XX:ParallelGCThreads automatically set to number or cores-2 if &gt;10  cores present  * concGCThreads (<a href="Integer">Optional</a>, defaults to: undef) - -XX:ConcGCThreads automatically set to -XX:ParallelGCThreads if the above is  set</p>
 
-<p>The <code>config</code> class contains a factory for this class which will
-create an instance using the settings of <code>cassandra::java_gc</code>,
-if not undef.</p>
+<p>The <code>config</code> class contains a factory for this class which will create an instance using the settings of <code>cassandra::java_gc</code>, if not undef.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -202,7 +187,7 @@ class cassandra::java::gc (
   notify { &#39;The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!&#39;:
     loglevel =&gt; warning,
   }
-  file{ &quot;${cassandra::config_dir}/jvm.options&quot;:
+  file { &quot;${cassandra::config_dir}/jvm.options&quot;:
     ensure  =&gt; file,
     content =&gt; epp(&quot;cassandra/jvm.${collector}.options.epp&quot;, $params),
   }

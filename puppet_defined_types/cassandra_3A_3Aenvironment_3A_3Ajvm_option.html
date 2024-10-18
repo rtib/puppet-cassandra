@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::environment::jvm_option
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -76,14 +76,13 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Each instance of this type is adding a JVM option to the JVM running the
-Cassandra. This enables you to set e.g. <code>verbose:gc</code>.</p>
+<p>Each instance of this type is adding a JVM option to the JVM running the Cassandra. This enables you to set e.g. <code>verbose:gc</code>.</p>
 
-<p>The <code>config</code> class contains a factory for this type which will
-create instances for each key of <code>cassandra::jvm_options</code>.</p>
+<p>The <code>config</code> class contains a factory for this type which will create instances for each key of <code>cassandra::jvm_options</code>.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -131,7 +130,7 @@ create instances for each key of <code>cassandra::jvm_options</code>.</p>
 
 define cassandra::environment::jvm_option (
 ) {
-  cassandra::environment::variable{ &quot;cassandra::environment::jvm_option[${name}]&quot;:
+  cassandra::environment::variable { &quot;cassandra::environment::jvm_option[${name}]&quot;:
     id    =&gt; &#39;JVM_EXTRA_OPTS&#39;,
     value =&gt; &quot;\$JVM_EXTRA_OPTS -${name}&quot;,
   }

@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::jvm_option_set
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -76,20 +76,13 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Select the file to be controlled by choosing, jvm, jvm8 or jvm11 and the
-variant server or clients. Options, properties and advanced runtime options
-can be defined to have particular values or to be removed from the
-configuration. Any option not mentioned will not be touched.</p>
+<p>Select the file to be controlled by choosing, jvm, jvm8 or jvm11 and the variant server or clients. Options, properties and advanced runtime options can be defined to have particular values or to be removed from the configuration. Any option not mentioned will not be touched.</p>
 
-<p>For Cassandra 3.x versions, only <code>optsfile = jvm</code> with
-<code>variant = undef</code> is supported, which will control the
-<code>/etc/cassandra/jvm.options</code> file. Since Cassandra versions
-&gt;= 4.0 use distinct option files for server and clients, as well as Java
-independent, Java-8 and Java-11, use parameters <code>optsfile</code> and
-<code>variant</code> to select a particular options file.</p>
+<p>For Cassandra 3.x versions, only <code>optsfile = jvm</code> with <code>variant = undef</code> is supported, which will control the <code>/etc/cassandra/jvm.options</code> file. Since Cassandra versions &gt;= 4.0 use distinct option files for server and clients, as well as Java independent, Java-8 and Java-11, use parameters <code>optsfile</code> and <code>variant</code> to select a particular options file.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -101,7 +94,7 @@ independent, Java-8 and Java-11, use parameters <code>optsfile</code> and
         <span class='name'>optsfile</span>
       
       
-        <span class='type'>(<tt>Enum['jvm', 'jvm8', 'jvm11']</tt>)</span>
+        <span class='type'>(<tt>Enum['jvm', 'jvm8', 'jvm11', 'jvm17']</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>&#39;jvm&#39;</tt>)</em>
@@ -109,9 +102,7 @@ independent, Java-8 and Java-11, use parameters <code>optsfile</code> and
       
         &mdash;
         <div class='inline'>
-<p>determine the file to control, either <code>jvm</code> for the independet
-options or <code>jvm8</code> or <code>jvm11</code> for the version
-dependant options</p>
+<p>determine the file to control, either <code>jvm</code> for the independet options or <code>jvm8</code>, <code>jvm11</code> or <code>jvm17</code> for the version dependant options</p>
 </div>
       
     </li>
@@ -129,8 +120,7 @@ dependant options</p>
       
         &mdash;
         <div class='inline'>
-<p>leave this undef for Cassandra &lt; 4.0, set it to <code>server</code> or
-<code>clients</code> if running &gt;= 4.0</p>
+<p>leave this undef for Cassandra &lt; 4.0, set it to <code>server</code> or <code>clients</code> if running &gt;= 4.0</p>
 </div>
       
     </li>
@@ -148,8 +138,7 @@ dependant options</p>
       
         &mdash;
         <div class='inline'>
-<p>list of basic JVM options, e.g. <code>ea</code>, <code>server</code>,
-<code>Xms4g</code>, etc.</p>
+<p>list of basic JVM options, e.g. <code>ea</code>, <code>server</code>, <code>Xms4g</code>, etc.</p>
 </div>
       
     </li>
@@ -185,8 +174,7 @@ dependant options</p>
       
         &mdash;
         <div class='inline'>
-<p>JVM options having a value concatenated directly to the options, e.g.
-<code>Xmx4g</code>.</p>
+<p>JVM options having a value concatenated directly to the options, e.g. <code>Xmx4g</code>.</p>
 </div>
       
     </li>
@@ -322,12 +310,12 @@ dependant options</p>
         <pre class="code"><span class="info file"># File 'manifests/jvm_option_set.pp', line 26</span>
 
 define cassandra::jvm_option_set (
-  Enum[&#39;jvm&#39;, &#39;jvm8&#39;, &#39;jvm11&#39;]        $optsfile = &#39;jvm&#39;,
-  Optional[Enum[&#39;clients&#39;, &#39;server&#39;]] $variant = undef,
-  Array[String]                       $options = [],
-  Hash[String,Optional[Scalar]]       $properties = {},
-  Hash[String,Optional[Scalar]]       $sizeoptions = {},
-  Hash[String,Optional[Scalar]]       $advancedoptions = {},
+  Enum[&#39;jvm&#39;, &#39;jvm8&#39;, &#39;jvm11&#39;, &#39;jvm17&#39;] $optsfile = &#39;jvm&#39;,
+  Optional[Enum[&#39;clients&#39;, &#39;server&#39;]]   $variant = undef,
+  Array[String]                         $options = [],
+  Hash[String,Optional[Scalar]]         $properties = {},
+  Hash[String,Optional[Scalar]]         $sizeoptions = {},
+  Hash[String,Optional[Scalar]]         $advancedoptions = {},
 ) {
   $_file = $variant ? {
     /^(server|clients)$/ =&gt; &quot;${cassandra::config_dir}/${optsfile}-${variant}.options&quot;,

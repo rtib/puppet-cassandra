@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::environment::variable
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -76,15 +76,13 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Each instance of this type is adding a environment variable to the
-Cassandra process. This enables you to set e.g. <code>MAX_HEAP_SIZE</code>,
-<code>HEAP_NEWSIZE</code>, etc.</p>
+<p>Each instance of this type is adding a environment variable to the Cassandra process. This enables you to set e.g. <code>MAX_HEAP_SIZE</code>, <code>HEAP_NEWSIZE</code>, etc.</p>
 
-<p>The <code>config</code> class contains a factory for this type which will
-create instances for each key of <code>cassandra::environment</code>.</p>
+<p>The <code>config</code> class contains a factory for this type which will create instances for each key of <code>cassandra::environment</code>.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -182,7 +180,7 @@ define cassandra::environment::variable (
   String $value,
   String $id = $title,
 ) {
-  concat::fragment{ &quot;cassandra::environment::variable[${id}]=${value}&quot;:
+  concat::fragment { &quot;cassandra::environment::variable[${id}]=${value}&quot;:
     target  =&gt; $cassandra::envfile,
     order   =&gt; &#39;10&#39;,
     content =&gt; inline_epp(&#39;&lt;%= $name %&gt;=&quot;&lt;%= $val -%&gt;&quot;&#39;,
@@ -190,7 +188,7 @@ define cassandra::environment::variable (
         &#39;name&#39; =&gt; $id,
         &#39;val&#39;  =&gt; $value,
       }
-    )
+    ),
   }
 }</pre>
       </td>

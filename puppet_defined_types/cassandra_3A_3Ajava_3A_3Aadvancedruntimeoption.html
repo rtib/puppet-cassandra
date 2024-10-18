@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::java::advancedruntimeoption
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -76,15 +76,13 @@
 <div class="docstring">
   <div class="discussion">
     
-<p>Each instance of this type adds a advanced runtime option to the JVM
-running Cassandra.</p>
+<p>Each instance of this type adds a advanced runtime option to the JVM running Cassandra.</p>
 
-<p>The <code>config</code> class contains a factory for this type which will
-create instances for each key of
-<code>cassandra::java::runtime_options</code>.</p>
+<p>The <code>config</code> class contains a factory for this type which will create instances for each key of <code>cassandra::java::runtime_options</code>.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -127,8 +125,7 @@ create instances for each key of
       
         &mdash;
         <div class='inline'>
-<p>a string value to be added to the runtime option or a boolean which will
-prefix the option with + or -</p>
+<p>a string value to be added to the runtime option or a boolean which will prefix the option with + or -</p>
 </div>
       
     </li>
@@ -160,7 +157,9 @@ prefix the option with + or -</p>
 38
 39
 40
-41</pre>
+41
+42
+43</pre>
       </td>
       <td>
         <pre class="code"><span class="info file"># File 'manifests/java/advancedruntimeoption.pp', line 25</span>
@@ -173,12 +172,14 @@ define cassandra::java::advancedruntimeoption (
       {
         &#39;name&#39;  =&gt; $name,
         &#39;value&#39; =&gt; $value,
-      }),
+      }
+    ),
     default  =&gt; inline_epp(&#39;XX:&lt;%= $name -%&gt;=&lt;%= $value %&gt;&#39;,
       {
         &#39;name&#39;  =&gt; $name,
         &#39;value&#39; =&gt; $value,
-      }),
+      }
+    ),
   }
   cassandra::environment::jvm_option { $_opt: }
 }</pre>

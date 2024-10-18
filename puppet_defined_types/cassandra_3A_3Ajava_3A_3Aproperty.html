@@ -6,7 +6,7 @@
 <title>
   Defined Type: cassandra::java::property
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -78,11 +78,11 @@
     
 <p>Each instance of this type adds a property to the JVM running Cassandra.</p>
 
-<p>The <code>config</code> class contains a factory for this type which will
-create instances for each key of <code>cassandra::java::properties</code>.</p>
+<p>The <code>config</code> class contains a factory for this type which will create instances for each key of <code>cassandra::java::properties</code>.</p>
 
   </div>
 </div>
+
 
 
 <div class="tags">
@@ -152,7 +152,7 @@ create instances for each key of <code>cassandra::java::properties</code>.</p>
 define cassandra::java::property (
   Scalar $value,
 ) {
-  cassandra::environment::jvm_option{ &quot;D${name}=${value}&quot;: }
+  cassandra::environment::jvm_option { &quot;D${name}=${value}&quot;: }
 }</pre>
       </td>
     </tr>
