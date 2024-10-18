@@ -12,7 +12,7 @@
 #
 # @param optsfile
 #   determine the file to control, either `jvm` for the independet
-#   options or `jvm8` or `jvm11` for the version dependant options
+#   options or `jvm8`, `jvm11` or `jvm17` for the version dependant options
 # @param variant
 #   leave this undef for Cassandra < 4.0, set it to `server` or `clients` if running >= 4.0
 # @param options
@@ -24,12 +24,12 @@
 # @param advancedoptions
 #   advanced runtime options which may be feature toggles or values
 define cassandra::jvm_option_set (
-  Enum['jvm', 'jvm8', 'jvm11']        $optsfile = 'jvm',
-  Optional[Enum['clients', 'server']] $variant = undef,
-  Array[String]                       $options = [],
-  Hash[String,Optional[Scalar]]       $properties = {},
-  Hash[String,Optional[Scalar]]       $sizeoptions = {},
-  Hash[String,Optional[Scalar]]       $advancedoptions = {},
+  Enum['jvm', 'jvm8', 'jvm11', 'jvm17'] $optsfile = 'jvm',
+  Optional[Enum['clients', 'server']]   $variant = undef,
+  Array[String]                         $options = [],
+  Hash[String,Optional[Scalar]]         $properties = {},
+  Hash[String,Optional[Scalar]]         $sizeoptions = {},
+  Hash[String,Optional[Scalar]]         $advancedoptions = {},
 ) {
   $_file = $variant ? {
     /^(server|clients)$/ => "${cassandra::config_dir}/${optsfile}-${variant}.options",
