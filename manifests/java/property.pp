@@ -23,5 +23,5 @@
 define cassandra::java::property (
   Scalar $value,
 ) {
-  cassandra::environment::jvm_option{ "D${name}=${value}": }
+  cassandra::environment::jvm_option { "D${name}=${value}": }
 }

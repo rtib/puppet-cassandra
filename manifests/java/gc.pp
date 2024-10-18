@@ -44,7 +44,7 @@ class cassandra::java::gc (
   notify { 'The class cassandra::java::gc is deprecated now, consider using cassandra::jvm_option_sets instead!':
     loglevel => warning,
   }
-  file{ "${cassandra::config_dir}/jvm.options":
+  file { "${cassandra::config_dir}/jvm.options":
     ensure  => file,
     content => epp("cassandra/jvm.${collector}.options.epp", $params),
   }
