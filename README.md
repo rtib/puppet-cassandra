@@ -45,7 +45,7 @@ Puppet Forge:  ![PDK](https://img.shields.io/puppetforge/pdk-version/trepasi/cas
 
 ## Description
 
-This module enables Puppet to install, configure and run [Apache Cassandra][1] nodes. As a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x, 3.0, 3.11 to latest 4.0 releases and multiple distributions, e.g. DSE, Apache and other.
+This module enables Puppet to install, configure and run [Apache Cassandra][1] nodes. As a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x, 3.0, 3.11 to latest 5.0 releases and multiple distributions, e.g. DSE, Apache and other. Efforts are taken to keep the generally available Apache open-source releases supported.
 
 Leveraging the declarative nature of Puppet DSL, Cassandra configuration is considered a declarative description of the desired state and will be ensured in the node configuration. Configuration values not declared in the manifest will be kept untouched by this module.
 
@@ -316,9 +316,9 @@ cassandra::jvm_option_sets:
       cassandra.initial_token: ~
 ```
 
-#### Cassandra 4.0 JVM setup
+#### Cassandra 4.0 and later JVM setup
 
-Cassandra 4.0 and later is using distinct option files for server operation and client tools, for Java version independent options and for different Java versions. Set the parameters `optsfile` to `jvm`, `jvm8` or `jvm11` and `variant` to `server` or `clients` accordingly.
+Cassandra 4.0 and later are using distinct option files for server operation and client tools, for Java version independent options and for different Java versions. Set the parameters `optsfile` to `jvm`, `jvm8`, `jvm11` or `jvm17` and `variant` to `server` or `clients` accordingly.
 
 ```yaml
 cassandra::jvm_option_sets:
