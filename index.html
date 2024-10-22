@@ -125,7 +125,7 @@
 <!-- /code_chunk_output -->
 <h2 id="label-Description">Description</h2>
 
-<p>This module enables Puppet to install, configure and run <a href="https://cassandra.apache.org/">Apache Cassandra</a> nodes. As a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x, 3.0, 3.11 to latest 4.0 releases and multiple distributions, e.g. DSE, Apache and other.</p>
+<p>This module enables Puppet to install, configure and run <a href="https://cassandra.apache.org/">Apache Cassandra</a> nodes. As a spin-off of several years of experience we collected in running Cassandra in a production environment, using Puppet to maintain the configuration of the nodes. During its evolution the module has proven to be useful for Cassandra versions ranging from early 1.1, over many 2.x, 3.0, 3.11 to latest 5.0 releases and multiple distributions, e.g. DSE, Apache and other. Efforts are taken to keep the generally available Apache open-source releases supported.</p>
 
 <p>Leveraging the declarative nature of Puppet DSL, Cassandra configuration is considered a declarative description of the desired state and will be ensured in the node configuration. Configuration values not declared in the manifest will be kept untouched by this module.</p>
 
@@ -394,9 +394,9 @@
       cassandra.initial_token: ~
 </code></pre>
 
-<h4 id="label-Cassandra+4.0+JVM+setup">Cassandra 4.0 JVM setup</h4>
+<h4 id="label-Cassandra+4.0+and+later+JVM+setup">Cassandra 4.0 and later JVM setup</h4>
 
-<p>Cassandra 4.0 and later is using distinct option files for server operation and client tools, for Java version independent options and for different Java versions. Set the parameters <code>optsfile</code> to <code>jvm</code>, <code>jvm8</code> or <code>jvm11</code> and <code>variant</code> to <code>server</code> or <code>clients</code> accordingly.</p>
+<p>Cassandra 4.0 and later are using distinct option files for server operation and client tools, for Java version independent options and for different Java versions. Set the parameters <code>optsfile</code> to <code>jvm</code>, <code>jvm8</code>, <code>jvm11</code> or <code>jvm17</code> and <code>variant</code> to <code>server</code> or <code>clients</code> accordingly.</p>
 
 <pre class="code ruby"><code class="ruby">cassandra::jvm_option_sets:
   java8example:
